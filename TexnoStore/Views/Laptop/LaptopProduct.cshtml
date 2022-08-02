@@ -55,16 +55,17 @@
 								<a class="review-link" href="#">10 Review(s) | Add your review</a>
 							</div>
 							<div>
-								<h3 class="product-price">$@Model.Price<del class="product-old-price">$@Model.OldPrice</del></h3>
+								<h3 class="product-price" id="final_price">$@Model.Price<del class="product-old-price">$@Model.OldPrice</del></h3>
 								<span class="product-available">In Stock</span>
 							</div>
 							<p>@Model.ShortDesc</p>
 
 							<div class="product-options">
-								<label>
-									Size
-									<select class="input-select">
-										<option value="0">X</option>
+								<label for="Processor_edition">
+									Processor
+									<select class="input-select" id="Processor_edition">
+										<option value="0">i7</option>
+										<option value="0">i5</option>
 									</select>
 								</label>
 								<label>
@@ -582,5 +583,18 @@
 			</div>
 			<!-- /container -->
 		</div>
+
+
+		<script src="~/js/bootstrap.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				 $('.product-options select').change(function(){
+					<p>Salamm</p>
+				 })
+			})
+		</script>
+
+
+
 
 	</body>
