@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ElectroMagazine\TexnoStore.Core\TexnoStore.Core.csproj" />
+    <ProjectReference Include="..\TexnoStore.Core\TexnoStore.Core.csproj" />
   </ItemGroup>
 
 </Project>
