@@ -59,26 +59,33 @@
 								<span class="product-available">In Stock</span>
 							</div>
 							<p>@Model.ShortDesc</p>
+							<div class="Test">
+								<div class="form_radio_btn">
+									<input id="radio-1" type="radio" name="radio" value="1">
+									<label for="radio-1">i7-9750H / GTX 1660Ti</label>
+								</div>
+								<div class="form_radio_btn">
+									<input id="radio-2" type="radio" name="radio" value="2">
+									<label for="radio-2">i7-12700H / RTX 3060 / 17"</label>
+								</div>
+								<div class="form_radio_btn">
+									<input id="radio-3" type="radio" name="radio" value="3">
+									<label for="radio-3">i7-11800H / RTX3060</label>
+								</div>
+								<input type="button" value="Get Value">
+							</div>
+								
 
 							<div class="product-options">
 								<label for="Processor_edition">
-									Processor
+									Params
 									<select class="input-select" id="processor_edition" name="processor">
-										<option value="90">i5</option>
-										<option value="150">i7</option>
-										<option value="190">Amd</option>
-
+										<option value="90">i7-9750H / GTX 1660Ti</option>
+										<option value="150">i7-12700H / RTX 3060 / 17"</option>
+										<option value="190">i7-11800H / RTX3060</option>
 									</select>
 								</label>
-								<label>
-									Color
-									<select class="input-select" id="videokarta_edition" name="videokarta">
-										<option value="70">gtx1050</option>
-										<option value="90">gtx1060</option>
-										<option value="110">gtx1650</option>
-										<option value="140">gtx1660</option>
-									</select>
-								</label>
+								
 							</div>
 
 							<div class="add-to-cart">
@@ -589,20 +596,22 @@
 		</div>
 
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
-    <script>
-    	$(document).ready(function(){
-    		$(document).ready(function(){
-				 $('.product-options select').change(function(){
-					$processor = $('select#processor_edition').val();
-					$videokarta = $('select#videokarta_edition').val(); 
-					$price=parseInt($processor)+parseInt($videokarta)+@Model.Price;
-					$('h3#final_price').text('$'+$price);
-				 })
-			})
-    	})
-    </script>	
-
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("input[type='button']").click(function(){
+        		var radioValue = $("input[name='radio']:checked").val();
+				if(radioValue==1){
+					@Model.Price += 300;
+					$('h3#final_price').text('$'+@Model.Price+300);
+				}
+				else
+				{
+					radioValue=@Model.Price + 600;
+					$('h3#final_price').text('$'+radioValue);
+				}
+			});
+		});
+	</script>
 
 	</body>
