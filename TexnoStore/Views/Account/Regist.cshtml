@@ -1,0 +1,33 @@
+﻿@using TexnoStore.Models.Users
+
+@model UserViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Regist</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/css/regist.css">
+</head>
+
+<form asp-action="Regist" asp-controller="Account" method="post">
+  <div class="container">
+    <h1>Register</h1>
+    <p>Please fill in this form to create an account.</p>
+    <hr>
+
+    <input asp-for="user.Email" class="form-control mb-2" placeholder="Email" type="email">
+    <span asp-validation-for="@Model.user.Email" class="text-danger"></span>
+
+    <input asp-for="user.PasswordHash" class="form-control mb-2" placeholder="Password" type="password">
+	<span asp-validation-for="@Model.user.PasswordHash" class="text-danger"></span>
+    <span>@ViewBag.Error</span>
+
+    <button type="submit" class="registerbtn">Регистрация</button>
+  </div>
+
+  <div class="container signin">
+    <p>Already have an account? <a href="~/Account/Login">Sign in</a>.</p>
+  </div>
+</form>
