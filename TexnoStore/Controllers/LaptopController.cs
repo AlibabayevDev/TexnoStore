@@ -54,7 +54,7 @@ namespace TexnoStore.Controllers
             }
             var model = new LaptopListViewModel
             {
-                Laptops = laptopModels.Where(x => x.Id == id)
+                Laptop = laptopModels.FirstOrDefault(x => x.Id == id)
             };
 
             return View(model.Laptops.FirstOrDefault());
