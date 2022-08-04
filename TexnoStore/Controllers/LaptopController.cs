@@ -60,5 +60,10 @@ namespace TexnoStore.Controllers
             return View(model.Laptops.FirstOrDefault());
         }
 
+        public IActionResult Korzina(LaptopModel model)
+        {
+            return View();
+        }
+
     }
 }

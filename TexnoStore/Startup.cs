@@ -33,6 +33,12 @@ namespace TexnoStore
                 return DbFactory.Create(connectionString);
             });
 
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromDays(1);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -52,6 +58,7 @@ namespace TexnoStore
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();
