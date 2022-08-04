@@ -58,7 +58,7 @@ namespace TexnoStore.Controllers
                 Laptop = laptopModels.FirstOrDefault(x => x.Id == id)
             };
 
-            return View(model.Laptops.FirstOrDefault());
+            return View(model);
         }
 
         public IActionResult Korzina(LaptopModel model)

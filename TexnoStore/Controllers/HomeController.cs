@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Core.Domain.Entities.Laptop;
@@ -11,6 +12,7 @@ using TexnoStore.Models.Phones;
 
 namespace TexnoStore.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IUnitOfWork db;

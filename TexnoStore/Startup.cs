@@ -9,6 +9,10 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using TexnoStore.Core.Factory;
+using TexnoStore.Core.Domain.Entities;
+using TexnoStore.IdentityServer;
+using TexnoStore.Core.DataAccess.Implementation.SQL;
+using TexnoStore.Core.IdentityServer;
 
 namespace TexnoStore
 {
@@ -32,13 +36,11 @@ namespace TexnoStore
 
                 return DbFactory.Create(connectionString);
             });
+            services.AddIdentity<User, Role>();
 
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromDays(1);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
+            services.AddSingleton<IPasswordHasher<User>, CustomPasswordHasher>();
+            services.AddSingleton<IUserStore<User>, UserStore>();
+            services.AddSingleton<IRoleStore<Role>, RoleStore>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -58,7 +60,6 @@ namespace TexnoStore
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();
