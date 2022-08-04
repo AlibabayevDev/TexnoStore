@@ -17,7 +17,7 @@
 									for(int i=0;i<@Model.Laptop.LaptopsImages.Image.Count;i++)
 									{
 										<div class="product-preview">
-											<img src="~/img/@Model.LaptopsImages.Image[i].ImgName" alt="" width="150px" height="400px" >
+											<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="" width="150px" height="400px" >
 										</div>
 									}
 							}
@@ -29,10 +29,10 @@
 					<div class="col-md-2  col-md-pull-5">
 						<div id="product-imgs">
 							@{
-								for(int i=0;i<Model.LaptopsImages.Image.Count;i++)
+								for(int i=0;i<Model.Laptop.LaptopsImages.Image.Count;i++)
 								{
 									<div class="product-preview">
-										<img src="~/img/@Model.LaptopsImages.Image[i].ImgName" alt="">
+										<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="">
 									</div>
 								}
 						}
@@ -55,10 +55,10 @@
 								<a class="review-link" href="#">10 Review(s) | Add your review</a>
 							</div>
 							<div>
-								<h3 class="product-price" id="final_price">$@Model.Price</h3><del class="product-old-price" id="">$@Model.OldPrice</del>
+								<h3 class="product-price" id="final_price">$@Model.Laptop.Price</h3><del class="product-old-price" id="">$@Model.Laptop.OldPrice</del>
 								<span class="product-available">In Stock</span>
 							</div>
-							<p>@Model.ShortDesc</p>
+							<p>@Model.Laptop.ShortDesc</p>
 							<form asp-controller="Laptop" asp-action="Korzina">
 									@{
 										for(int i=0;i<5;i++)
@@ -146,7 +146,7 @@
 								<div id="tab1" class="tab-pane fade in active">
 									<div class="row">
 										<div class="col-md-12">
-											<p>@Model.LognDesc</p>
+											<p>@Model.Laptop.LognDesc</p>
 										</div>
 									</div>
 								</div>
@@ -164,67 +164,67 @@
 														<tr class="odd-row">
 															<th class="first">Производитель</th>
 															<td class="last">
-																<p itemprop="brand">@Model.Brand</p>
+																<p itemprop="brand">@Model.Laptop.Brand</p>
 															</td>
 														</tr>
 														<tr>
 															<th class="first">Модель</th>
 															<td class="last">
-																<p>@Model.Series</p>
+																<p>@Model.Laptop.Series</p>
 															</td>
 														</tr>
 														<tr class="odd-row">
 															<th class="first">Диагональ дисплея</th>
 															<td class="last">
-																<p>@Model.ScreenSize"</p>
+																<p>@Model.Laptop.ScreenSize"</p>
 															</td>
 														</tr>
 														<tr>
 															<th class="first">Разрешение</th>
 															<td class="last">
-																<p>@Model.Display</p>
+																<p>@Model.Laptop.Display</p>
 															</td>
 														</tr>
 														<tr class="odd-row">
 															<th class="first">Тип матрицы</th>
 															<td class="last">
-																<p>@Model.ScreenMatrix</p>
+																<p>@Model.Laptop.ScreenMatrix</p>
 															</td>
 														</tr>
 														<tr>
 															<th class="first">Процессор</th>
 															<td class="last">
-																<p>@Model.Processor</p>
+																<p>@Model.Laptop.Processor</p>
 															</td>
 														</tr>
 														<tr class="odd-row">
 															<th class="first">Объем оперативной памяти</th>
 															<td class="last">
-																<p>@Model.RAM ГБ</p>
+																<p>@Model.Laptop.RAM ГБ</p>
 															</td>
 														</tr>
 														<tr>
 															<th class="first">Объем SSD</th>
 															<td class="last">
-																<p>@Model.HardDrive</p>
+																<p>@Model.Laptop.HardDrive</p>
 															</td>
 														</tr>
 														<tr class="odd-row">
 															<th class="first">Видеокарта</th>
 															<td class="last">
-																<p>@Model.GraphicsCoprocessor</p>
+																<p>@Model.Laptop.GraphicsCoprocessor</p>
 															</td>
 														</tr>
 														<tr class="odd-row">
 															<th class="first">Операционная система</th>
 															<td class="last">
-																<p>@Model.OperatingSystem</p>
+																<p>@Model.Laptop.OperatingSystem</p>
 															</td>
 														</tr>
 														<tr>
 															<th class="first">Вес</th>
 															<td class="last">
-															<p>@Model.Weight Кг</p>
+															<p>@Model.Laptop.Weight Кг</p>
 															</td>
 														</tr>
 														<tr class="odd-row">
@@ -396,9 +396,9 @@
 										<div class="col-md-3">
 											<div id="review-form">
 												<form class="review-form">
-													<input class="input" type="text" placeholder="Your Name">
-													<input class="input" type="email" placeholder="Your Email">
-													<textarea class="input" placeholder="Your Review"></textarea>
+													<input asp-for="@Model.Review.Name" class="input" type="text" placeholder="Your Name">
+													<input asp-for="@Model.Review.Email" class="input" type="email" placeholder="Your Email">
+													<textarea  asp-for="@Model.Review.Message" class="input" placeholder="Your Review"></textarea>
 													<div class="input-rating">
 														<span>Your Rating: </span>
 														<div class="stars">
@@ -610,7 +610,7 @@
 		{
 			var radioValue;
 				$(b+i).click(function(){
-				radioValue=@Model.Price + i;
+				radioValue=@Model.Laptop.Price + i;
 				$('h3#final_price').text('$'+radioValue);		
 				});
 		}
@@ -630,7 +630,7 @@
 			//	}
 			//	else
 			//	{
-			//		radioValue=@Model.Price + 600;
+			//		radioValue=@Model.Laptop.Price + 600;
 			//		$('h3#final_price').text('$'+radioValue);
 			//	}
 			//});

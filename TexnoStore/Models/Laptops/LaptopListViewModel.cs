@@ -9,5 +9,7 @@ namespace TexnoStore.Models.Laptops
         public LaptopModel Laptop { get; set; }
 
         public List<ReviewModel> Reviews { get; set; }
+
+        public ReviewModel Review { get; set; }
     }
 }
