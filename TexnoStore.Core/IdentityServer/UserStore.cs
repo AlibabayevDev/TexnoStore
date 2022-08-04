@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Core.Domain.Entities;
 
-namespace TexnoStore.Core.DataAccess.Implementation.SQL
+namespace TexnoStore.Core.IdentityServer
 {
     public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserRoleStore<User>
     {

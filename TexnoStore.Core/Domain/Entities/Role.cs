@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankApp.Core.Domain.Entities
+namespace TexnoStore.Core.Domain.Entities
 {
     public class Role : BaseEntity
     {

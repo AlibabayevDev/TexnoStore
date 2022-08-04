@@ -1,9 +1,9 @@
-﻿using BankApp.Core.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using System.Threading;
 using System.Threading.Tasks;
+using TexnoStore.Core.Domain.Entities;
 
-namespace TexnoStore.IdentityServer
+namespace TexnoStore.Core.IdentityServer
 {
     public class RoleStore : IRoleStore<Role>
     {
