@@ -10,7 +10,6 @@
 			<div class="container">
 				<!-- row -->
 				<div class="row">
-					<form asp-controller="Laptop" asp-action="ShopCart">
 					<div class="col-md-5 col-md-push-2">
 						<div id="product-main-img">
 							@{
@@ -53,6 +52,9 @@
 								<span class="product-available">In Stock</span>
 							</div>
 							<p>@Model.Laptop.ShortDesc</p>
+							<form asp-controller="Laptop" asp-action="ShopCart">
+									<input hidden asp-for="Id"/>
+
 									@{
 										for(int i=0;i<5;i++)
 										{
@@ -62,6 +64,7 @@
 											</div>
 										}
 									}
+
 									<div class="add-to-cart">
 										<div class="qty-label">
 											Qty
@@ -71,8 +74,9 @@
 												<span class="qty-down">-</span>
 											</div>
 										</div>
-										<button type="submit" value="Create" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+										<button type="submit" value="Create" class="add-to-cart-btn" ><i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
+
 							</form>
 							
 

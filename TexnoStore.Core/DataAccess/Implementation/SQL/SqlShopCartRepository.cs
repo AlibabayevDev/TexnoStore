@@ -24,7 +24,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             {
                 connection.Open();
 
-                string cmdText = "Insert into ShopCart values(@UserId,@LaptopId,@PhoneId)";
+                string cmdText = "Insert into ShopCarts values(@UserId,@LaptopId,@PhoneId)";
 
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {

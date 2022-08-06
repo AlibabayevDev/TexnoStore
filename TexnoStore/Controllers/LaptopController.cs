@@ -6,16 +6,20 @@ using TexnoStore.Models;
 using TexnoStore.Mapper.Laptops;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Mapper;
+using Microsoft.AspNetCore.Identity;
+using TexnoStore.Core.Domain.Entities;
 
 namespace TexnoStore.Controllers
 {
     public class LaptopController : Controller
     {
-        public static int test { get;set;}
+        public static LaptopModel SelectedModel { get;set;}
         private readonly IUnitOfWork db;
+        private readonly UserManager<User> userManager;
 
-        public LaptopController(IUnitOfWork db)
+        public LaptopController(IUnitOfWork db, UserManager<User> userManager)
         {
+            this.userManager= userManager;
             this.db = db;
         }
 
@@ -42,7 +46,6 @@ namespace TexnoStore.Controllers
 
         public IActionResult LaptopProduct(int id)
         {
-            test = id;
             var laptops = db.LaptopRepository.Laptops();
 
             LaptopMapper laptopMapper = new LaptopMapper();
@@ -59,7 +62,7 @@ namespace TexnoStore.Controllers
             {
                 Laptop = laptopModels.FirstOrDefault(x => x.Id == id)
             };
-
+            SelectedModel = model.Laptop;
             return View(model);
         }
 
@@ -101,14 +104,21 @@ namespace TexnoStore.Controllers
 
         public IActionResult ShopCart(LaptopListViewModel viewModel)
 		{
-            viewModel.ShopCart = new ShopCartModel();
-            viewModel.ShopCart.LaptopId = test;
-
-
+            var name=User.Identity.Name;
+            var userid = userManager.FindByNameAsync(name).Result;
             ShopCartMapper shopCartMapper = new ShopCartMapper();
+            viewModel.ShopCart = new ShopCartModel();
+            viewModel.ShopCart.LaptopId = viewModel.Id;
+            viewModel.ShopCart.UserId = userid.Id;
             var shopCart = shopCartMapper.Map(viewModel.ShopCart);
             db.ShopCartRepository.Add(shopCart);
+            viewModel.Laptop = SelectedModel;
             return View("LaptopProduct",viewModel);
+        }
+        public IActionResult ShopCartbyId(int Id)
+        {
+            ShopCartMapper shopCartMapper = new ShopCartMapper();
+            return View("LaptopProduct");
         }
     }
 }
