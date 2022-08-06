@@ -71,26 +71,26 @@ namespace TexnoStore.Controllers
             return View();
         }
 
-        public IActionResult Review(ReviewModel reviewModel)
+        public IActionResult Review(LaptopListViewModel reviewModel)
         {
             if (ModelState.IsValid == false)
             {
                 var errors = ModelState.SelectMany(x => x.Value.Errors).Select(x => x.ErrorMessage).ToList();
                 var errorMessage = errors.Aggregate((message, value) =>
                 {
-                        if (message.Length == 0)
-                            return value;
+                    if (message.Length == 0)
+                        return value;
 
-                        return message + ", " + value;
+                    return message + ", " + value;
                 });
 
                 TempData["Message"] = errorMessage;
-                return RedirectToAction("LaptopProduct");
+                return RedirectToAction("Index");
             }
 
             ReviewMapper reviewMapper = new ReviewMapper();
 
-            var review = reviewMapper.Map(reviewModel);
+            var review = reviewMapper.Map(reviewModel.Review);
             try
             {
                 db.ReviewRepository.Add(review);
