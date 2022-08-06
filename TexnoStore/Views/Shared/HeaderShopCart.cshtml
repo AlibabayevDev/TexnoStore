@@ -1,0 +1,30 @@
+﻿@using TexnoStore.Models.Phones
+								   
+@{
+												@foreach(LaptopModel Model in Model.LaptopModel)
+												{
+													<div class="product-widget">
+													<div class="product-img">
+														<img src="~/img/@Model.MainImg" alt="">
+													</div>
+													<div class="product-body">
+														<h3 class="product-name"><a href="#">@Model.Name</a></h3>
+														<h4 class="product-price"><span class="qty">1x</span>$@Model.Price</h4>
+													</div>
+													<button class="delete"><i class="fa fa-close"></i></button>
+												</div>
+												}
+												@foreach(PhoneModel Model in Model.PhoneModel)
+												{
+													<div class="product-widget">
+													<div class="product-img">
+														<img src="~/img/@Model.MainImg" alt="">
+													</div>
+													<div class="product-body">
+														<h3 class="product-name"><a href="#">@Model.Name</a></h3>
+														<h4 class="product-price"><span class="qty">1x</span>$@Model.Price</h4>
+													</div>
+													<button class="delete"><i class="fa fa-close"></i></button>
+												</div>
+												}
+											}

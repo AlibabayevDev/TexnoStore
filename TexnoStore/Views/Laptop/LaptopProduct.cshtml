@@ -10,7 +10,6 @@
 			<div class="container">
 				<!-- row -->
 				<div class="row">
-					<!-- Product main img -->
 					<div class="col-md-5 col-md-push-2">
 						<div id="product-main-img">
 							@{
@@ -23,9 +22,6 @@
 							}
 						</div>
 					</div>
-					<!-- /Product main img -->
-
-					<!-- Product thumb imgs -->
 					<div class="col-md-2  col-md-pull-5">
 						<div id="product-imgs">
 							@{
@@ -38,9 +34,6 @@
 						}
 						</div>
 					</div>
-					<!-- /Product thumb imgs -->
-
-					<!-- Product details -->
 					<div class="col-md-5">
 						<div class="product-details">
 							<h2 class="product-name">@Model.Name</h2>
@@ -59,7 +52,9 @@
 								<span class="product-available">In Stock</span>
 							</div>
 							<p>@Model.Laptop.ShortDesc</p>
-							<form asp-controller="Laptop" asp-action="Korzina">
+							<form asp-controller="Laptop" asp-action="ShopCart">
+									<input hidden asp-for="Id"/>
+
 									@{
 										for(int i=0;i<5;i++)
 										{
@@ -68,39 +63,20 @@
 												<label for="radio-@i">i7-9750H / GTX 1660Ti</label>
 											</div>
 										}
-								}
-								
-								@*<div class="form_radio_btn">
-									<input id="radio-2" type="radio" name="ImageId" value="2">
-									<label for="radio-2">i7-12700H / RTX 3060 / 17"</label>
-								</div>
-								<div class="form_radio_btn">
-									<input id="radio-3" type="radio" name="ImageId" value="3">
-									<label for="radio-3">i7-11800H / RTX3060</label>
-								</div>
-*@
-								@*<input type="button" value="Get Value">
-							<div class="product-options">
-								<label for="Processor_edition">
-									Params
-									<select class="input-select" id="processor_edition" name="processor">
-										<option value="90">i7-9750H / GTX 1660Ti</option>
-										<option value="150">i7-12700H / RTX 3060 / 17"</option>
-										<option value="190">i7-11800H / RTX3060</option>
-									</select>
-								</label>
-							</div>*@
-							<div class="add-to-cart">
-								<div class="qty-label">
-									Qty
-									<div class="input-number">
-										<input type="number">
-										<span class="qty-up">+</span>
-										<span class="qty-down">-</span>
+									}
+
+									<div class="add-to-cart">
+										<div class="qty-label">
+											Qty
+											<div class="input-number">
+												<input type="number">
+												<span class="qty-up">+</span>
+												<span class="qty-down">-</span>
+											</div>
+										</div>
+										<button type="submit" value="Create" class="add-to-cart-btn" ><i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
-								</div>
-								<button type="submit" value="Create" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-							</div>
+
 							</form>
 							
 
