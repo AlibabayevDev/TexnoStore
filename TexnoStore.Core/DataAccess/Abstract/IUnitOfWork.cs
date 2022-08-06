@@ -13,5 +13,6 @@ namespace TexnoStore.Core.DataAccess.Abstract
         IAllProductRepository AllProductRepository { get; }
         ILoginRepository LoginRepository { get; }
         IReviewRepository ReviewRepository { get; }
+        IShopCartRepository ShopCartRepository { get; }
     }
 }

@@ -11,6 +11,7 @@ namespace TexnoStore.Controllers
 {
     public class LaptopController : Controller
     {
+        public static int test { get;set;}
         private readonly IUnitOfWork db;
 
         public LaptopController(IUnitOfWork db)
@@ -41,6 +42,7 @@ namespace TexnoStore.Controllers
 
         public IActionResult LaptopProduct(int id)
         {
+            test = id;
             var laptops = db.LaptopRepository.Laptops();
 
             LaptopMapper laptopMapper = new LaptopMapper();
@@ -95,6 +97,18 @@ namespace TexnoStore.Controllers
                 TempData["Message"] = "Something went wrong";
             }
             return View();      
+        }
+
+        public IActionResult ShopCart(LaptopListViewModel viewModel)
+		{
+            viewModel.ShopCart = new ShopCartModel();
+            viewModel.ShopCart.LaptopId = test;
+
+
+            ShopCartMapper shopCartMapper = new ShopCartMapper();
+            var shopCart = shopCartMapper.Map(viewModel.ShopCart);
+            db.ShopCartRepository.Add(shopCart);
+            return View("LaptopProduct",viewModel);
         }
     }
 }
