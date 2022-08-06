@@ -73,14 +73,14 @@ namespace TexnoStore.Controllers
                 var errors = ModelState.SelectMany(x => x.Value.Errors).Select(x => x.ErrorMessage).ToList();
                 var errorMessage = errors.Aggregate((message, value) =>
                 {
-                        if (message.Length == 0)
-                            return value;
+                    if (message.Length == 0)
+                        return value;
 
-                        return message + ", " + value;
+                    return message + ", " + value;
                 });
 
                 TempData["Message"] = errorMessage;
-                return RedirectToAction("LaptopProduct");
+                return RedirectToAction("Index");
             }
 
             ReviewMapper reviewMapper = new ReviewMapper();

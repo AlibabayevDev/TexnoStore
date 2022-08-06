@@ -20,7 +20,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
 
         public  bool Add(Review review)
         {
-            using (SqlConnection connection = new SqlConnection())
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
