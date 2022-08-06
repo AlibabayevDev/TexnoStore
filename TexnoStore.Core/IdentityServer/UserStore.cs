@@ -8,7 +8,7 @@ using TexnoStore.Core.Domain.Entities;
 
 namespace TexnoStore.Core.IdentityServer
 {
-    public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserRoleStore<User>
+    public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserRoleStore<User>,IPasswordValidator<User>
     {
         private readonly IUnitOfWork db;
         public UserStore(IUnitOfWork db)
@@ -16,29 +16,14 @@ namespace TexnoStore.Core.IdentityServer
             this.db = db;
         }
 
-        public Task AddToRoleAsync(User user, string roleName, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        #region IUserStore implementation
-
-        public Task<IdentityResult> CreateAsync(User user, CancellationToken cancellationToken)
-        {
-            db.LoginRepository.Insert(user);
-
-
-            return Task.FromResult(IdentityResult.Success);
-
-        }
-
-        public Task<IdentityResult> DeleteAsync(User user, CancellationToken cancellationToken)
-        {
-            throw new System.NotImplementedException();
-        }
-
+        #region ImplementationMethods
         public void Dispose()
         {
+
+        }
+        public Task<IdentityResult> ValidateAsync(UserManager<User> manager, User user, string password)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<User> FindByIdAsync(string userId, CancellationToken cancellationToken)
@@ -57,33 +42,52 @@ namespace TexnoStore.Core.IdentityServer
             return Task.FromResult(user);
         }
 
+        public Task<string> GetPasswordHashAsync(User user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.PasswordHash);
+        }
+        public Task<string> GetUserIdAsync(User user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.Id.ToString());
+        }
+        public Task<string> GetUserNameAsync(User user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.Email);
+        }
+        #endregion
+
+        public Task AddToRoleAsync(User user, string roleName, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IdentityResult> CreateAsync(User user, CancellationToken cancellationToken)
+        {
+            db.LoginRepository.Insert(user);
+
+            return Task.FromResult(IdentityResult.Success);
+        }
+
+        public Task<IdentityResult> DeleteAsync(User user, CancellationToken cancellationToken)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Task<string> GetNormalizedUserNameAsync(User user, CancellationToken cancellationToken)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<string> GetPasswordHashAsync(User user, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(user.PasswordHash);
-        }
+
 
         public Task<IList<string>> GetRolesAsync(User user, CancellationToken cancellationToken)
         {
             IList<string> roles = new List<string>
             {
-                "A" , "SA"
-            };
+                "A","SA"
+            } as IList<string>;
+
             return Task.FromResult(roles);
-        }
-
-        public Task<string> GetUserIdAsync(User user, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(user.Id.ToString());
-        }
-
-        public Task<string> GetUserNameAsync(User user, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(user.Email);
         }
 
         public Task<IList<User>> GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken)
@@ -93,7 +97,7 @@ namespace TexnoStore.Core.IdentityServer
 
         public Task<bool> HasPasswordAsync(User user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
         public Task<bool> IsInRoleAsync(User user, string roleName, CancellationToken cancellationToken)
@@ -108,12 +112,14 @@ namespace TexnoStore.Core.IdentityServer
 
         public Task SetNormalizedUserNameAsync(User user, string normalizedName, CancellationToken cancellationToken)
         {
-            return Task.FromResult(user.Email = normalizedName);
+            user.Email = normalizedName;
+            return Task.FromResult(user);
         }
 
         public Task SetPasswordHashAsync(User user, string passwordHash, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            user.PasswordHash = passwordHash;
+            return Task.FromResult(user);
         }
 
         public Task SetUserNameAsync(User user, string userName, CancellationToken cancellationToken)
@@ -126,10 +132,54 @@ namespace TexnoStore.Core.IdentityServer
             throw new System.NotImplementedException();
         }
 
-        #endregion
+        public string HashPassword(User user, string password)
+        {
+            throw new NotImplementedException();
+        }
 
-        #region IUserPasswordStore implementation
+        public PasswordVerificationResult VerifyHashedPassword(User user, string hashedPassword, string providedPassword)
+        {
+            throw new NotImplementedException();
+        }
 
-        #endregion
+        public Task SetEmailAsync(User user, string email, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> GetEmailAsync(User user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.Email);
+        }
+
+        public Task<bool> GetEmailConfirmedAsync(User user, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SetEmailConfirmedAsync(User user, bool confirmed, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
+        {
+            var user = db.LoginRepository.Get(normalizedEmail);
+
+            return Task.FromResult(user);
+        }
+
+        public Task<string> GetNormalizedEmailAsync(User user, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SetNormalizedEmailAsync(User user, string normalizedEmail, CancellationToken cancellationToken)
+        {
+            user.Email = normalizedEmail;
+            return Task.FromResult(user);
+        }
+
+
     }
 }

@@ -25,7 +25,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             {
                 connection.Open();
 
-                string cmdText = $"Delete from Logins where Id = @Id";
+                string cmdText = $"Delete from Users where Id = @Id";
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {
                     cmd.Parameters.AddWithValue("@ID", ID);
@@ -43,12 +43,15 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             {
                 connection.Open();
 
-                string cmdText = $"Insert into Logins values(@Email,@PasswordHash)";
+                string cmdText = $"Insert into Users values(@Email,@PasswordHash,@Name,@LastName)";
 
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {
                     cmd.Parameters.AddWithValue("@Email", login.Email);
                     cmd.Parameters.AddWithValue("@PasswordHash", login.PasswordHash);
+                    cmd.Parameters.AddWithValue("@Name", login.Name);
+                    cmd.Parameters.AddWithValue("@LastName", login.LastName);
+
 
                     int affectedCount = cmd.ExecuteNonQuery();
 
@@ -63,7 +66,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             {
                 connection.Open();
 
-                string cmdText = "select * from Logins";
+                string cmdText = "select * from Users";
 
                 using (SqlCommand cmd = new SqlCommand())
                 {
@@ -92,7 +95,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             {
                 connection.Open();
 
-                string cmdText = $"Update Logins set Email = @Email, PasswordHash = @PasswordHash where Id = @Id";
+                string cmdText = $"Update Users set Email = @Email, PasswordHash = @PasswordHash where Id = @Id";
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {
                     cmd.Parameters.AddWithValue("@Id", login.Id);
@@ -112,7 +115,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "select * from Logins where Id=@id";
+                string query = "select * from Users where Id=@id";
                 var command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("Id", id);
                 var reader = command.ExecuteReader();
@@ -134,7 +137,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "select * from Logins where Email = @Email";
+                string query = "select * from Users where Email = @Email";
                 var command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Email", Username);
                 var reader = command.ExecuteReader();
@@ -156,7 +159,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             return new User
             {
                 Id = reader.Get<int>("Id"),
-                Email = reader.Get<string>("Username"),
+                Email = reader.Get<string>("Email"),
                 PasswordHash = reader.Get<string>("PasswordHash"),
             };
         } 

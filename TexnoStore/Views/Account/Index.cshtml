@@ -24,14 +24,7 @@
 	<!-- start registration -->
 	<div class="registration">
 		<div class="registration_left">
-		<h2><span>Enter Confirmation Password</span></h2>
-		<!-- [if IE] 
-		    < link rel='stylesheet' type='text/css' href='ie.css'/>  
-		 [endif] -->  
-		  
-		<!-- [if lt IE 7]>  
-		    < link rel='stylesheet' type='text/css' href='ie6.css'/>  
-		<! [endif] -->  
+		<h2>new user? <span> create an account </span></h2>
 		<script>
 			(function() {
 		
@@ -72,20 +65,77 @@
 		</script>
 		 <div class="registration_form">
 		 <!-- Form -->
-			<form id="registration_form" asp-action="Complete" asp-controller="Account" method="post">
+			<form asp-action="Regist" asp-controller="Account" method="post">
+				<div>
+						<input asp-for="@Model.loginModel.Name" placeholder="first name:" type="text" required autofocus tabindex="1">
+				</div>
 				<div>
 					<label>
-						<input placeholder="Confirm Password" asp-for="@Model.ConfirmPassword" type="password" tabindex="1" required>
+						<input placeholder="last name:" asp-for="@Model.loginModel.LastName" type="text" required autofocus tabindex="2">
+					</label>
+				</div>
+				<div>
+					<label>
+						<input type="text" placeholder="email address:" asp-for="@Model.loginModel.Email" required autofocus tabindex="3">
+					</label>
+				</div>
+				<div>
+					<label>
+						<input placeholder="password" data-type="password" asp-for="@Model.loginModel.Password" type="password" tabindex="4" >
+						<span asp-validation-for="@Model.loginModel.Password" class="text-danger"></span>
+
+					</label>
+				</div>						
+				<div>
+					<label>
+						<input placeholder="retype password" asp-for="@Model.loginModel.RetypePassword" type="password" tabindex="5" >
+						<span asp-validation-for="@Model.loginModel.Password" class="text-danger"></span>
 					</label>
 				</div>	
+                <div class="hr" style="color:red">@TempData["Error"]</div>
+
 				<div>
-					<input type="submit" value="Submit" id="register-submit">
+					<input type="submit" value="create an account" id="register-submit">
 				</div>
+				<div class="sky-form">
+					<label class="checkbox"><input type="checkbox" name="isMarried" value="true"/><i></i>i agree to TexnoStore.com &nbsp;<a class="terms" href="#"> terms of service</a> </label>
+				</div>
+
 			</form>
+
 			<!-- /Form -->
 		</div>
 	</div>
+	<div class="registration_left">
+		<h2>existing user</h2>
+		 <div class="registration_form">
+		 <!-- Form -->
+			<form id="registration_form" asp-action="Login" asp-controller="Account" method="post">
+				<div>
+					<label>
+						<input placeholder="email:" type="email" tabindex="6" asp-for="@Model.loginModel.Email" required>
+					</label>
+				</div>
+				<div>
+					<label>
+						<input placeholder="password" type="password" tabindex="7" asp-for="@Model.loginModel.Password" required>
+					</label>
+				</div>						
+				<div>
+					<input type="submit" value="sign in" id="register-submit">
+				</div>
+				
+				<div class="hr">@TempData["Message"]</div>
+
+				<div class="forget">
+					<a href="#">forgot your password</a>
+				</div>
+			</form>
+			<!-- /Form -->
+			</div>
+	</div>
 	<div class="clearfix"></div>
 	</div>
+	<!-- end registration -->
 </div>
 </body>
