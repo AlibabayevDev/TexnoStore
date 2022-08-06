@@ -81,7 +81,7 @@ namespace TexnoStore.Controllers
                 });
 
                 TempData["Message"] = errorMessage;
-                return RedirectToAction("LaptopProduct", new {reviewModel.Review.Id});
+                return RedirectToAction("LaptopProduct");
             }
 
             ReviewMapper reviewMapper = new ReviewMapper();
@@ -96,7 +96,7 @@ namespace TexnoStore.Controllers
                 TempData["Message"] = "Something went wrong";
             }
 
-            return RedirectToAction($"LaptopProduct({reviewModel.Review.Id}");
+            return RedirectToAction("LaptopProduct");
         }
     }
 }
