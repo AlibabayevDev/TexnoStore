@@ -6,6 +6,7 @@ using TexnoStore.Models;
 using TexnoStore.Mapper.Laptops;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Mapper;
+using System;
 
 namespace TexnoStore.Controllers
 {
@@ -80,7 +81,7 @@ namespace TexnoStore.Controllers
                 });
 
                 TempData["Message"] = errorMessage;
-                return RedirectToAction("Index");
+                return RedirectToAction("LaptopProduct", new {reviewModel.Review.Id});
             }
 
             ReviewMapper reviewMapper = new ReviewMapper();
@@ -90,11 +91,12 @@ namespace TexnoStore.Controllers
             {
                 db.ReviewRepository.Add(review);
             }
-            catch
+            catch(Exception ex)
             {
                 TempData["Message"] = "Something went wrong";
             }
-            return View();      
+
+            return RedirectToAction($"LaptopProduct({reviewModel.Review.Id}");
         }
     }
 }

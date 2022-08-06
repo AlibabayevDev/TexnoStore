@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Core.Domain.Entities;
+using TexnoStore.Core.Extensions;
 
 namespace TexnoStore.Core.DataAccess.Implementation.SQL
 {
@@ -31,8 +32,16 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                     cmd.Parameters.AddWithValue("@Name", review.Name);
                     cmd.Parameters.AddWithValue("@Email", review.Email);
                     cmd.Parameters.AddWithValue("@Message", review.Message);
-                    cmd.Parameters.AddWithValue("@StarCount", review.StarCount);
 
+                    if (review.StarCount.IsNull())
+                    {
+                        cmd.Parameters.AddWithValue("@StarCount", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@StarCount", review.StarCount);
+                    }
+                
                     int affectedCount = cmd.ExecuteNonQuery();
 
                     return affectedCount == 1;
