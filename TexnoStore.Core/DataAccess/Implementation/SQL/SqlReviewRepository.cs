@@ -11,6 +11,13 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
 {
     public class SqlReviewRepository : IReviewRepository
     {
+        private readonly string connectionString;
+
+        public SqlReviewRepository(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
+
         public  bool Add(Review review)
         {
             using (SqlConnection connection = new SqlConnection())

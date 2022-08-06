@@ -20,6 +20,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
         public ILaptopRepository LaptopRepository => new SqlLaptopRepository(connectionString);
         public IPhoneRepository PhoneRepository => new SqlPhoneRepository(connectionString);
         public IAllProductRepository AllProductRepository => new SqlAllProductRepository(connectionString);
+        public IReviewRepository ReviewRepository => new SqlReviewRepository(connectionString);
         public ILoginRepository LoginRepository => new SqlLoginRepository(connectionString);
     }
 }

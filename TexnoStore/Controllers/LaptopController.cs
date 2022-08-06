@@ -5,6 +5,7 @@ using System.Linq;
 using TexnoStore.Models;
 using TexnoStore.Mapper.Laptops;
 using TexnoStore.Models.Laptops;
+using TexnoStore.Mapper;
 
 namespace TexnoStore.Controllers
 {
@@ -65,5 +66,35 @@ namespace TexnoStore.Controllers
             return View();
         }
 
+        public IActionResult Review(ReviewModel reviewModel)
+        {
+            if (ModelState.IsValid == false)
+            {
+                var errors = ModelState.SelectMany(x => x.Value.Errors).Select(x => x.ErrorMessage).ToList();
+                var errorMessage = errors.Aggregate((message, value) =>
+                {
+                        if (message.Length == 0)
+                            return value;
+
+                        return message + ", " + value;
+                });
+
+                TempData["Message"] = errorMessage;
+                return RedirectToAction("LaptopProduct");
+            }
+
+            ReviewMapper reviewMapper = new ReviewMapper();
+
+            var review = reviewMapper.Map(reviewModel);
+            try
+            {
+                db.ReviewRepository.Add(review);
+            }
+            catch
+            {
+                TempData["Message"] = "Something went wrong";
+            }
+            return View();      
+        }
     }
 }
