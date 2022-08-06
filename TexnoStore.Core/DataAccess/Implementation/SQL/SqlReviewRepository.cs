@@ -25,7 +25,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             {
                 connection.Open();
 
-                string cmdText = "Insert into Review values(@Name,@Email,@Message,@StarCount)";
+                string cmdText = "Insert into Review values(@Name,@Email,@Message,@StarCount,@LaptopId)";
 
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {
@@ -41,6 +41,8 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                     {
                         cmd.Parameters.AddWithValue("@StarCount", review.StarCount);
                     }
+
+                    cmd.Parameters.AddWithValue("@LaptopId", review.LaptopId);
                 
                     int affectedCount = cmd.ExecuteNonQuery();
 
