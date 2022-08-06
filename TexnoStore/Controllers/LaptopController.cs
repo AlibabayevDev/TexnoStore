@@ -64,7 +64,7 @@ namespace TexnoStore.Controllers
                 Laptop = laptopModels.FirstOrDefault(x => x.Id == id)
             };
             SelectedModel = model.Laptop;
-            return View(model);
+            return View("LaptopProduct",model);
         }
 
         public IActionResult Korzina(LaptopModel model)
@@ -72,8 +72,10 @@ namespace TexnoStore.Controllers
             return View();
         }
 
-        public IActionResult Review(LaptopListViewModel reviewModel)
+        public IActionResult Review(LaptopListViewModel viewModel)
         {
+            viewModel.Laptop = SelectedModel;
+
             if (ModelState.IsValid == false)
             {
                 var errors = ModelState.SelectMany(x => x.Value.Errors).Select(x => x.ErrorMessage).ToList();
@@ -86,12 +88,12 @@ namespace TexnoStore.Controllers
                 });
 
                 TempData["Message"] = errorMessage;
-                return RedirectToAction("LaptopProduct", SelectedModel);
+                return RedirectToAction("LaptopProduct", new {id=viewModel.Laptop.Id});
             }
 
             ReviewMapper reviewMapper = new ReviewMapper();
 
-            var review = reviewMapper.Map(reviewModel.Review);
+            var review = reviewMapper.Map(viewModel.Review);
             try
             {
                 db.ReviewRepository.Add(review);
@@ -100,8 +102,7 @@ namespace TexnoStore.Controllers
             {
                 TempData["Message"] = "Something went wrong";
             }
-
-            return RedirectToAction("LaptopProduct");
+            return LaptopProduct(viewModel.Laptop.Id);
         }
 
         public IActionResult ShopCart(LaptopListViewModel viewModel)
