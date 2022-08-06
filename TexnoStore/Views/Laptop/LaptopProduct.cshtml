@@ -372,8 +372,6 @@
 										<div class="col-md-3">
 											<div id="review-form">
 												<form asp-controller="Laptop" asp-action="Review" class="review-form">
-													<input hidden asp-for="@Model.Review.Id"/>
-												    <input hidden asp-for="@Model.Laptop.Id"/>
 													<input asp-for="@Model.Review.Name" class="input" type="text" placeholder="Your Name">
 													<input asp-for="@Model.Review.Email" class="input" type="email" placeholder="Your Email">
 													<textarea  asp-for="@Model.Review.Message" class="input" placeholder="Your Review"></textarea>
