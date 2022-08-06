@@ -12,5 +12,7 @@ namespace TexnoStore.Core.Domain.Entities
 
         [Display(Name = "Password"), MinLength(6), MaxLength(30), Required(ErrorMessage = "Длина пароля не менее 6 символов")]
         public string PasswordHash { get; set; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
     }
 }

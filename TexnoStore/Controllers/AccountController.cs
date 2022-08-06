@@ -26,7 +26,10 @@ namespace TexnoStore.Controllers
             this.signInManager = signInManager;
         }
 
-
+        public IActionResult Index()
+        {
+            return View();
+        }
         public IActionResult Login()
         {
             return View();
@@ -35,26 +38,26 @@ namespace TexnoStore.Controllers
         [HttpPost]
         public IActionResult Login(UserViewModel model)
         {
-            if((model.user.Email == null) || (model.user.PasswordHash == null))
+            if((model.loginModel.Email == null) || (model.loginModel.Password == null))
             {
                 return View(model);
             }
 
-            var user = userManager.FindByNameAsync(model.user.Email).Result;
+            var user = userManager.FindByNameAsync(model.loginModel.Email).Result;
             if (user == null)
             {
-                ViewBag.Message = "Username or password is incorrect";
+                TempData["Message"] = "Username or password is incorrect";
                 return View(model);
             }
             
-            var signInResult = signInManager.PasswordSignInAsync(user, model.user.PasswordHash, true, false).Result;
+            var signInResult = signInManager.PasswordSignInAsync(user, model.loginModel.Password, true, false).Result;
 
             if(signInResult.Succeeded)
             {
                 return RedirectToAction("Index", "Home");
             }
-            ViewBag.Message = "Username or password is incorrect";
-            return View("Login", model);
+            TempData["Message"] = "Username or password is incorrect";
+            return View("Index", model);
         }
 
         [HttpGet]
@@ -69,12 +72,16 @@ namespace TexnoStore.Controllers
         {
             if ((model.loginModel.Email == null) || (model.loginModel.Password == null))
             {
-                return View("Login",model);
+                return View("Index",model);
+            }
+            if (model.loginModel.Password != model.loginModel.RetypePassword)
+            {
+                TempData["Error"] = "Passwords do not match";
+                return View("Index", model);
             }
             model.user = LoginMapper.Map(model.loginModel);
-
-            var user = userManager.CreateAsync(model.user, model.user.PasswordHash).Result;
-            if (user.Succeeded)
+            var user = userManager.FindByNameAsync(model.loginModel.Email).Result;
+            if(user==null)
             {
                 try
                 {
@@ -101,16 +108,21 @@ namespace TexnoStore.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Message = "Такой email не существует";
-                    return RedirectToAction("Login", model);
+                    TempData["Error"] = "This email does not exist";
+                    return RedirectToAction("Index", model);
                 }
             }
             else
             {
-                ViewBag.Message = "Повторите еще раз";
-                model.user = null;
-                return View("Login", model);
+                TempData["Error"] = "This Email is registered";
+                return RedirectToAction("Index", model);
+
             }
+            /*foreach (var i in user.Errors)
+            {
+                model.ErrorMessage += i.Description;
+                TempData["Error"] = model.ErrorMessage;
+            }*/
         }
 
 

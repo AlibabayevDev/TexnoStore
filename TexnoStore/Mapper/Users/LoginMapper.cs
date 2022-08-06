@@ -11,6 +11,8 @@ namespace TexnoStore.Mapper.Users
             {
                 Email = entity.Email,
                 Password = entity.PasswordHash,
+                Name = entity.Name,
+                LastName = entity.LastName,
             }; 
         }
 
@@ -19,7 +21,9 @@ namespace TexnoStore.Mapper.Users
             return new User
             {
                 Email = model.Email,
-                PasswordHash = model.Password
+                PasswordHash = model.Password,
+                LastName = model.LastName,
+                Name = model.Name,
             };
         }
 

@@ -12,7 +12,6 @@ using TexnoStore.Models.Phones;
 
 namespace TexnoStore.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly IUnitOfWork db;
