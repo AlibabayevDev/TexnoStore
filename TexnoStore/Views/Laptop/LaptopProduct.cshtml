@@ -395,13 +395,10 @@
 										<!-- Review Form -->
 										<div class="col-md-3">
 											<div id="review-form">
-												<form asp-action="Review" asp-controller="Laptop" method="post" class="review-form">
+												<form asp-controller="Laptop" asp-action="Review" class="review-form">
 													<input asp-for="@Model.Review.Name" class="input" type="text" placeholder="Your Name">
-													  <span asp-validation-for="@Model.Review.Name" class="text-danger"></span>
 													<input asp-for="@Model.Review.Email" class="input" type="email" placeholder="Your Email">
-													  <span asp-validation-for="@Model.Review.Email" class="text-danger"></span>
 													<textarea  asp-for="@Model.Review.Message" class="input" placeholder="Your Review"></textarea>
-													  <span asp-validation-for="@Model.Review.Message" class="text-danger"></span>
 													<div class="input-rating">
 														<span>Your Rating: </span>
 														<div class="stars">
@@ -412,8 +409,8 @@
 															<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
 														</div>
 													</div>
-													<button class ="primary-btn">Submit</button>
-												</form>
+													<button type="submit" class="primary-btn">Submit</button>
+												</form> 
 											</div>
 										</div>
 										<!-- /Review Form -->

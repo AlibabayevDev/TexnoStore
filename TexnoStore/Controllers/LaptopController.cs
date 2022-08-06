@@ -66,7 +66,7 @@ namespace TexnoStore.Controllers
             return View();
         }
 
-        public IActionResult Review(ReviewModel reviewModel)
+        public IActionResult Review(LaptopListViewModel reviewModel)
         {
             if (ModelState.IsValid == false)
             {
@@ -85,7 +85,7 @@ namespace TexnoStore.Controllers
 
             ReviewMapper reviewMapper = new ReviewMapper();
 
-            var review = reviewMapper.Map(reviewModel);
+            var review = reviewMapper.Map(reviewModel.Review);
             try
             {
                 db.ReviewRepository.Add(review);
