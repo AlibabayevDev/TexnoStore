@@ -12,5 +12,7 @@ namespace TexnoStore.Core.Extensions
         {
             return string.IsNullOrWhiteSpace(s);
         }
+
+
     }
 }
