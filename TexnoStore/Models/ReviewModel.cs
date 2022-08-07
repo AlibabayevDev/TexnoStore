@@ -18,5 +18,7 @@ namespace TexnoStore.Models
         public string Message { get; set; }
 
         public string StarCount { get; set; }
+
+        public int LaptopId { get; set; }
     }
 }

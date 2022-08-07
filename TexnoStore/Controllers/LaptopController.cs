@@ -64,6 +64,7 @@ namespace TexnoStore.Controllers
                 Laptop = laptopModels.FirstOrDefault(x => x.Id == id)
             };
             SelectedModel = model.Laptop;
+          
             return View("LaptopProduct",model);
         }
 
@@ -75,6 +76,7 @@ namespace TexnoStore.Controllers
         public IActionResult Review(LaptopListViewModel viewModel)
         {
             viewModel.Laptop = SelectedModel;
+            viewModel.Review.LaptopId = viewModel.Laptop.Id;
 
             if (ModelState.IsValid == false)
             {
@@ -102,6 +104,8 @@ namespace TexnoStore.Controllers
             {
                 TempData["Message"] = "Something went wrong";
             }
+
+      
             return LaptopProduct(viewModel.Laptop.Id);
         }
 
