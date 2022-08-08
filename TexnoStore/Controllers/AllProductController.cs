@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using TexnoStore.Core.DataAccess.Abstract;
+using TexnoStore.Core.Domain.Entities;
 using TexnoStore.Core.Domain.Entities.Laptop;
 using TexnoStore.Core.Domain.Entities.Phone;
 using TexnoStore.Mapper.Laptops;
@@ -9,19 +11,19 @@ using TexnoStore.Mapper.Phones;
 using TexnoStore.Models;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Models.Phones;
+using BaseModel = TexnoStore.Models.BaseModel;
 
 namespace TexnoStore.Controllers
 {
     public class AllProductController : Controller
     {
         private readonly IUnitOfWork db;
-
         public AllProductController(IUnitOfWork db)
         {
             this.db = db;
         }
 
-        public IActionResult Index(BaseEntity model)
+        public IActionResult Index(BaseModel model)
         {
             if (model.Name == null)
             {
@@ -78,6 +80,7 @@ namespace TexnoStore.Controllers
 
             return View();
         }
+
 
 
         public List<LaptopModel> LaptopsModels(List<Laptop> laptops)

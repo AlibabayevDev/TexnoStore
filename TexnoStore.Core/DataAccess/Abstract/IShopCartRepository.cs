@@ -10,6 +10,6 @@ namespace TexnoStore.Core.DataAccess.Abstract
 	public interface IShopCartRepository
 	{
 		bool Add(ShopCart shopcart);
-
+		List<ShopCart> GetAll(int userId);
 	}
 }

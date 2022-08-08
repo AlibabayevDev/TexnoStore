@@ -13,6 +13,7 @@ namespace TexnoStore.Mapper
                 Name = model.Name,
                 Email = model.Email,
                 Message = model.Message,
+                StarCount = model.rating,
                 StarCount = model.StarCount,
                 LaptopId = model.LaptopId
             };
@@ -27,6 +28,7 @@ namespace TexnoStore.Mapper
                 Name = entity.Name,
                 Email = entity.Email,
                 Message = entity.Message,
+                rating = entity.StarCount,
                 StarCount = entity.StarCount,
                 LaptopId = entity.LaptopId
             };

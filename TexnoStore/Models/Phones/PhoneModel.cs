@@ -2,7 +2,7 @@
 
 namespace TexnoStore.Models.Phones
 {
-    public class PhoneModel : BaseEntity
+    public class PhoneModel : BaseModel
     {
         public string LognDesc { get; set; }
         public int Sale { get; set; }
