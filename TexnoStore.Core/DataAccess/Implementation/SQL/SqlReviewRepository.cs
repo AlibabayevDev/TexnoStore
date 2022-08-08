@@ -32,18 +32,9 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                     cmd.Parameters.AddWithValue("@Name", review.Name);
                     cmd.Parameters.AddWithValue("@Email", review.Email);
                     cmd.Parameters.AddWithValue("@Message", review.Message);
+                    cmd.Parameters.AddWithValue("@StarCount", review.StarCount);
+                    cmd.Parameters.AddWithValue("@LaptopId", review.ProductId);
 
-                    if (review.StarCount.IsNull())
-                    {
-                        cmd.Parameters.AddWithValue("@StarCount", DBNull.Value);
-                    }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("@StarCount", review.StarCount);
-                    }
-
-                    cmd.Parameters.AddWithValue("@LaptopId", review.LaptopId);
-                
                     int affectedCount = cmd.ExecuteNonQuery();
 
                     return affectedCount == 1;
