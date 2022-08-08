@@ -222,8 +222,8 @@ namespace TexnoStore.Controllers
             var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
             string[] userInfo = { info.Principal.FindFirst(ClaimTypes.Name).Value, info.Principal.FindFirst(ClaimTypes.Email).Value };
             if (result.Succeeded)
-                return View();
-            // return RedirectToAction("Index", "Allproduct");
+               // return View();
+               return RedirectToAction("Index", "Allproduct");
             else
             {
                 User user = new User
