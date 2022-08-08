@@ -57,15 +57,18 @@
 
 								<!-- Cart -->
 								<div class="dropdown">
-									
-									<form>
-										<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+									<button onclick="ClickFunction()" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 											<i class="fa fa-shopping-cart"></i>
 											<span>Your Cart</span>
 											<div class="qty">3</div>
-										</a>
-										<input type="submit" asp-page-handler="Shopcart"/>
-									</form> 
+									</button>
+								
+									<script>
+										function ClickFunction()
+										{
+											@Model.AllProductsListViewModel.LaptopModel = null;
+										}
+									</script>
 									<div class="cart-dropdown">
 										<div class="cart-list">
 
