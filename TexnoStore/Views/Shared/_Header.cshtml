@@ -1,7 +1,6 @@
 ﻿@using TexnoStore.Models.Laptops
 @using TexnoStore.Models
 @using TexnoStore.Models.Phones
-
 @model BaseModel
 
 <header>
@@ -66,13 +65,14 @@
 									<script>
 										function ClickFunction()
 										{
-											@Model.AllProductsListViewModel.LaptopModel = null;
+											@Model.AllProductsListViewModel.LaptopModel = 
 										}
 									</script>
 									<div class="cart-dropdown">
 										<div class="cart-list">
 
 											@{
+												if(Model.AllProductsListViewModel.LaptopModel != null)
 												@foreach(LaptopModel laptop in Model.AllProductsListViewModel.LaptopModel)
 												{
 													<div class="product-widget">
