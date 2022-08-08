@@ -82,7 +82,7 @@ namespace TexnoStore.Controllers
         public IActionResult Review(LaptopListViewModel viewModel,int rating)
         {
             viewModel.Laptop = SelectedModel;
-            viewModel.Review.LaptopId = viewModel.Laptop.Id;
+            viewModel.Review.ProductId = viewModel.Laptop.Id;
 
             if (ModelState.IsValid == false)
             {
