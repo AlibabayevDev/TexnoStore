@@ -17,6 +17,6 @@ namespace TexnoStore.Models
         [Required]
         public string Message { get; set; }
 
-        public string rating { get; set; }
+        public int rating { get; set; }
     }
 }

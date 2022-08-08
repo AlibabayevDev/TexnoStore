@@ -77,7 +77,7 @@ namespace TexnoStore.Controllers
             return View();
         }
 
-        public IActionResult Review(LaptopListViewModel viewModel)
+        public IActionResult Review(LaptopListViewModel viewModel,int rating)
         {
             viewModel.Laptop = SelectedModel;
 
@@ -97,7 +97,7 @@ namespace TexnoStore.Controllers
             }
 
             ReviewMapper reviewMapper = new ReviewMapper();
-
+            viewModel.Review.rating = rating;
             var review = reviewMapper.Map(viewModel.Review);
             try
             {
