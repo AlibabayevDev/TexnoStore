@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Core.Domain.Entities;
+using TexnoStore.Core.Extensions;
 
 namespace TexnoStore.Core.DataAccess.Implementation.SQL
 {

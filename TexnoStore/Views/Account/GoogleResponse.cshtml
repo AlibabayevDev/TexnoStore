@@ -1,0 +1,21 @@
+﻿@model IEnumerable<string>;
+
+<h1 class="bg-info text-white">Your Login Details</h1>
+
+@{
+    Layout = null;
+}
+
+<table class="table table-sm table-bordered">
+    <tr><th>Name</th><th>Email</th></tr>
+    <tr>
+      @*  @foreach (string info in Model)
+        {
+            <td>@info</td>
+        }*@
+    </tr>
+</table>
+
+
+ <a asp-controller="AllProduct" asp-action="Index">click here to visit  the site</a>
+

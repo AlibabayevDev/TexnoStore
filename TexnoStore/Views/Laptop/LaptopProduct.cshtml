@@ -377,6 +377,8 @@ const { data } = require("jquery");
 										<!-- Review Form -->
 										<div class="col-md-3">
 											<div id="review-form">
+												<form asp-controller="Laptop" asp-action="Review" class="review-form">
+													<input asp-for="@Model.Laptop.Id" />
 												<form asp-controller="Laptop" asp-action="Review" method="post" class="review-form"> 
 													<input asp-for="@Model.Review.Name" class="input" type="text" placeholder="Your Name">
 													<input asp-for="@Model.Review.Email" class="input" type="email" placeholder="Your Email">

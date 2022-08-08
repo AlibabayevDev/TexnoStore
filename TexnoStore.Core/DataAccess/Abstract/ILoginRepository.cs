@@ -10,5 +10,6 @@ namespace TexnoStore.Core.DataAccess.Abstract
     public interface ILoginRepository : ICrudRepository<User>
     {
         User Get(string username);
+        public User GetByLogin(string loginProvider);
     }
 }

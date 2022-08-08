@@ -12,10 +12,11 @@ using TexnoStore.Models.Phones;
 using TexnoStore.Core.Domain.Entities.Phone;
 using TexnoStore.Mapper.Phones;
 using TexnoStore.Core.Domain.Entities.Laptop;
+using System;
 
 namespace TexnoStore.Controllers
 {
-    public class LaptopController : Controller
+    public class LaptopController : BaseController
     {
         public static LaptopModel SelectedModel { get;set;}
         private readonly IUnitOfWork db;
@@ -69,6 +70,7 @@ namespace TexnoStore.Controllers
             };
             SelectedModel = model.Laptop;
             model.AllProductsListViewModel = Checkout();
+          
             return View("LaptopProduct",model);
         }
 
@@ -80,6 +82,7 @@ namespace TexnoStore.Controllers
         public IActionResult Review(LaptopListViewModel viewModel,int rating)
         {
             viewModel.Laptop = SelectedModel;
+            viewModel.Review.LaptopId = viewModel.Laptop.Id;
 
             if (ModelState.IsValid == false)
             {
@@ -105,10 +108,12 @@ namespace TexnoStore.Controllers
             {
                 db.ReviewRepository.Add(review);
             }
-            catch
+            catch(Exception ex)
             {
                 TempData["Message"] = "Something went wrong";
             }
+
+      
             return LaptopProduct(viewModel.Laptop.Id);
         }
 
@@ -126,67 +131,15 @@ namespace TexnoStore.Controllers
             viewModel.AllProductsListViewModel = Checkout();
             return View("LaptopProduct",viewModel);
         }
-        public IActionResult ShopCartbyId(int Id)
+
+       
+        public  IActionResult ShopCartbyId(int Id)
         {
             ShopCartMapper shopCartMapper = new ShopCartMapper();
 
             return View("LaptopProduct");
         }
 
-        public AllProductsListViewModel Checkout()
-        {
-            var userid = db.LoginRepository.Get(User.Identity.Name);
-            var user = db.ShopCartRepository.GetAll(userid.Id);
-            var laptops = db.LaptopRepository.Laptops();
-            var laptopModel = LaptopsModels(laptops);
-            var phones = db.PhoneRepository.Phones();
-            var phonesModel = PhoneModels(phones);
-
-            AllProductsListViewModel shopcartproducts = new AllProductsListViewModel();
-
-            var laptoplist = new List<LaptopModel>();
-            var phonelist = new List<PhoneModel>();
-
-            foreach (var a in user)
-            {
-                laptoplist.Add(laptopModel.FirstOrDefault(x => x.Id == a.LaptopId));
-                phonelist.Add(phonesModel.FirstOrDefault(x => x.Id == a.PhoneId));
-            }
-            shopcartproducts.LaptopModel = laptoplist;
-            shopcartproducts.PhoneModel = phonelist;
-            return shopcartproducts;
-        }
-
-        public List<LaptopModel> LaptopsModels(List<Laptop> laptops)
-        {
-            LaptopMapper laptopMapper = new LaptopMapper();
-            List<LaptopModel> laptopsModels = new List<LaptopModel>();
-
-            for (int i = 0; i < laptops.Count; i++)
-            {
-                var laptop = laptops[i];
-                var laptopModel = laptopMapper.Map(laptop);
-
-                laptopsModels.Add(laptopModel);
-            }
-
-            return laptopsModels;
-        }
-        public List<PhoneModel> PhoneModels(List<Phone> phones)
-        {
-            PhoneMapper phoneMapper = new PhoneMapper();
-            List<PhoneModel> phonesModels = new List<PhoneModel>();
-
-            for (int i = 0; i < phones.Count; i++)
-            {
-                var phone = phones[i];
-                var phoneModel = phoneMapper.Map(phone);
-
-                phonesModels.Add(phoneModel);
-            }
-
-            return phonesModels;
-        }
-
+      
     }
 }
