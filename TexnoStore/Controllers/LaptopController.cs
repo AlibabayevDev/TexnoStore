@@ -98,6 +98,8 @@ namespace TexnoStore.Controllers
 
             ReviewMapper reviewMapper = new ReviewMapper();
             viewModel.Review.rating = rating;
+            viewModel.Review.ProductId = SelectedModel.Id;
+
             var review = reviewMapper.Map(viewModel.Review);
             try
             {

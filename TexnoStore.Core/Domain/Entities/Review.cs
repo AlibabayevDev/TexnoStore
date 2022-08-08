@@ -13,6 +13,7 @@ namespace TexnoStore.Core.Domain.Entities
         public string Email { get; set; }
 
         public string Message { get; set; }
+        public int ProductId { get; set; }
 
         public int StarCount { get; set; }
     }
