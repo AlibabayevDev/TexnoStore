@@ -12,7 +12,7 @@ using System;
 
 namespace TexnoStore.Controllers
 {
-    public class LaptopController : Controller
+    public class LaptopController : BaseController
     {
         public static LaptopModel SelectedModel { get;set;}
         private readonly IUnitOfWork db;
@@ -109,7 +109,7 @@ namespace TexnoStore.Controllers
             return LaptopProduct(viewModel.Laptop.Id);
         }
 
-        public IActionResult ShopCart(LaptopListViewModel viewModel)
+        public override IActionResult ShopCart(LaptopListViewModel viewModel)
 		{
             var name=User.Identity.Name;
             var userid = userManager.FindByNameAsync(name).Result;
@@ -122,7 +122,9 @@ namespace TexnoStore.Controllers
             viewModel.Laptop = SelectedModel;
             return View("LaptopProduct",viewModel);
         }
-        public IActionResult ShopCartbyId(int Id)
+
+       
+        public override IActionResult ShopCartbyId(int Id)
         {
             ShopCartMapper shopCartMapper = new ShopCartMapper();
             return View("LaptopProduct");
