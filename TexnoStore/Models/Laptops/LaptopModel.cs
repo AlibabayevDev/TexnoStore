@@ -2,7 +2,7 @@
 
 namespace TexnoStore.Models.Laptops
 {
-    public class LaptopModel :BaseEntity
+    public class LaptopModel :BaseModel
     {
         public string LognDesc { get; set; }
         public int Sale { get; set; }

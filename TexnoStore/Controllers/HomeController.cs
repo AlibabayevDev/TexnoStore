@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Core.Domain.Entities.Laptop;
 using TexnoStore.Core.Domain.Entities.Phone;
@@ -36,6 +37,7 @@ namespace TexnoStore.Controllers
             {
                 return RedirectToAction("ProductNotFound", "Error");
             }
+            viewModel.AllProductsListViewModel = Checkout();
             return View(viewModel);
         }
         public IActionResult Home()
@@ -76,6 +78,27 @@ namespace TexnoStore.Controllers
             }
 
             return phonesModels;
+        }
+
+
+
+        public AllProductsListViewModel Checkout()
+        {
+            var userid = db.LoginRepository.Get(User.Identity.Name);
+            var user = db.ShopCartRepository.GetAll(userid.Id);
+            var laptops = db.LaptopRepository.Laptops();
+            var laptopModel = LaptopsModels(laptops);
+            var phones = db.PhoneRepository.Phones();
+            var phonesModel = PhoneModels(phones);
+
+            AllProductsListViewModel shopcartproducts = new AllProductsListViewModel();
+
+            foreach (var a in user)
+            {
+                shopcartproducts.LaptopModel = laptopModel.Where(x => x.Id == a.LaptopId);
+                shopcartproducts.PhoneModel = phonesModel.Where(x => x.Id == a.PhoneId);
+            }
+            return shopcartproducts;
         }
     }
 }

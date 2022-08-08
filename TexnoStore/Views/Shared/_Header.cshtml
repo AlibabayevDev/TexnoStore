@@ -2,7 +2,7 @@
 @using TexnoStore.Models
 @using TexnoStore.Models.Phones
 
-@model BaseEntity
+@model BaseModel
 
 <header>
 			<div id="top-header">
@@ -65,7 +65,7 @@
 									<div class="cart-dropdown">
 										<div class="cart-list">
 
-											@*{
+											@{
 												@foreach(LaptopModel laptop in Model.AllProductsListViewModel.LaptopModel)
 												{
 													<div class="product-widget">
@@ -80,7 +80,7 @@
 													</div>
 
 												}
-											}*@
+											}
 												
 
 										</div>

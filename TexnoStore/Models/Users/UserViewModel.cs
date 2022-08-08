@@ -3,7 +3,7 @@ using TexnoStore.Core.Domain.Entities;
 
 namespace TexnoStore.Models.Users
 {
-    public class UserViewModel :BaseEntity
+    public class UserViewModel :BaseModel
     {
         public User user { get; set; }
         public LoginRequestModel loginModel { get; set; }

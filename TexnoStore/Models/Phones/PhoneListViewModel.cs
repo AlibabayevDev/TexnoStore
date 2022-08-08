@@ -3,7 +3,7 @@ using TexnoStore.Core.Domain.Entities;
 
 namespace TexnoStore.Models.Phones
 {
-    public class PhoneListViewModel : BaseEntity
+    public class PhoneListViewModel : BaseModel
     {
         public IEnumerable<PhoneModel> Phones { get; set; }
     }

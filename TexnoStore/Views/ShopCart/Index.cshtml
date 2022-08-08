@@ -1,12 +1,9 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 
-@{
-	Layout = null;
-}
+
 @using TexnoStore.Models
 @using TexnoStore.Models.Laptops
-@model AllProductsListViewModel
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -56,7 +53,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									@{
+									@*{
 										foreach(LaptopModel laptop in Model.LaptopModel)
 										{
 											<tr>
@@ -74,7 +71,7 @@
 											<td class="text-right"><button class="main-btn icon-btn"><i class="fa fa-close"></i></button></td>
 											</tr>										
 										}
-									}
+									}*@
 									<tr>
 										<td class="thumb"><img src="./img/thumb-product01.jpg" alt=""></td>
 										<td class="details">

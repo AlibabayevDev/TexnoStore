@@ -17,6 +17,6 @@ namespace TexnoStore.Models
         [Required]
         public string Message { get; set; }
 
-        public string StarCount { get; set; }
+        public string rating { get; set; }
     }
 }

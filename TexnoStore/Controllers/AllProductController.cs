@@ -11,7 +11,7 @@ using TexnoStore.Mapper.Phones;
 using TexnoStore.Models;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Models.Phones;
-using BaseEntity = TexnoStore.Models.BaseEntity;
+using BaseModel = TexnoStore.Models.BaseModel;
 
 namespace TexnoStore.Controllers
 {
@@ -23,7 +23,7 @@ namespace TexnoStore.Controllers
             this.db = db;
         }
 
-        public IActionResult Index(BaseEntity model)
+        public IActionResult Index(BaseModel model)
         {
             if (model.Name == null)
             {

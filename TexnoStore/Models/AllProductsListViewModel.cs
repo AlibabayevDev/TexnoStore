@@ -4,7 +4,7 @@ using TexnoStore.Models.Phones;
 
 namespace TexnoStore.Models
 {
-    public class AllProductsListViewModel : BaseEntity
+    public class AllProductsListViewModel : BaseModel
     {
         public IEnumerable<LaptopModel> LaptopModel { get; set; }
         public IEnumerable<PhoneModel> PhoneModel { get; set; }
