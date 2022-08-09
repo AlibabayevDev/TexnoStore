@@ -55,23 +55,15 @@
 
 								<!-- Cart -->
 								<div class="dropdown">
-									<a onclick="ClickFunction()" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 											<i class="fa fa-shopping-cart"></i>
 											<span>Your Cart</span>
 											<div class="qty">3</div>
 									</a>
-								
-									<script>
-										function ClickFunction()
-										{
-											alert("salam");
-										}
-									</script>
+																		
 									<div class="cart-dropdown">
 										<div class="cart-list">
-
-											@*{
-												if(Model.AllProductsListViewModel.LaptopModel != null)
+											@{
 												@foreach(LaptopModel laptop in Model.AllProductsListViewModel.LaptopModel)
 												{
 													<div class="product-widget">
@@ -86,7 +78,7 @@
 													</div>
 
 												}
-											}*@
+											}
 										</div>
 										<div class="cart-summary">
 											<small>3 Item(s) selected</small>

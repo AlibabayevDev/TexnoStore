@@ -24,7 +24,7 @@ namespace TexnoStore.Controllers
 
         public LaptopController(IUnitOfWork db) : base(db)
         {
-
+           this.db = db;
         }
 
         public IActionResult Index()
@@ -133,30 +133,6 @@ namespace TexnoStore.Controllers
             ShopCartMapper shopCartMapper = new ShopCartMapper();
 
             return View("LaptopProduct");
-        }
-
-        public IActionResult checkOut ()
-        {
-            var userid = db.LoginRepository.Get(User.Identity.Name);
-            var user = db.ShopCartRepository.GetAll(userid.Id);
-            var laptops = db.LaptopRepository.Laptops();
-            var laptopModel = LaptopsModels(laptops);
-            var phones = db.PhoneRepository.Phones();
-            var phonesModel = PhoneModels(phones);
-
-            AllProductsListViewModel shopcartproducts = new AllProductsListViewModel();
-
-            var laptoplist = new List<LaptopModel>();
-            var phonelist = new List<PhoneModel>();
-
-            foreach (var a in user)
-            {
-                laptoplist.Add(laptopModel.FirstOrDefault(x => x.Id == a.LaptopId));
-                phonelist.Add(phonesModel.FirstOrDefault(x => x.Id == a.PhoneId));
-            }
-            shopcartproducts.LaptopModel = laptoplist;
-            shopcartproducts.PhoneModel = phonelist;
-            return RedirectToPage("_header",shopcartproducts);
         }
     }
 }
