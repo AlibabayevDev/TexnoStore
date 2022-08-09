@@ -14,5 +14,9 @@ namespace TexnoStore.Core.Domain.Entities
         public string PasswordHash { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
+
+        public string LoginProvider { get; set; }
+
+        public string ProviderKey { get; set; }
     }
 }

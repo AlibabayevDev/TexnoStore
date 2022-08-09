@@ -58,8 +58,9 @@ namespace TexnoStore
             })
            .AddGoogle(options =>
             {
-                options.ClientId = "54033117845-k26estikeml9j6h0r2uh27n90opvsrg4.apps.googleusercontent.com";
-                options.ClientSecret = "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";
+                options.ClientId = Configuration["Authentication:Google:ClientId"];
+                options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                options.SignInScheme = IdentityConstants.ExternalScheme;
             });
         }
 
