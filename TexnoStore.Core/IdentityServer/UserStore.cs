@@ -197,7 +197,7 @@ namespace TexnoStore.Core.IdentityServer
 
         public Task<User> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken)
         {
-            var user = db.LoginRepository.GetByLogin(loginProvider, providerKey);
+            var user = db.LoginRepository.GetByLogin(providerKey);
 
             return Task.FromResult(user);
         }

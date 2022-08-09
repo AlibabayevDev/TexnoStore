@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Core.Domain.Entities;
 using TexnoStore.Mapper.Users;
 using TexnoStore.Models.Users;
@@ -24,11 +25,13 @@ namespace TexnoStore.Controllers
         private static string ConfirmPass { get; set; }
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly IUnitOfWork db;
         
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IUnitOfWork db)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.db = db;
         }
 
         public IActionResult Index()
@@ -219,10 +222,10 @@ namespace TexnoStore.Controllers
             if (info == null)
                 return RedirectToAction(nameof(Login));
 
+            db.LoginRepository.AddKey(info.ProviderKey);
             var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
             string[] userInfo = { info.Principal.FindFirst(ClaimTypes.Name).Value, info.Principal.FindFirst(ClaimTypes.Email).Value };
             if (result.Succeeded)
-               // return View();
                return RedirectToAction("Index", "Allproduct");
             else
             {
