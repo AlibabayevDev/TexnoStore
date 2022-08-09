@@ -17,7 +17,10 @@ namespace TexnoStore.Controllers
     public  class BaseController : Controller
     {
         private readonly IUnitOfWork db;
-
+        public BaseController(IUnitOfWork db)
+        {
+            this.db = db;
+        }
         public AllProductsListViewModel Checkout()
         {
             var userid = db.LoginRepository.Get(User.Identity.Name);

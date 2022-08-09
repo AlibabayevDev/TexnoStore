@@ -1,9 +1,6 @@
 ﻿@using TexnoStore.Models.Laptops
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js">
-const { data } = require("jquery");
-
-const { data } = require("jquery");
+<script >
 </script>
 
 @model LaptopListViewModel
@@ -379,7 +376,6 @@ const { data } = require("jquery");
 											<div id="review-form">
 												<form asp-controller="Laptop" asp-action="Review" class="review-form">
 													<input asp-for="@Model.Laptop.Id" />
-												<form asp-controller="Laptop" asp-action="Review" method="post" class="review-form"> 
 													<input asp-for="@Model.Review.Name" class="input" type="text" placeholder="Your Name">
 													<input asp-for="@Model.Review.Email" class="input" type="email" placeholder="Your Email">
 													<textarea  asp-for="@Model.Review.Message" class="input" placeholder="Your Review"></textarea>

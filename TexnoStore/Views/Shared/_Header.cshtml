@@ -2,7 +2,6 @@
 @using TexnoStore.Models
 @using TexnoStore.Models.Phones
 @model BaseModel
-
 <header>
 			<div id="top-header">
 				<div class="container">
@@ -56,22 +55,22 @@
 
 								<!-- Cart -->
 								<div class="dropdown">
-									<button onclick="ClickFunction()" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+									<a onclick="ClickFunction()" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 											<i class="fa fa-shopping-cart"></i>
 											<span>Your Cart</span>
 											<div class="qty">3</div>
-									</button>
+									</a>
 								
 									<script>
 										function ClickFunction()
 										{
-											@Model.AllProductsListViewModel.LaptopModel = 
+											alert("salam");
 										}
 									</script>
 									<div class="cart-dropdown">
 										<div class="cart-list">
 
-											@{
+											@*{
 												if(Model.AllProductsListViewModel.LaptopModel != null)
 												@foreach(LaptopModel laptop in Model.AllProductsListViewModel.LaptopModel)
 												{
@@ -87,9 +86,7 @@
 													</div>
 
 												}
-											}
-												
-
+											}*@
 										</div>
 										<div class="cart-summary">
 											<small>3 Item(s) selected</small>
