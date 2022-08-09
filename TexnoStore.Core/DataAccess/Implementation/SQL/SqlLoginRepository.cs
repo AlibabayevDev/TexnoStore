@@ -154,14 +154,15 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
         }
 
 
-        public User GetByLogin(string loginProvider)
+        public User GetByLogin(string loginProvider, string providerKey)
         {
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "select * from Users where LoginProvider = @LoginProvider";
+                string query = "select * from Users where LoginProvider = @LoginProvider and Providerkey = @ProviderKey";
                 var command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@LoginProvider", loginProvider);
+                command.Parameters.AddWithValue("@ProviderKey", providerKey);
                 var reader = command.ExecuteReader();
                 if (reader.Read())
                 {
