@@ -15,8 +15,6 @@ namespace TexnoStore.Mapper
                 Message = model.Message,
                 ProductId = model.ProductId,
                 StarCount = model.rating,
-                StarCount = model.StarCount,
-                LaptopId = model.LaptopId
             };
         }
 
