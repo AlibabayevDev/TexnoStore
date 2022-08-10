@@ -1,5 +1,9 @@
 ﻿@using TexnoStore.Models.Users
 
+@{
+	Layout = null;
+}
+
 @model UserViewModel
 
 <head>
@@ -130,6 +134,8 @@
 				<div class="forget">
 					<a href="#">forgot your password</a>
 				</div>
+				  <img width="30" height="30" src="~/img/google.jpg"/>
+				  <a class="btn btn-info" asp-action="GoogleLogin">Login with google</a>
 			</form>
 			<!-- /Form -->
 			</div>

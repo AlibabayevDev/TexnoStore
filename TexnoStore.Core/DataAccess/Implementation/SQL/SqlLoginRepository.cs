@@ -43,7 +43,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             {
                 connection.Open();
 
-                string cmdText = $"Insert into Users values(@Email,@PasswordHash,@Name,@LastName)";
+                string cmdText = $"Insert into Users values(@Email,@PasswordHash,@Name,@LastName,@LoginProvider)";
 
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {
@@ -51,7 +51,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                     cmd.Parameters.AddWithValue("@PasswordHash", login.PasswordHash);
                     cmd.Parameters.AddWithValue("@Name", login.Name);
                     cmd.Parameters.AddWithValue("@LastName", login.LastName);
-
+                    cmd.Parameters.AddWithValue("@LoginProvider","Google");
 
                     int affectedCount = cmd.ExecuteNonQuery();
 
@@ -154,6 +154,27 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
         }
 
 
+        public User GetByLogin(string providerKey)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "select * from Users where Providerkey = @ProviderKey";
+                var command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@ProviderKey", providerKey);
+                var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    var login = GetFromReader(reader);
+                    return login;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
         private User GetFromReader(SqlDataReader reader)
         {
             return new User
@@ -162,6 +183,27 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                 Email = reader.Get<string>("Email"),
                 PasswordHash = reader.Get<string>("PasswordHash"),
             };
-        } 
+        }
+
+
+        public bool AddKey(string providerKey)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string cmdText = $"Update Users set ProviderKey=@ProviderKey where [ID] = (SELECT MAX([ID]) FROM Users)";
+
+                using (SqlCommand cmd = new SqlCommand(cmdText, connection))
+                {
+                    cmd.Parameters.AddWithValue("@ProviderKey", providerKey);
+                    cmd.Parameters.AddWithValue("@LoginProvider", "Google");
+
+                    int affectedCount = cmd.ExecuteNonQuery();
+
+                    return affectedCount == 1;
+                }
+            }
+        }
     }
 }

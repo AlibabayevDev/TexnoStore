@@ -13,6 +13,7 @@ using TexnoStore.Core.Domain.Entities;
 using TexnoStore.IdentityServer;
 using TexnoStore.Core.DataAccess.Implementation.SQL;
 using TexnoStore.Core.IdentityServer;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace TexnoStore
 {
@@ -46,6 +47,21 @@ namespace TexnoStore
             services.AddSingleton<IPasswordHasher<User>, CustomPasswordHasher>();
             services.AddSingleton<IUserStore<User>, UserStore>();
             services.AddSingleton<IRoleStore<Role>, RoleStore>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/account/google-login"; // Must be lowercase
+            })
+           .AddGoogle(options =>
+            {
+                options.ClientId = Configuration["Authentication:Google:ClientId"];
+                options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                options.SignInScheme = IdentityConstants.ExternalScheme;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -73,7 +89,7 @@ namespace TexnoStore
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Index}/{id?}");
             });
         }
     }

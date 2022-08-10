@@ -8,7 +8,7 @@ using TexnoStore.Core.Domain.Entities;
 
 namespace TexnoStore.Core.IdentityServer
 {
-    public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserRoleStore<User>,IPasswordValidator<User>
+    public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserRoleStore<User>,IPasswordValidator<User>,IUserLoginStore<User>
     {
         private readonly IUnitOfWork db;
         public UserStore(IUnitOfWork db)
@@ -180,6 +180,26 @@ namespace TexnoStore.Core.IdentityServer
             return Task.FromResult(user);
         }
 
+        public Task AddLoginAsync(User user, UserLoginInfo login, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task RemoveLoginAsync(User user, string loginProvider, string providerKey, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IList<UserLoginInfo>> GetLoginsAsync(User user, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User> FindByLoginAsync(string loginProvider, string providerKey, CancellationToken cancellationToken)
+        {
+            var user = db.LoginRepository.GetByLogin(providerKey);
+
+            return Task.FromResult(user);
+        }
     }
 }
