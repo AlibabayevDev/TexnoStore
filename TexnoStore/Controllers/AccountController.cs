@@ -221,8 +221,16 @@ namespace TexnoStore.Controllers
             ExternalLoginInfo info = await signInManager.GetExternalLoginInfoAsync();
             if (info == null)
                 return RedirectToAction(nameof(Login));
-
-            db.LoginRepository.AddKey(info.ProviderKey);
+            try
+            {
+                db.LoginRepository.AddKey(info.ProviderKey);
+            }
+            catch(Exception ex)
+            {
+                TempData["Error"] = "Something went wrong";
+                return RedirectToAction("Index","Allproduct");
+            }
+        
             var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
             string[] userInfo = { info.Principal.FindFirst(ClaimTypes.Name).Value, info.Principal.FindFirst(ClaimTypes.Email).Value };
             if (result.Succeeded)
