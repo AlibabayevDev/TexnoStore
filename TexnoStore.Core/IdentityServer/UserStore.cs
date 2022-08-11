@@ -183,7 +183,36 @@ namespace TexnoStore.Core.IdentityServer
 
         public Task AddLoginAsync(User user, UserLoginInfo login, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if (user != null)
+            {
+                try
+                {
+                    db.LoginRepository.Insert(user);
+                    return Task.FromResult(user);
+                }
+                catch
+                {
+                    CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
+                    cancellationToken = cancelTokenSource.Token;
+
+                    Task task = new Task(() =>
+                    {
+                          if (cancellationToken.IsCancellationRequested)  
+                              return;     
+
+                            Thread.Sleep(200);
+                    }, cancellationToken);
+                    task.Start();
+
+                    Thread.Sleep(1000);
+                    cancelTokenSource.Cancel();  
+                    Thread.Sleep(1000);
+      
+                    cancelTokenSource.Dispose(); 
+                }
+            }
+   
+            return Task.FromResult(user);
         }
 
         public Task RemoveLoginAsync(User user, string loginProvider, string providerKey, CancellationToken cancellationToken)
