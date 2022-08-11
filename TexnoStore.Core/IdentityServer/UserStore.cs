@@ -8,7 +8,7 @@ using TexnoStore.Core.Domain.Entities;
 
 namespace TexnoStore.Core.IdentityServer
 {
-    public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserRoleStore<User>,IPasswordValidator<User>,IUserLoginStore<User>, IUserEmailStore<User>
+    public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserRoleStore<User>,IPasswordValidator<User>,IUserLoginStore<User>, IUserEmailStore<User>, IUserTwoFactorTokenProvider<User>
     {
         private readonly IUnitOfWork db;
         public UserStore(IUnitOfWork db)
@@ -129,7 +129,8 @@ namespace TexnoStore.Core.IdentityServer
 
         public Task<IdentityResult> UpdateAsync(User user, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            db.LoginRepository.Update(user);
+            return Task.FromResult(IdentityResult.Success);
         }
 
         public string HashPassword(User user, string password)
@@ -200,6 +201,21 @@ namespace TexnoStore.Core.IdentityServer
             var user = db.LoginRepository.GetByLogin(providerKey);
 
             return Task.FromResult(user);
+        }
+
+        public Task<string> GenerateAsync(string purpose, UserManager<User> manager, User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ValidateAsync(string purpose, string token, UserManager<User> manager, User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> CanGenerateTwoFactorTokenAsync(UserManager<User> manager, User user)
+        {
+            throw new NotImplementedException();
         }
     }
 }

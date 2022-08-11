@@ -8,7 +8,7 @@ namespace TexnoStore.Email
         public bool SendEmail(string userEmail, string confirmationLink)
         {
             MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("care@yogihosting.com");
+            mailMessage.From = new MailAddress("nahidmir101@gmail.com");
             mailMessage.To.Add(new MailAddress(userEmail));
 
             mailMessage.Subject = "Confirm your email";
@@ -35,17 +35,30 @@ namespace TexnoStore.Email
         public bool SendEmailPasswordReset(string userEmail, string link)
         {
             MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("care@yogihosting.com");
+            mailMessage.From = new MailAddress("nahidmir101@gmail.com");
             mailMessage.To.Add(new MailAddress(userEmail));
 
             mailMessage.Subject = "Password Reset";
             mailMessage.IsBodyHtml = true;
             mailMessage.Body = link;
 
-            SmtpClient client = new SmtpClient();
-            client.Credentials = new System.Net.NetworkCredential("info@rainpuddleslabradoodles.com", "Mydoodles!");
-            client.Host = "smtpout.secureserver.net";
-            client.Port = 80;
+            SmtpClient client = new SmtpClient()
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new System.Net.NetworkCredential()
+                {
+                    UserName = userEmail,
+                    Password = "euzbnbiytebfiomw"
+                }
+            };
+
+            //client.Credentials = new System.Net.NetworkCredential(userEmail, "euzbnbiytebfiomw");
+            //client.Host = "smtp.gmail.com";
+            //client.Port = 587;
 
             try
             {

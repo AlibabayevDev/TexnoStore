@@ -234,7 +234,7 @@ namespace TexnoStore.Controllers
 
             EmailHelper emailHelper = new EmailHelper();
             bool emailResponse = emailHelper.SendEmailPasswordReset(user.Email, link);
-
+            
             if (emailResponse)
                 return RedirectToAction("ForgotPasswordConfirmation");
             else
