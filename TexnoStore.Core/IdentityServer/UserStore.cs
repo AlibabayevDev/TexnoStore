@@ -8,7 +8,7 @@ using TexnoStore.Core.Domain.Entities;
 
 namespace TexnoStore.Core.IdentityServer
 {
-    public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserRoleStore<User>,IPasswordValidator<User>,IUserLoginStore<User>
+    public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserRoleStore<User>,IPasswordValidator<User>,IUserLoginStore<User>, IUserEmailStore<User>
     {
         private readonly IUnitOfWork db;
         public UserStore(IUnitOfWork db)
