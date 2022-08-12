@@ -7,11 +7,11 @@ using TexnoStore.Models.Phones;
 
 namespace TexnoStore.Controllers
 {
-    public class PhoneController : Controller
+    public class PhoneController : BaseController
     {
         private readonly IUnitOfWork db;
 
-        public PhoneController(IUnitOfWork db)
+        public PhoneController(IUnitOfWork db) : base(db)
         {
             this.db = db;
         }
@@ -33,6 +33,7 @@ namespace TexnoStore.Controllers
             var model = new PhoneListViewModel
             {
                 Phones = phonesModels,
+                ShopCartList = Checkout()
             };
             return View(model);
         }
@@ -54,6 +55,7 @@ namespace TexnoStore.Controllers
             var model = new PhoneListViewModel
             {
                 Phones = phonesModels.Where(x => x.Id == id),
+                ShopCartList= Checkout()
             };
 
             return View(model.Phones.FirstOrDefault());

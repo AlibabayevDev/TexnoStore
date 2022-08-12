@@ -21,7 +21,8 @@ namespace TexnoStore.Controllers
         {
             this.db = db;
         }
-        public AllProductsListViewModel Checkout()
+
+		public AllProductsListViewModel Checkout()
         {
             var userid = db.LoginRepository.Get(User.Identity.Name);
             var user = db.ShopCartRepository.GetAll(userid.Id);

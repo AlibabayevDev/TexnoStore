@@ -8,6 +8,6 @@ namespace TexnoStore.Models
         public string Name { get; set; }
         public int CategoryId { get; set; }
         public DateTime AddDate { get; set; }
-        public AllProductsListViewModel AllProductsListViewModel { get; set; }
+        public AllProductsListViewModel ShopCartList { get; set; }
     }
 }

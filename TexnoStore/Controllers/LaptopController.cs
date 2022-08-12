@@ -21,7 +21,6 @@ namespace TexnoStore.Controllers
         public static LaptopModel SelectedModel { get;set;}
         private readonly IUnitOfWork db;
         private readonly UserManager<User> userManager;
-
         public LaptopController(IUnitOfWork db) : base(db)
         {
            this.db = db;
@@ -44,7 +43,9 @@ namespace TexnoStore.Controllers
             var model = new LaptopListViewModel
             {
                 Laptops = laptopModels,
+                ShopCartList = Checkout()
             };
+
             return View(model);
         }
 
@@ -64,18 +65,32 @@ namespace TexnoStore.Controllers
             }
             var model = new LaptopListViewModel
             {
-                Laptop = laptopModels.FirstOrDefault(x => x.Id == id)
+                Laptop = laptopModels.FirstOrDefault(x => x.Id == id),
+                ShopCartList= Checkout()
             };
             SelectedModel = model.Laptop;
-          
             return View("LaptopProduct",model);
         }
 
-        public IActionResult Korzina(LaptopModel model)
-        {
-            return View();
-        }
+        public string ErrorMessage { get; set; }
 
+        public JsonResult AddReview(ReviewModel model)
+        {
+            ReviewMapper reviewMapper = new ReviewMapper();
+
+            var review = reviewMapper.Map(model);
+            try
+            {
+                db.ReviewRepository.Add(review);
+                ErrorMessage = "Succesfully added";
+
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = "Something went wrong";
+            }
+            return Json(ErrorMessage);
+        }
         public IActionResult Review(LaptopListViewModel viewModel,int rating)
         {
             viewModel.Laptop = SelectedModel;
@@ -96,7 +111,7 @@ namespace TexnoStore.Controllers
             }
 
             ReviewMapper reviewMapper = new ReviewMapper();
-            viewModel.Review.rating = rating;
+            viewModel.Review.Rating = rating;
             viewModel.Review.ProductId = SelectedModel.Id;
 
             var review = reviewMapper.Map(viewModel.Review);
@@ -112,7 +127,6 @@ namespace TexnoStore.Controllers
       
             return LaptopProduct(viewModel.Laptop.Id);
         }
-
         public IActionResult ShopCart(LaptopListViewModel viewModel)
 		{
             var name=User.Identity.Name;
@@ -124,10 +138,10 @@ namespace TexnoStore.Controllers
             var shopCart = shopCartMapper.Map(viewModel.ShopCart);
             db.ShopCartRepository.Add(shopCart);
             viewModel.Laptop = SelectedModel;
+            viewModel.ShopCartList = Checkout();
+
             return View("LaptopProduct",viewModel);
         }
-
-       
         public  IActionResult ShopCartbyId(int Id)
         {
             ShopCartMapper shopCartMapper = new ShopCartMapper();
