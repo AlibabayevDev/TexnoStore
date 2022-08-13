@@ -24,26 +24,39 @@ namespace TexnoStore.Controllers
 
 		public AllProductsListViewModel Checkout()
         {
-            var userid = db.LoginRepository.Get(User.Identity.Name);
-            var user = db.ShopCartRepository.GetAll(userid.Id);
-            var laptops = db.LaptopRepository.Laptops();
-            var laptopModel = LaptopsModels(laptops);
-            var phones = db.PhoneRepository.Phones();
-            var phonesModel = PhoneModels(phones);
-
-            AllProductsListViewModel shopcartproducts = new AllProductsListViewModel();
-
-            var laptoplist = new List<LaptopModel>();
-            var phonelist = new List<PhoneModel>();
-
-            foreach (var a in user)
+            if(User.Identity.IsAuthenticated)
             {
-                laptoplist.Add(laptopModel.FirstOrDefault(x => x.Id == a.LaptopId));
-                phonelist.Add(phonesModel.FirstOrDefault(x => x.Id == a.PhoneId));
+                var userid = db.LoginRepository.Get(User.Identity.Name);
+                var user = db.ShopCartRepository.GetAll(userid.Id);
+                var laptops = db.LaptopRepository.Laptops();
+                var laptopModel = LaptopsModels(laptops);
+                var phones = db.PhoneRepository.Phones();
+                var phonesModel = PhoneModels(phones);
+
+                AllProductsListViewModel shopcartproducts = new AllProductsListViewModel();
+
+                var laptoplist = new List<LaptopModel>();
+                var phonelist = new List<PhoneModel>();
+
+                foreach (var a in user)
+                {
+                    laptoplist.Add(laptopModel.FirstOrDefault(x => x.Id == a.LaptopId));
+                    phonelist.Add(phonesModel.FirstOrDefault(x => x.Id == a.PhoneId));
+                }
+                shopcartproducts.LaptopModel = laptoplist;
+                shopcartproducts.PhoneModel = phonelist;
+                return shopcartproducts;
             }
-            shopcartproducts.LaptopModel = laptoplist;
-            shopcartproducts.PhoneModel = phonelist;
-            return shopcartproducts;
+            else
+            {
+                var shopcartproducts = new AllProductsListViewModel()
+                {
+                    LaptopModel = new List<LaptopModel>(),
+                    PhoneModel = new List<PhoneModel>()
+                };
+                return shopcartproducts;
+            }
+            
         }
 
         public List<LaptopModel> LaptopsModels(List<Laptop> laptops)
