@@ -1,0 +1,29 @@
+﻿html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+body {
+    display: table;
+}
+
+img {
+    position: absolute;
+    margin: 150px auto auto auto;
+    width: 100px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+div {
+    font-size: 30px;
+    ;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
