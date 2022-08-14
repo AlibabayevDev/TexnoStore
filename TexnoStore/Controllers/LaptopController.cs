@@ -148,5 +148,23 @@ namespace TexnoStore.Controllers
 
             return View("LaptopProduct");
         }
+
+        public IActionResult QuickView(int id)
+        {
+            var laptops = db.LaptopRepository.Laptops();
+
+            LaptopMapper laptopMapper = new LaptopMapper();
+            List<LaptopModel> laptopModels = new List<LaptopModel>();
+
+            for (int i = 0; i < laptops.Count; i++)
+            {
+                var laptop = laptops[i];
+                var laptopModel = laptopMapper.Map(laptop);
+
+                laptopModels.Add(laptopModel);
+            }
+            var model = laptopModels.FirstOrDefault(x => x.Id == id);
+            return PartialView(model);
+        }
     }
 }
