@@ -55,39 +55,14 @@
 
 								<!-- Cart -->
 								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" data-target="#shopCartModal" onclick="ShopCartModal()" data-id="@Model.Id">
 											<i class="fa fa-shopping-cart"></i>
 											<span>Your Cart</span>
 											<div class="qty">3</div>
 									</a>
 																		
-									<div class="cart-dropdown">
-										<div class="cart-list">
-											@{
-												@foreach(LaptopModel laptop in Model.ShopCartList.LaptopModel)
-												{
-													<div class="product-widget">
-														<div class="product-img">
-															<img src="~/img/@laptop.MainImg" alt="">
-														</div>
-														<div class="product-body">
-															<h3 class="product-name"><a href="#">product name goes here</a></h3>
-															<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-														</div>
-														<button class="delete"><i class="fa fa-close"></i></button>
-													</div>
+									<div class="cart-dropdown" id="shopCart" >
 
-												}
-											}
-										</div>
-										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
-											<h5>SUBTOTAL: $2940.00</h5>
-										</div>
-										<div class="cart-btns">
-											<a href="#">View Cart</a>
-											<a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-										</div>
 									</div>
 								</div>
 								<!-- /Cart -->
@@ -110,3 +85,17 @@
 			</div>
 			<!-- /MAIN HEADER -->
 		</header>
+
+		<script>
+			function ShopCartModal() {
+				$.ajax({
+					url: "/ShopCart/ShopCartList",
+					success: function (data) {
+						$('#shopCart').html(data);
+					},
+					error: function (error) {
+						console.log(error);
+					}
+				});
+			}
+		</script>
