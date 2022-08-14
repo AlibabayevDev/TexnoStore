@@ -21,11 +21,9 @@ namespace TexnoStore.Controllers
         public static LaptopModel SelectedModel { get;set;}
         private readonly IUnitOfWork db;
         private readonly UserManager<User> userManager;
-
-        public LaptopController(IUnitOfWork db, UserManager<User> userManager)
+        public LaptopController(IUnitOfWork db) : base(db)
         {
-            this.userManager= userManager;
-            this.db = db;
+           this.db = db;
         }
 
         public IActionResult Index()
@@ -45,8 +43,8 @@ namespace TexnoStore.Controllers
             var model = new LaptopListViewModel
             {
                 Laptops = laptopModels,
-                AllProductsListViewModel = Checkout()
             };
+
             return View(model);
         }
 
@@ -66,23 +64,34 @@ namespace TexnoStore.Controllers
             }
             var model = new LaptopListViewModel
             {
-                Laptop = laptopModels.FirstOrDefault(x => x.Id == id)
+                Laptop = laptopModels.FirstOrDefault(x => x.Id == id),
             };
             SelectedModel = model.Laptop;
-            model.AllProductsListViewModel = Checkout();
-          
             return View("LaptopProduct",model);
         }
 
-        public IActionResult Korzina(LaptopModel model)
-        {
-            return View();
-        }
+        public string ErrorMessage { get; set; }
 
+        public JsonResult AddReview(ReviewModel model)
+        {
+            ReviewMapper reviewMapper = new ReviewMapper();
+
+            var review = reviewMapper.Map(model);
+            try
+            {
+                db.ReviewRepository.Add(review);
+                ErrorMessage = "Succesfully added";
+
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = "Something went wrong";
+            }
+            return Json(ErrorMessage);
+        }
         public IActionResult Review(LaptopListViewModel viewModel,int rating)
         {
             viewModel.Laptop = SelectedModel;
-            viewModel.Review.ProductId = viewModel.Laptop.Id;
 
             if (ModelState.IsValid == false)
             {
@@ -100,7 +109,7 @@ namespace TexnoStore.Controllers
             }
 
             ReviewMapper reviewMapper = new ReviewMapper();
-            viewModel.Review.rating = rating;
+            viewModel.Review.Rating = rating;
             viewModel.Review.ProductId = SelectedModel.Id;
 
             var review = reviewMapper.Map(viewModel.Review);
@@ -116,7 +125,6 @@ namespace TexnoStore.Controllers
       
             return LaptopProduct(viewModel.Laptop.Id);
         }
-
         public IActionResult ShopCart(LaptopListViewModel viewModel)
 		{
             var name=User.Identity.Name;
@@ -128,11 +136,9 @@ namespace TexnoStore.Controllers
             var shopCart = shopCartMapper.Map(viewModel.ShopCart);
             db.ShopCartRepository.Add(shopCart);
             viewModel.Laptop = SelectedModel;
-            viewModel.AllProductsListViewModel = Checkout();
+
             return View("LaptopProduct",viewModel);
         }
-
-       
         public  IActionResult ShopCartbyId(int Id)
         {
             ShopCartMapper shopCartMapper = new ShopCartMapper();
@@ -140,6 +146,22 @@ namespace TexnoStore.Controllers
             return View("LaptopProduct");
         }
 
-      
+        public IActionResult QuickView(int id)
+        {
+            var laptops = db.LaptopRepository.Laptops();
+
+            LaptopMapper laptopMapper = new LaptopMapper();
+            List<LaptopModel> laptopModels = new List<LaptopModel>();
+
+            for (int i = 0; i < laptops.Count; i++)
+            {
+                var laptop = laptops[i];
+                var laptopModel = laptopMapper.Map(laptop);
+
+                laptopModels.Add(laptopModel);
+            }
+            var model = laptopModels.FirstOrDefault(x => x.Id == id);
+            return PartialView(model);
+        }
     }
 }

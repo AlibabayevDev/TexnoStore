@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Core.Domain.Entities.Laptop;
 using TexnoStore.Core.Domain.Entities.Phone;
-using TexnoStore.Mapper;
 using TexnoStore.Mapper.Laptops;
 using TexnoStore.Mapper.Phones;
 using TexnoStore.Models;
@@ -14,17 +12,25 @@ using TexnoStore.Models.Phones;
 
 namespace TexnoStore.Controllers
 {
-    public  class BaseController : Controller
+    public class ShopCartController : Controller
     {
         private readonly IUnitOfWork db;
-        public BaseController(IUnitOfWork db)
+        public ShopCartController(IUnitOfWork db)
         {
             this.db = db;
         }
-
-		public AllProductsListViewModel Checkout()
+        public IActionResult ShopCartList()
         {
-            if(User.Identity.IsAuthenticated)
+            var allProductsList = Checkout();
+            return PartialView(allProductsList);
+        }
+
+
+
+
+        public AllProductsListViewModel Checkout()
+        {
+            if (User.Identity.IsAuthenticated)
             {
                 var userid = db.LoginRepository.Get(User.Identity.Name);
                 var user = db.ShopCartRepository.GetAll(userid.Id);
@@ -56,7 +62,7 @@ namespace TexnoStore.Controllers
                 };
                 return shopcartproducts;
             }
-            
+
         }
 
         public List<LaptopModel> LaptopsModels(List<Laptop> laptops)
@@ -91,7 +97,5 @@ namespace TexnoStore.Controllers
 
             return phonesModels;
         }
-
-
     }
 }
