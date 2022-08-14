@@ -208,10 +208,6 @@ namespace TexnoStore.Controllers
         }
 
 
-
-
-
-
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
