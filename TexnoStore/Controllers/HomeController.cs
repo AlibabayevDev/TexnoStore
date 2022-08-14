@@ -33,7 +33,6 @@ namespace TexnoStore.Controllers
             {
                 PhoneModel = phonesModels,
                 LaptopModel = laptopsModels,
-                ShopCartList = Checkout()
             };
             if (viewModel.LaptopModel.Equals(0) && viewModel.PhoneModel.Equals(0))
             {

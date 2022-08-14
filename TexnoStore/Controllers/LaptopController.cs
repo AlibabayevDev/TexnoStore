@@ -43,7 +43,6 @@ namespace TexnoStore.Controllers
             var model = new LaptopListViewModel
             {
                 Laptops = laptopModels,
-                ShopCartList = Checkout()
             };
 
             return View(model);
@@ -66,7 +65,6 @@ namespace TexnoStore.Controllers
             var model = new LaptopListViewModel
             {
                 Laptop = laptopModels.FirstOrDefault(x => x.Id == id),
-                ShopCartList= Checkout()
             };
             SelectedModel = model.Laptop;
             return View("LaptopProduct",model);
@@ -138,7 +136,6 @@ namespace TexnoStore.Controllers
             var shopCart = shopCartMapper.Map(viewModel.ShopCart);
             db.ShopCartRepository.Add(shopCart);
             viewModel.Laptop = SelectedModel;
-            viewModel.ShopCartList = Checkout();
 
             return View("LaptopProduct",viewModel);
         }
