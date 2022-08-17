@@ -4,6 +4,7 @@ using System.Linq;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Core.Domain.Entities.Laptop;
 using TexnoStore.Core.Domain.Entities.Phone;
+using TexnoStore.Mapper;
 using TexnoStore.Mapper.Laptops;
 using TexnoStore.Mapper.Phones;
 using TexnoStore.Models;
@@ -21,37 +22,53 @@ namespace TexnoStore.Controllers
         }
         public IActionResult ShopCartList()
         {
+            var userid = db.LoginRepository.Get(User.Identity.Name);
+
             var allProductsList = Checkout();
-            return PartialView(allProductsList);
+            var model = new ShopCartListViewModel()
+            {
+                ShopCartModels = allProductsList
+            };
+
+            
+            foreach(var price in model.ShopCartModels)
+            {
+                model.ShopCartCount++;
+                model.ShopCartPrice += price.Price*price.Count;
+            }
+            return PartialView(model);
+        }
+
+        
+
+        public IActionResult Delete(int id)
+        {
+            db.ShopCartRepository.Delete(id);
+            return RedirectToAction("ShopCartList");
         }
 
 
 
-
-        public AllProductsListViewModel Checkout()
+        public List<ShopCartModel> Checkout()
         {
             if (User.Identity.IsAuthenticated)
             {
                 var userid = db.LoginRepository.Get(User.Identity.Name);
-                var user = db.ShopCartRepository.GetAll(userid.Id);
-                var laptops = db.LaptopRepository.Laptops();
-                var laptopModel = LaptopsModels(laptops);
-                var phones = db.PhoneRepository.Phones();
-                var phonesModel = PhoneModels(phones);
 
-                AllProductsListViewModel shopcartproducts = new AllProductsListViewModel();
+                var shopCarts = db.ShopCartRepository.GetAll(userid.Id);
 
-                var laptoplist = new List<LaptopModel>();
-                var phonelist = new List<PhoneModel>();
+                var mapper = new ShopCartMapper();
+                List<ShopCartModel> ShopCarts = new List<ShopCartModel>();
 
-                foreach (var a in user)
+                for (int i = 0; i < shopCarts.Count; i++)
                 {
-                    laptoplist.Add(laptopModel.FirstOrDefault(x => x.Id == a.LaptopId));
-                    phonelist.Add(phonesModel.FirstOrDefault(x => x.Id == a.PhoneId));
+                    var shopCart = shopCarts[i];
+                    var shopCartModel = mapper.Map(shopCart);
+
+                    ShopCarts.Add(shopCartModel);
                 }
-                shopcartproducts.LaptopModel = laptoplist;
-                shopcartproducts.PhoneModel = phonelist;
-                return shopcartproducts;
+
+                return ShopCarts;
             }
             else
             {
@@ -60,11 +77,10 @@ namespace TexnoStore.Controllers
                     LaptopModel = new List<LaptopModel>(),
                     PhoneModel = new List<PhoneModel>()
                 };
-                return shopcartproducts;
+                return new List<ShopCartModel>();
             }
 
         }
-
         public List<LaptopModel> LaptopsModels(List<Laptop> laptops)
         {
             LaptopMapper laptopMapper = new LaptopMapper();
@@ -80,8 +96,6 @@ namespace TexnoStore.Controllers
 
             return laptopsModels;
         }
-
-
         public List<PhoneModel> PhoneModels(List<Phone> phones)
         {
             PhoneMapper phoneMapper = new PhoneMapper();

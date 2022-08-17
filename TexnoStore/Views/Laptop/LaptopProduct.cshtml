@@ -1,8 +1,5 @@
 ﻿@using TexnoStore.Models.Laptops
 
-<script >
-</script>
-
 @model LaptopListViewModel
 
 
@@ -56,7 +53,7 @@
 							</div>
 							<p>@Model.Laptop.ShortDesc</p>
 							<form asp-controller="Laptop" asp-action="ShopCart">
-									<input hidden asp-for="Id"/>
+									<input hidden asp-for="@Model.Laptop.ProductId"/>
 
 									@{
 										for(int i=0;i<5;i++)
@@ -72,7 +69,7 @@
 										<div class="qty-label">
 											Qty
 											<div class="input-number">
-												<input type="number">
+												<input asp-for="@Model.ShopCart.Count" type="number" step="1" min="1" max="12" value="1">
 												<span class="qty-up">+</span>
 												<span class="qty-down">-</span>
 											</div>

@@ -1,5 +1,5 @@
 ﻿@using TexnoStore.Models
-@model LaptopModel
+@model ShopCartModel
 <div id="quickview" tabindex="-1" role="dialog" aria-labelledby="quickview" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -26,27 +26,30 @@
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                             </div>
-                                            <h5 class="price">$@Model.Price <span>@Model.OldPrice</span></h5>
+                                            <h5 class="price">$@Model.Price <span>$@Model.OldPrice</span></h5>
                                             <p>@Model.ShortDesc</p>
-                                            <a href="/Laptop/LaptopProduct/@Model.Id">View Full Product Details</a>
+                                            <a href="@Url.Action("ProductName","Home", new { productId= @Model.Id, typeId= @Model.ProductType})">View Full Product Details</a>
                                         </div>
                                         <!-- Add to Cart Form -->
                                         <form class="cart" method="post">
+                                            <input asp-for="@Model.ProductId" hidden id="ProductId" />
+                                            <input asp-for="@Model.ProductType" hidden id="ProductType" />
+
                                             <div class="quantity">
                                                 <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
 
-                                                <input type="number" class="qty-text" id="qty" step="1" min="1" max="12" name="quantity" value="1">
+                                                <input asp-for="@Model.Count" type="number" class="qty-text" id="qty" step="1" min="1" max="12" name="quantity" value="1">
 
                                                 <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                             </div>
-                                            <button type="submit" name="addtocart" value="5" class="cart-submit">Add to cart</button>
+                                            <input type="button" onclick="AddToCard()" name="addtocart" class="cart-submit" value="Add to cart" />
                                             <!-- Wishlist -->
                                             <div class="modal_pro_wishlist">
-                                                <a href="wishlist.html" target="_blank"><i class="ti-heart"></i></a>
+                                                <a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a>
                                             </div>
                                             <!-- Compare -->
                                             <div class="modal_pro_compare">
-                                                <a href="compare.html" target="_blank"><i class="ti-stats-up"></i></a>
+                                                <a href="#"><i class="fa fa-exchange"></i> add to compare</a>
                                             </div>
                                         </form>
 
@@ -67,3 +70,24 @@
                 </div>
             </div>
             </div>
+            <script>
+                function AddToCard() {
+	                var id = $("#ProductId").val();
+	                var productType = $("#ProductType").val();
+	                var obj = {
+		                ProductId: id,
+		                ProductType: productType
+	                }
+	                $.ajax({
+		                url: "/Home/AddToCard",
+		                method: "POST",
+		                data: obj,
+		                success: function (data) {
+			                alert("sala");
+		                },
+		                error: function (err) {
+			                console.error(err);
+		                }
+	                })
+                }
+            </script>

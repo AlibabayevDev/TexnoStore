@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace TexnoStore.Core.Domain.Entities
 {
-	public class ShopCart 
+	public class ShopCart : BaseEntity
 	{
 		public int Id { get; set; }
 		public int UserId { get; set; }
-		public int LaptopId { get; set; }
-		public int PhoneId { get; set; }
+		public int ProductId { get; set; }
+		public int Count { get; set; }
 
 	}
 }

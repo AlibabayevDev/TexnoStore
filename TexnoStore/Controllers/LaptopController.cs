@@ -67,7 +67,7 @@ namespace TexnoStore.Controllers
                 Laptop = laptopModels.FirstOrDefault(x => x.Id == id),
             };
             SelectedModel = model.Laptop;
-            return View("LaptopProduct",model);
+            return View(model);
         }
 
         public string ErrorMessage { get; set; }
@@ -128,14 +128,15 @@ namespace TexnoStore.Controllers
         public IActionResult ShopCart(LaptopListViewModel viewModel)
 		{
             var name=User.Identity.Name;
-            var userid = userManager.FindByNameAsync(name).Result;
+            var userid = db.LoginRepository.Get(User.Identity.Name);
+
             ShopCartMapper shopCartMapper = new ShopCartMapper();
-            viewModel.ShopCart = new ShopCartModel();
-            viewModel.ShopCart.LaptopId = viewModel.Id;
-            viewModel.ShopCart.UserId = userid.Id;
-            var shopCart = shopCartMapper.Map(viewModel.ShopCart);
+            ShopCartModel shopCartModel = new ShopCartModel();
+            shopCartModel.ProductId = viewModel.Laptop.ProductId;
+            shopCartModel.UserId = userid.Id;
+            shopCartModel.Count = viewModel.ShopCart.Count;
+            var shopCart = shopCartMapper.Map(shopCartModel);
             db.ShopCartRepository.Add(shopCart);
-            viewModel.Laptop = SelectedModel;
 
             return View("LaptopProduct",viewModel);
         }
@@ -144,24 +145,6 @@ namespace TexnoStore.Controllers
             ShopCartMapper shopCartMapper = new ShopCartMapper();
 
             return View("LaptopProduct");
-        }
-
-        public IActionResult QuickView(int id)
-        {
-            var laptops = db.LaptopRepository.Laptops();
-
-            LaptopMapper laptopMapper = new LaptopMapper();
-            List<LaptopModel> laptopModels = new List<LaptopModel>();
-
-            for (int i = 0; i < laptops.Count; i++)
-            {
-                var laptop = laptops[i];
-                var laptopModel = laptopMapper.Map(laptop);
-
-                laptopModels.Add(laptopModel);
-            }
-            var model = laptopModels.FirstOrDefault(x => x.Id == id);
-            return PartialView(model);
         }
     }
 }

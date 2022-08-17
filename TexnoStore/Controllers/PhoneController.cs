@@ -33,7 +33,6 @@ namespace TexnoStore.Controllers
             var model = new PhoneListViewModel
             {
                 Phones = phonesModels,
-                ShopCartList = Checkout()
             };
             return View(model);
         }
@@ -54,11 +53,10 @@ namespace TexnoStore.Controllers
             }
             var model = new PhoneListViewModel
             {
-                Phones = phonesModels.Where(x => x.Id == id),
-                ShopCartList= Checkout()
+                Phone = phonesModels.FirstOrDefault(x => x.Id == id),
             };
 
-            return View(model.Phones.FirstOrDefault());
+            return View(model);
         }
     }
 }

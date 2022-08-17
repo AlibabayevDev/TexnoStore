@@ -1,11 +1,10 @@
 ﻿namespace TexnoStore.Models
 {
-	public class ShopCartModel
+	public class ShopCartModel : BaseModel
 	{
 		public int Id { get; set; }
 		public int UserId { get; set; }
-		public int LaptopId { get; set; }
-		public int PhoneId { get; set; }
-
+		public int Count { get; set; }
+		public int ProductId { get; set; }
 	}
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Core.Domain.Entities.Laptop;
 using TexnoStore.Core.Domain.Entities.Phone;
+using TexnoStore.Mapper;
 using TexnoStore.Mapper.Laptops;
 using TexnoStore.Mapper.Phones;
 using TexnoStore.Models;
@@ -41,6 +42,30 @@ namespace TexnoStore.Controllers
             return View(viewModel);
         }
         public IActionResult Home()
+        {
+            return View();
+        }
+
+        public IActionResult QuickView(int id)
+        {
+            var product = db.AllProductRepository.QuickViewProduct(id);
+            ShopCartMapper mapper = new ShopCartMapper();
+            var model = mapper.Map(product);
+
+            return PartialView(model);
+        }
+
+        public IActionResult ProductName(int productId, int typeId)
+        {
+            if (typeId == 1)
+            {
+                var laptop = db.LaptopRepository.LaptopProduct(productId);
+                return RedirectToAction("LaptopProduct", "Laptop", new { id = laptop.Id });
+            }
+            return View();
+        }
+
+        public IActionResult AddToCard(ShopCartModel model)
         {
             return View();
         }

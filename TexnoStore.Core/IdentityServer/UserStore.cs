@@ -183,6 +183,7 @@ namespace TexnoStore.Core.IdentityServer
 
         public Task AddLoginAsync(User user, UserLoginInfo login, CancellationToken cancellationToken)
         {
+            user.ProviderKey = login.ProviderKey;
             if (user != null)
             {
                 try

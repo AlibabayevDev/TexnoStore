@@ -473,7 +473,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string cmdText = "select Category.CategoryName,Phone.Id, Phone.Name,Phone.OldPrice, Phone.Price, Phone.Sale ,Phone.LongDesc,Phone.ImageId,Phone.MainImg, Phone.CategoryId,Phone.AddDate from Phone inner join Category on Phone.CategoryId = Category.Id";
+                string cmdText = "select Category.CategoryName,Phone.Id, Products.Name,Products.OldPrice, Products.Price, Products.Sale ,Products.LongDesc,Phone.ImageId,Products.MainImg, Phone.CategoryId,Products.AddDate from Phone inner join Category on Phone.CategoryId = Category.Id inner join Products on Phone.ProductId=Products.Id";
 
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {

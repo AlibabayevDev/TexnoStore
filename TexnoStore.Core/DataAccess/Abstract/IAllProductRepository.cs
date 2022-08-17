@@ -9,6 +9,8 @@ namespace TexnoStore.Core.DataAccess.Abstract
 {
     public interface IAllProductRepository
     {
-        List<BaseEntity> AllProducts(string name);
+        BaseEntity AllProducts(int id);
+        ShopCart QuickViewProduct(int id);
+
     }
 }

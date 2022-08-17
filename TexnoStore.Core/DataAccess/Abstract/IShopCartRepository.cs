@@ -11,5 +11,6 @@ namespace TexnoStore.Core.DataAccess.Abstract
 	{
 		bool Add(ShopCart shopcart);
 		List<ShopCart> GetAll(int userId);
+		bool Delete(int productId);
 	}
 }

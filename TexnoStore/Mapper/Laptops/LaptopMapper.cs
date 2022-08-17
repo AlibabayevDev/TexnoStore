@@ -43,6 +43,8 @@ namespace TexnoStore.Mapper.Laptops
                 Series = model.Series,
                 Weight = model.Weight,
                 ShortDesc= model.ShortDesc,
+                ProductId = model.ProductId,
+                ProductType = model.ProductType,
             };
             return laptop;
         }
@@ -75,6 +77,8 @@ namespace TexnoStore.Mapper.Laptops
                 Series = entity.Series,
                 Weight = entity.Weight,
                 ShortDesc = entity.ShortDesc,
+                ProductId = entity.ProductId,
+                ProductType = entity.ProductType,
             };
             return laptop;
         }

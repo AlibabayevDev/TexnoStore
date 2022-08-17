@@ -27,6 +27,10 @@ namespace TexnoStore.Controllers
             if(User.Identity.IsAuthenticated)
             {
                 var userid = db.LoginRepository.Get(User.Identity.Name);
+
+
+
+
                 var user = db.ShopCartRepository.GetAll(userid.Id);
                 var laptops = db.LaptopRepository.Laptops();
                 var laptopModel = LaptopsModels(laptops);
@@ -38,11 +42,6 @@ namespace TexnoStore.Controllers
                 var laptoplist = new List<LaptopModel>();
                 var phonelist = new List<PhoneModel>();
 
-                foreach (var a in user)
-                {
-                    laptoplist.Add(laptopModel.FirstOrDefault(x => x.Id == a.LaptopId));
-                    phonelist.Add(phonesModel.FirstOrDefault(x => x.Id == a.PhoneId));
-                }
                 shopcartproducts.LaptopModel = laptoplist;
                 shopcartproducts.PhoneModel = phonelist;
                 return shopcartproducts;
