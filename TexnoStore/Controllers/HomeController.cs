@@ -46,7 +46,7 @@ namespace TexnoStore.Controllers
             return View();
         }
 
-        public IActionResult QuickView(int id)
+        public IActionResult QuickView(int id,int type)
         {
             var product = db.AllProductRepository.QuickViewProduct(id);
             ShopCartMapper mapper = new ShopCartMapper();
@@ -65,9 +65,20 @@ namespace TexnoStore.Controllers
             return View();
         }
 
-        public IActionResult AddToCard(ShopCartModel model)
+        public JsonResult AddToCard(ShopCartModel model)
         {
-            return View();
+            var name = User.Identity.Name;
+            var userid = db.LoginRepository.Get(User.Identity.Name);
+
+            ShopCartMapper shopCartMapper = new ShopCartMapper();
+            ShopCartModel shopCartModel = new ShopCartModel();
+            shopCartModel.ProductId = model.ProductId;
+            shopCartModel.UserId = userid.Id;
+            shopCartModel.Count = model.Count;
+            var shopCart = shopCartMapper.Map(shopCartModel);
+            db.ShopCartRepository.Add(shopCart);
+
+            return Json("completed");
         }
     }
 }

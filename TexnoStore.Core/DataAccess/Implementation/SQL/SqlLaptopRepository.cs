@@ -472,7 +472,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string cmdText = "select Category.CategoryName,Laptop.Id,Laptop.Brand,Laptop.Series,Laptop.Processor,Laptop.HardDrive,Laptop.RAM,Laptop.OperatingSystem,Laptop.GraphicsCoprocessor,Laptop.ScreenMatrix,Laptop.Weight,Laptop.ScreenSize,Laptop.Display,Laptop.ProductId, Products.Name,Products.OldPrice,Products.TypeId, Products.Price, Products.Sale ,Products.LongDesc,Laptop.ImageId,Products.MainImg, Laptop.CategoryId , Products.AddDate,Products.ShortDesc from Laptop inner join Category on Laptop.CategoryId = Category.Id inner join Products on Laptop.ProductId = Products.Id";
+                string cmdText = "select  Enum.ProductType,Laptop.Id,Laptop.Brand,Laptop.Series,Laptop.Processor,Laptop.HardDrive,Laptop.RAM,Laptop.OperatingSystem,Laptop.GraphicsCoprocessor,Laptop.ScreenMatrix,Laptop.Weight,Laptop.ScreenSize,Laptop.Display,Laptop.ProductId, Products.Name,Products.OldPrice,Products.TypeId, Products.Price, Products.Sale ,Products.LongDesc,Laptop.ImageId,Products.MainImg, Laptop.CategoryId ,Products.AddDate,Products.ShortDesc from Laptop inner join Category on Laptop.CategoryId = Category.Id inner join Products on Laptop.ProductId = Products.Id inner join Enum on Enum.Id = Products.TypeId";
 
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {
@@ -509,10 +509,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         laptop.ShortDesc = Convert.ToString(reader["ShortDesc"]);
                         laptop.ProductId = Convert.ToInt16(reader["ProductId"]);
                         laptop.ProductType = Convert.ToInt16(reader["TypeId"]);
-                        laptop.Category = new Category()
-                        {
-                            CategoryName = Convert.ToString(reader["CategoryName"])
-                        };
+                        laptop.ProductTypeName = Convert.ToString(reader["ProductType"]);
                         laptop.AddDate = Convert.ToDateTime(reader["AddDate"]);
 
                         laptops.Add(laptop);
@@ -581,7 +578,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             }
 
         }
-
+        
         public List<Laptop> SearchLaptops(string Name)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))

@@ -20,6 +20,7 @@ namespace TexnoStore.Mapper
                 AddDate = model.AddDate,
                 ShortDesc = model.ShortDesc,
                 ProductType = model.ProductType,
+                ProductTypeName = model.ProductTypeName,
             };
             return entity;
         }
@@ -39,6 +40,7 @@ namespace TexnoStore.Mapper
                 AddDate = entity.AddDate,
                 ShortDesc = entity.ShortDesc,
                 ProductType = entity.ProductType,
+                ProductTypeName= entity.ProductTypeName,
             };
             return model;
         }

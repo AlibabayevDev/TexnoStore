@@ -17,7 +17,6 @@ namespace TexnoStore.Models.Laptops
         public string Weight { get; set; }
         public string Display { get; set; }
         public string ScreenSize { get; set; }
-        public int ProductId { get; set; }
         public CategoryModel Category { get; set; }
         public LaptopsImagesModel LaptopsImages { get; set; }
     }

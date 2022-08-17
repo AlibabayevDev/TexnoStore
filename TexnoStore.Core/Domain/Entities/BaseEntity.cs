@@ -12,6 +12,8 @@
         public double OldPrice { get; set; }
         public string MainImg { get; set; }
         public int ProductType { get; set; }
+        public string ProductTypeName { get; set; }
+        public int ProductId { get; set; }
         public DateTime AddDate { get; set; }
     }
 }

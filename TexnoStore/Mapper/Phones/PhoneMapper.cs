@@ -25,11 +25,12 @@ namespace TexnoStore.Mapper.Phones
                 Price = model.Price,
                 OldPrice = model.OldPrice,
                 Sale = model.Sale,
-                Category = categoryMapper.Map(model.Category),
-                CategoryId = model.CategoryId,
                 PhonesImages = laptopImageMapper.Map(model.PhonesImages),
                 ImageId = model.ImageId,
                 MainImg = model.MainImg,
+                ProductTypeName = model.ProductTypeName,
+                ProductId = model.ProductId,
+                ProductType = model.ProductType,
             };
             return laptop;
         }
@@ -44,11 +45,12 @@ namespace TexnoStore.Mapper.Phones
                 Price = entity.Price,
                 OldPrice = entity.OldPrice,
                 Sale = entity.Sale,
-                Category = categoryMapper.Map(entity.Category),
-                CategoryId = entity.CategoryId,
                 PhonesImages = laptopImageMapper.Map(entity.PhonesImages),
                 ImageId = entity.ImageId,
                 MainImg= entity.MainImg,
+                ProductTypeName = entity.ProductTypeName,
+                ProductType = entity.ProductType,
+                ProductId = entity.ProductId,
             };
             return laptop;
         }

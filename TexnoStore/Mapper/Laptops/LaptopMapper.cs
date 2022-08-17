@@ -25,8 +25,6 @@ namespace TexnoStore.Mapper.Laptops
                 Price = model.Price,
                 OldPrice = model.OldPrice,
                 Sale = model.Sale,
-                Category = categoryMapper.Map(model.Category),
-                CategoryId = model.CategoryId,
                 LaptopsImages = laptopImageMapper.Map(model.LaptopsImages),
                 ImageId = model.ImageId,
                 MainImg = model.MainImg,
@@ -45,6 +43,7 @@ namespace TexnoStore.Mapper.Laptops
                 ShortDesc= model.ShortDesc,
                 ProductId = model.ProductId,
                 ProductType = model.ProductType,
+                ProductTypeName = model.ProductTypeName,
             };
             return laptop;
         }
@@ -59,8 +58,6 @@ namespace TexnoStore.Mapper.Laptops
                 Price = entity.Price,
                 OldPrice = entity.OldPrice,
                 Sale = entity.Sale,
-                Category = categoryMapper.Map(entity.Category),
-                CategoryId = entity.CategoryId,
                 LaptopsImages = laptopImageMapper.Map(entity.LaptopsImages),
                 ImageId = entity.ImageId,
                 MainImg= entity.MainImg,
@@ -79,6 +76,7 @@ namespace TexnoStore.Mapper.Laptops
                 ShortDesc = entity.ShortDesc,
                 ProductId = entity.ProductId,
                 ProductType = entity.ProductType,
+                ProductTypeName = entity.ProductTypeName,
             };
             return laptop;
         }
