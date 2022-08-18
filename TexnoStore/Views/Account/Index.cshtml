@@ -7,14 +7,6 @@
 @model UserViewModel
 
 
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +30,7 @@
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
 			<div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
-				<form class="login100-form validate-form flex-sb flex-w">
+				<form asp-controller="Account" class="login100-form validate-form flex-sb flex-w">
 					<span class="login100-form-title p-b-53">
 						Sign In With
 					</span>
@@ -49,7 +41,7 @@
 					</a>
 
 					<a href="#" class="btn-google m-b-20">
-						<img src="images/icons/icon-google.png" alt="GOOGLE">
+						<img src="~/img//google.jpg" alt="GOOGLE">
 						Google
 					</a>
 					
@@ -78,7 +70,7 @@
 					</div>
 
 					<div class="container-login100-form-btn m-t-17">
-						<button class="login100-form-btn">
+						<button asp-action="Login" type="submit" class="login100-form-btn">
 							Sign In
 						</button>
 					</div>
