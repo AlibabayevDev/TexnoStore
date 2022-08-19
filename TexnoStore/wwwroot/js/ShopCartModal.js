@@ -26,21 +26,21 @@ function ShowDeleteModal(elem) {
 }
 
 function AddToCard() {
-	alert("salam");
-	var id = $("#ProductId").val();
-	var productType = $("#ProductType").val();
+	var id = $("#stdProductId").val();
+	var productType = $("#stdProductType").val();
 	var count = $("#qty").val();
 	var obj = {
 		ProductId: id,
 		ProductType: productType,
 		Count: count
 	}
+	console.log(obj);
 	$.ajax({
 		url: "/Home/AddToCard",
 		method: "POST",
 		data: obj,
 		success: function (data) {
-			alert("sala");
+			alert(data);
 		},
 		error: function (err) {
 			console.error(err);

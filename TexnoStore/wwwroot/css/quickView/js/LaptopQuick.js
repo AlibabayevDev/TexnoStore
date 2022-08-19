@@ -12,3 +12,22 @@
 		}
 	});
 }
+function AddToCardQuick(elem) {
+	var id = $(elem).data("id");
+	var count = 1;
+	var obj = {
+		ProductId: id,
+		Count: count
+	}
+	alert(count);
+	$.ajax({
+		url: "/Home/AddToCard",
+		method: "POST",
+		data: obj,
+		success: function (data) {
+		},
+		error: function (err) {
+			console.error(err);
+		}
+	})
+}

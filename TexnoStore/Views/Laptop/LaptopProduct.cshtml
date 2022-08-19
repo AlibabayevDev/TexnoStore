@@ -52,8 +52,8 @@
 								<span class="product-available">In Stock</span>
 							</div>
 							<p>@Model.Laptop.ShortDesc</p>
-							<form asp-controller="Laptop" asp-action="ShopCart">
-									<input hidden asp-for="@Model.Laptop.ProductId"/>
+							<form>
+									<input hidden asp-for="@Model.Laptop.ProductId" id="stdProductId"/>
 
 									@{
 										for(int i=0;i<5;i++)
@@ -69,17 +69,38 @@
 										<div class="qty-label">
 											Qty
 											<div class="input-number">
-												<input asp-for="@Model.ShopCart.Count" type="number" step="1" min="1" max="12" value="1">
+												<input asp-for="@Model.ShopCart.Count" type="number" step="1" min="1" max="12" value="1" id="stdCount">
 												<span class="qty-up">+</span>
 												<span class="qty-down">-</span>
 											</div>
 										</div>
-										<button type="submit" value="Create" class="add-to-cart-btn" ><i class="fa fa-shopping-cart"></i> add to cart</button>
+										<button type="button" value="Create" onclick="AddToCardQuick(this)" data-id="@Model.Laptop.ProductId" class="add-to-cart-btn" ><i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
 
 							</form>
 							
-
+							<script>
+											function AddToCardQuick(elem) {
+												var id = $("#stdProductId").val();
+												var count = $("#stdCount").val();
+												var obj = {
+													ProductId: id,
+													Count:count
+												}
+												$.ajax({
+													url: "/Home/AddToCard",
+													method: "POST",
+													data: obj,
+													success: function (data) {
+														$('#createModal').html(data);
+														$("#createModal").modal("show");
+													},
+													error: function (err) {
+														console.error(err);
+													}
+												})
+}
+										</script>
 							
 
 							<ul class="product-btns">

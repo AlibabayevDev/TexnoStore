@@ -7,9 +7,12 @@
 												@foreach(ShopCartModel product in Model.ShopCartModels)
 												{
 													<div class="product-widget">
-														<div class="product-img">
+													<a href="@Url.Action("ProductName","Home", new { productId= @product.ProductId, typeId= @product.ProductType})">
+													<div class="product-img">
 															<img src="~/img/@product.MainImg" alt="">
 														</div>
+													</a>
+														
 														<div class="product-body">
 															<h3 class="product-name"><a href="@Url.Action("ProductName","Home", new { productId= @product.ProductId, typeId= @product.ProductType})">@product.Name</a></h3>
 															<h4 class="product-price"><span class="qty">@product.Count x</span>$@product.Price.00</h4>

@@ -62,10 +62,16 @@ namespace TexnoStore.Controllers
                 var laptop = db.LaptopRepository.LaptopProduct(productId);
                 return RedirectToAction("LaptopProduct", "Laptop", new { id = laptop.Id });
             }
+            else if (typeId == 2)
+            {
+                var phone = db.PhoneRepository.PhoneProduct(productId);
+                return RedirectToAction("PhoneProduct", "Phone", new { id = phone.Id });
+            }
+
             return View();
         }
 
-        public JsonResult AddToCard(ShopCartModel model)
+        public IActionResult AddToCard(ShopCartModel model)
         {
             var name = User.Identity.Name;
             var userid = db.LoginRepository.Get(User.Identity.Name);
@@ -78,7 +84,7 @@ namespace TexnoStore.Controllers
             var shopCart = shopCartMapper.Map(shopCartModel);
             db.ShopCartRepository.Add(shopCart);
 
-            return Json("completed");
+            return PartialView("Success");
         }
     }
 }
