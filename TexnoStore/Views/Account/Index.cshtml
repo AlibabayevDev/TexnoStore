@@ -30,7 +30,7 @@
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
 			<div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
-				<form asp-controller="Account" class="login100-form validate-form flex-sb flex-w">
+				<form asp-action="Index" asp-controller="Account" class="login100-form validate-form flex-sb flex-w">
 					<span class="login100-form-title p-b-53">
 						Sign In With
 					</span>
@@ -51,7 +51,7 @@
 						</span>
 					</div>
 					<div class="wrap-input100 validate-input" data-validate = "Username is required">
-						<input class="input100" type="text" name="username" >
+						<input placeholder="email" asp-for="@Model.loginModel.Email" class="input100" type="text" name="username" >
 						<span class="focus-input100"></span>
 					</div>
 					
@@ -60,17 +60,17 @@
 							Password
 						</span>
 
-						<a href="#" class="txt2 bo1 m-l-5">
+						<a asp-action="ForgotPassword"  class="txt2 bo1 m-l-5">
 							Forgot?
 						</a>
 					</div>
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100" type="password" name="pass" >
+						<input placeholder="Password" asp-for="@Model.loginModel.Password" class="input100" type="password" name="pass" >
 						<span class="focus-input100"></span>
 					</div>
 
 					<div class="container-login100-form-btn m-t-17">
-						<button asp-action="Login" type="submit" class="login100-form-btn">
+						<button asp-action="Index" type="submit" class="login100-form-btn">
 							Sign In
 						</button>
 					</div>
