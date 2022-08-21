@@ -72,11 +72,11 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string cmdText = "select Enum.ProductType, Camera.Id, Camera.Compaany,OpticalZoom, Camera.Color, Camera.ProductId," +
+                string cmdText = "select Enum.ProductType, Camera.Id, Camera.Company,OpticalZoom, Camera.Color, Camera.ProductId," +
                     " Products.Name, Products.OldPrice, Products.TypeId, Products.Price, Products.Sale, Products.LongDesc, Camera.ImageId, Products.MainImg, Camera.CategoryId, Products.AddDate, Products.ShortDesc " +
-                    "from Camera inner join Category on Camera.CategoryId = Category.Id inner join Products on Camera.ProductId = Product.Id inner join Enum on Enum.Id = Products.TypeId";
+                    "from Camera inner join Category on Camera.CategoryId = Category.Id inner join Products on Camera.ProductId = Products.Id inner join Enum on Enum.Id = Products.TypeId";
 
-                using (SqlCommand cmd = new SqlCommand(cmdText))
+                using (SqlCommand cmd = new SqlCommand(cmdText,connection))
                 {
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -119,7 +119,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string cmdText = "select Camera.Id, CameraImage.ImgName from Camera inner join CamerasImages on Camera.Id = CamerasImage.CameraId inner join CameraImage on CamerasImage.ImageId = CameraImage.Id where CameraImages.CameraId = @Id";
+                string cmdText = "select Camera.Id, CameraImage.ImgName from Camera inner join CamerasImages on Camera.Id = CamerasImages.CameraId inner join CameraImage on CamerasImages.ImageId = CameraImage.Id where CamerasImages.CameraId = @Id";
 
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {

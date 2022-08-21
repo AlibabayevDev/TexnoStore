@@ -26,16 +26,20 @@ namespace TexnoStore.Controllers
         {
             var laptops = db.LaptopRepository.Laptops();
             var phones = db.PhoneRepository.Phones();
+            var cameras = db.CameraRepository.Cameras();
 
             var laptopsModels = LaptopsModels(laptops);
             var phonesModels = PhoneModels(phones);
+            var cameraModels = CameraModels(cameras);
 
             var viewModel = new AllProductsListViewModel()
             {
                 PhoneModel = phonesModels,
                 LaptopModel = laptopsModels,
+                CameraModel = cameraModels
             };
-            if (viewModel.LaptopModel.Equals(0) && viewModel.PhoneModel.Equals(0))
+
+            if (viewModel.LaptopModel.Equals(0) && viewModel.PhoneModel.Equals(0) &&viewModel.CameraModel.Equals(0))
             {
                 return RedirectToAction("ProductNotFound", "Error");
             }
