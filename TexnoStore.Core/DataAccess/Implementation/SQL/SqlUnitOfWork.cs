@@ -23,5 +23,6 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
         public ILoginRepository LoginRepository => new SqlLoginRepository(connectionString);
         public IReviewRepository ReviewRepository => new SqlReviewRepository(connectionString);
         public IShopCartRepository ShopCartRepository => new SqlShopCartRepository(connectionString);
+        public ICameraRepository CameraRepository => new SqlCameraRepository(connectionString);
     }
 }

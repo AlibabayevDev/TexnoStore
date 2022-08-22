@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using TexnoStore.Models.Cameras
+
+@model CameraListViewModel
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
 <html lang="en">
 
 	<body>
@@ -153,7 +160,7 @@
 							<h3 class="aside-title">Top selling</h3>
 							<div class="product-widget">
 								<div class="product-img">
-									<img src="~/img/product01.png" alt="">
+									<img src="~/img/success.png" alt="">
 								</div>
 								<div class="product-body">
 									<p class="product-category">Category</p>
@@ -164,7 +171,7 @@
 
 							<div class="product-widget">
 								<div class="product-img">
-									<img src="~/img/product02.png" alt="">
+									<img src="~/img/lg2.jpg" alt="">
 								</div>
 								<div class="product-body">
 									<p class="product-category">Category</p>
@@ -175,7 +182,7 @@
 
 							<div class="product-widget">
 								<div class="product-img">
-									<img src="~/img/product03.png" alt="">
+									<img src="~/img/lg3.jpg" alt="">
 								</div>
 								<div class="product-body">
 									<p class="product-category">Category</p>
@@ -215,13 +222,13 @@
 							</ul>
 						</div>
 						<!-- /store top filter -->
-
+					
 						<!-- store products -->
 						<div class="row">
 							@{
-								for(int i=0;i<100;i++)
+								foreach(CameraModel camera in Model.Cameras)
 								{
-									@Html.Partial("AllProduct")
+									@Html.Partial("AllProducts", camera)
 								}
 							}
 						</div>

@@ -535,7 +535,6 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
-
                     Laptop laptop = new Laptop();
 
                     while (reader.Read())

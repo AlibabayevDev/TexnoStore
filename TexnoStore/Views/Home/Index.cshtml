@@ -3,7 +3,7 @@
 }
 @using TexnoStore.Models
 @using TexnoStore.Models.Phones
-
+@using TexnoStore.Models.Cameras
 
 @model AllProductsListViewModel
 
@@ -73,13 +73,17 @@
 										@{
 											foreach(LaptopModel produc in Model.LaptopModel)
 											{
-
 												@Html.Partial("AllProducts",produc)
 											}
 											foreach(PhoneModel produc in Model.PhoneModel)
 											{
 												@Html.Partial("AllProducts",produc)
 											}
+											foreach(CameraModel produc in Model.CameraModel)
+								            {
+									           @Html.Partial("AllProducts", produc)
+							               	}
+
 										}
 									</div>
 									<div id="slick-nav-1" class="products-slick-nav"></div>

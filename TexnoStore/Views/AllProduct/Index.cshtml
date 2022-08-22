@@ -1,7 +1,7 @@
 ﻿@using TexnoStore.Models.Laptops
 @using TexnoStore.Models.Phones
 @using TexnoStore.Models
-
+@using TexnoStore.Models.Cameras
 
 @model AllProductsListViewModel
 
@@ -234,6 +234,10 @@
 							foreach(PhoneModel produc in Model.PhoneModel)
 							{
 								@Html.Partial("AllProducts",produc)
+							}
+						    foreach(CameraModel produc in Model.CameraModel)
+							{
+								@Html.Partial("AllCameras", produc)
 							}
 					    }
 							<!-- product -->
