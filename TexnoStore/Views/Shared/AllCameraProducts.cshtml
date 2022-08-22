@@ -1,0 +1,40 @@
+﻿@using TexnoStore.Models
+
+@model BaseModel
+
+
+<div class="col-md-4 col-xs-6">
+                               	<div class="product">
+									<a href="/Camera/CameraProduct/@Model.Id">
+										<div class="product-img">
+										<img src="~/img/@Model.MainImg" alt="" height="250px" width="150px">
+										<div class="product-label">
+											<span class="sale">-@Model.Sale%</span>
+											<span class="new">NEW</span>
+										</div>
+									</div>
+									</a>
+									<div class="product-body">
+										<p class="product-category">@Model.ProductTypeName</p>
+										<h3 class="product-name"><a href="@Url.Action("CameraProductName","Home", new { productId= @Model.Id, typeId= @Model.ProductType})">@Model.Name</a></h3>
+										<h4 class="product-price">$@Model.Price <del class="product-old-price">$@Model.OldPrice</del></h4>
+										<div class="product-rating">
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+										</div>
+										<div class="product-btns">
+											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+											<button class="quick-view" data-target="#quickview" onclick="ShowSaveModal(this)" data-id="@Model.ProductId" data-type="@Model.ProductType" id="btnUpdate" ><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+										</div>
+									</div>
+									<div class="add-to-cart">
+										<a href="/Camera/ShopCartbyId/@Model.Id" data-target="#myModalAdd">
+											<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+										</a>
+									</div>
+								</div>
+								</div>

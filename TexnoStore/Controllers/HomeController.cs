@@ -69,6 +69,19 @@ namespace TexnoStore.Controllers
             return View();
         }
 
+
+        public IActionResult CameraProductName(int productId, int typeId)
+        {
+            if (typeId == 1)
+            {
+                var camera = db.CameraRepository.CameraProduct(productId);
+                return RedirectToAction("CameraProduct", "Camera", new { id = camera.Id });
+            }
+            return View();
+        }
+
+
+
         public JsonResult AddToCard(ShopCartModel model)
         {
             var name = User.Identity.Name;

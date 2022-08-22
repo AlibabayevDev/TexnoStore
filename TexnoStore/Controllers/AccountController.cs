@@ -223,7 +223,7 @@ namespace TexnoStore.Controllers
 
             var user = await userManager.FindByEmailAsync(email);
             if (user == null)
-                return RedirectToAction(nameof(ForgotPasswordConfirmation));
+                return RedirectToAction(nameof(ForgotPassword));
 
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
             var link = Url.Action("ResetPassword", "Account", new { token, email = user.Email }, Request.Scheme);
