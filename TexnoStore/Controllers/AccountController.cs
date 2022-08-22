@@ -83,12 +83,12 @@ namespace TexnoStore.Controllers
         {
             if ((model.loginModel.Email == null) || (model.loginModel.Password == null))
             {
-                return View("Index",model);
+                return View("Regist",model);
             }
             if (model.loginModel.Password != model.loginModel.RetypePassword)
             {
                 TempData["Error"] = "Passwords do not match";
-                return View("Index", model);
+                return View("Regist", model);
             }
             model.user = LoginMapper.Map(model.loginModel);
             var user = userManager.FindByNameAsync(model.loginModel.Email).Result;
@@ -120,13 +120,13 @@ namespace TexnoStore.Controllers
                 catch (Exception ex)
                 {
                     TempData["Error"] = "This email does not exist";
-                    return RedirectToAction("Index", model);
+                    return RedirectToAction("Regist", model);
                 }
             }
             else
             {
                 TempData["Error"] = "This Email is registered";
-                return RedirectToAction("Index", model);
+                return RedirectToAction("Regist", model);
 
             }
             /*foreach (var i in user.Errors)
