@@ -39,7 +39,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                     {
                         camera.Id = Convert.ToInt32(reader["Id"]);
                         camera.ImageId = Convert.ToInt32(reader["ImageId"]);
-                        camera.CameraImages = new CameraImages()
+                        camera.CamerasImages = new CamerasImages()
                         {
                             img = Images(camera.Id)
                         };
@@ -87,7 +87,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         Camera camera = new Camera();
                         camera.Id = Convert.ToInt32(reader["Id"]);
                         camera.ImageId = Convert.ToInt32(reader["ImageId"]);
-                        camera.CameraImages = new CameraImages()
+                        camera.CamerasImages = new CamerasImages()
                         {
                             img = Images(camera.Id)
                         };
@@ -163,7 +163,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         Camera camera = new Camera();
                         camera.ImageId = Convert.ToInt32(reader["ImageId"]);
                         camera.Id = Convert.ToInt32(reader["Id"]);
-                        camera.CameraImages = new CameraImages()
+                        camera.CamerasImages = new CamerasImages()
                         {
                             img = Images(camera.Id)
                         };

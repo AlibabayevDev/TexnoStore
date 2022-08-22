@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TexnoStore.Core.Domain.Entities.Cameras
 {
-    public class CameraImages
+    public class CamerasImages
     {
         public int Id { get; set; }
         public virtual Camera camera { get; set; }

@@ -5,7 +5,7 @@ namespace TexnoStore.Mapper.Cameras
 {
     public class CameraImageMapper
     {
-        public CamerasImagesModel Map(CameraImages entity)
+        public CamerasImagesModel Map(CamerasImages entity)
         {
             var image = new CamerasImagesModel()
             {
@@ -16,9 +16,9 @@ namespace TexnoStore.Mapper.Cameras
             return image;
         }
 
-        public CameraImages Map(CamerasImagesModel model)
+        public CamerasImages Map(CamerasImagesModel model)
         {
-            var image = new CameraImages()
+            var image = new CamerasImages()
             {
                 Id = model.Id,
                 img = model.Image
