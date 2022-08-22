@@ -63,6 +63,11 @@ namespace TexnoStore.Core.IdentityServer
 
         public Task<IdentityResult> CreateAsync(User user, CancellationToken cancellationToken)
         {
+            Random random = new Random();
+            var loginprovider1 = random.Next(1000000000, 1999999999);
+            var loginprovider2 = random.Next(1000000000, 1999999999);
+            var loginprovider = Convert.ToString(loginprovider1) + Convert.ToString(loginprovider2);
+            user.ProviderKey = loginprovider+"1";
             db.LoginRepository.Insert(user);
 
             return Task.FromResult(IdentityResult.Success);

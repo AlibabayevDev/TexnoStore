@@ -43,7 +43,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             {
                 connection.Open();
 
-                string cmdText = $"Insert into Users values(@Email,@PasswordHash,@Name,@LastName,@LoginProvider)";
+                string cmdText = $"Insert into Users values(@Email,@PasswordHash,@Name,@LastName,@LoginProvider,@ProviderKey)";
 
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {
@@ -51,7 +51,8 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                     cmd.Parameters.AddWithValue("@PasswordHash", login.PasswordHash);
                     cmd.Parameters.AddWithValue("@Name", login.Name);
                     cmd.Parameters.AddWithValue("@LastName", login.LastName);
-                    cmd.Parameters.AddWithValue("@LoginProvider","Google");
+                    cmd.Parameters.AddWithValue("@LoginProvider", "Google");
+                    cmd.Parameters.AddWithValue("@ProviderKey", login.ProviderKey);
 
                     int affectedCount = cmd.ExecuteNonQuery();
 
