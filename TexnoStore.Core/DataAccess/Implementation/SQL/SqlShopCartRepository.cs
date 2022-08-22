@@ -45,7 +45,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string cmdText = "select ShopCarts.Id,ShopCarts.UserId,ShopCarts.ProductId,ShopCarts.Count,Products.Name,Products.MainImg,Products.AddDate,Products.Price,Products.OldPrice,Products.Sale,Products.TypeId,Products.LongDesc,Products.ShortDesc from ShopCarts inner join Products on Products.Id = ShopCarts.ProductId where userId=7";
+                string cmdText = "select ShopCarts.Id,ShopCarts.UserId,ShopCarts.ProductId,ShopCarts.Count,Products.Name,Products.MainImg,Products.AddDate,Products.Price,Products.OldPrice,Products.Sale,Products.TypeId,Products.LongDesc,Products.ShortDesc from ShopCarts inner join Products on Products.Id = ShopCarts.ProductId where userId=@userId";
 
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {
