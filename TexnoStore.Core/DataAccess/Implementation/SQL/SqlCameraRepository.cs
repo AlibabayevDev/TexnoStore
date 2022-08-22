@@ -29,7 +29,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
 
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {
-                    cmd.Parameters.AddWithValue("@Product", productId);
+                    cmd.Parameters.AddWithValue("@ProductId", productId);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 

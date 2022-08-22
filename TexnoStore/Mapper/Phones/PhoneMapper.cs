@@ -21,7 +21,7 @@ namespace TexnoStore.Mapper.Phones
             {
                 Id = model.Id,
                 Name = model.Name,
-                LongDesc = model.LognDesc,
+                LongDesc = model.LongDesc,
                 Price = model.Price,
                 OldPrice = model.OldPrice,
                 Sale = model.Sale,
@@ -41,7 +41,7 @@ namespace TexnoStore.Mapper.Phones
             {
                 Id = entity.Id,
                 Name = entity.Name,
-                LognDesc = entity.LongDesc,
+                LongDesc = entity.LongDesc,
                 Price = entity.Price,
                 OldPrice = entity.OldPrice,
                 Sale = entity.Sale,

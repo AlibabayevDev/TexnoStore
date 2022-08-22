@@ -20,6 +20,16 @@ namespace TexnoStore.Mapper.Cameras
                 CameraImages = cameraImageMapper.Map(model.CameraImages),
                 ProductId = model.ProductId,
                 ImageId = model.ImageId,
+                MainImg = model.MainImg,
+                Name = model.Name,
+                ProductType = model.ProductType,
+                Price = model.Price,
+                ProductTypeName = model.ProductTypeName,
+                OldPrice = model.OldPrice,
+                AddDate = model.AddDate,
+                LongDesc = model.LongDesc,
+                ShortDesc = model.ShortDesc,
+                Sale = model.Sale,
             };
 
             return camera;
@@ -36,6 +46,16 @@ namespace TexnoStore.Mapper.Cameras
                 CameraImages = cameraImageMapper.Map(entity.CameraImages),
                 ProductId = entity.ProductId,
                 ImageId = entity.ImageId,
+                MainImg = entity.MainImg,
+                Name= entity.Name,
+                ProductType = entity.ProductType,
+                Price = entity.Price,
+                ProductTypeName = entity.ProductTypeName,
+                OldPrice = entity.OldPrice,
+                AddDate = entity.AddDate,
+                LongDesc = entity.LongDesc,
+                ShortDesc = entity.ShortDesc,
+                Sale = entity.Sale,
             };
 
             return camera;

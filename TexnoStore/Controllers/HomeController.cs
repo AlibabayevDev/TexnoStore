@@ -71,6 +71,11 @@ namespace TexnoStore.Controllers
                 var phone = db.PhoneRepository.PhoneProduct(productId);
                 return RedirectToAction("PhoneProduct", "Phone", new { id = phone.Id });
             }
+            else if(typeId == 3)
+            {
+                var camera = db.CameraRepository.CameraProduct(productId);
+                return RedirectToAction("CameraProduct", "Camera", new { id = camera.Id });
+            }
 
             return View();
         }
