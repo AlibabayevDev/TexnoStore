@@ -5,6 +5,7 @@ using System.Linq;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Mapper;
 using TexnoStore.Mapper.Cameras;
+using TexnoStore.Models;
 using TexnoStore.Models.Cameras;
 
 namespace TexnoStore.Controllers
@@ -101,6 +102,33 @@ namespace TexnoStore.Controllers
 
 
             return CameraProduct(viewModel.Camera.Id);
+        }
+
+
+        public IActionResult ShopCart(CameraListViewModel viewModel)
+        {
+            var name = User.Identity.Name;
+            var user = db.LoginRepository.Get(name);
+
+            ShopCartMapper mapper = new ShopCartMapper();
+            ShopCartModel model = new ShopCartModel();
+
+            model.ProductId = viewModel.Camera.ProductId;
+            model.UserId = user.Id;
+            model.Count = viewModel.ShopCart.Count;
+            var shopCart = mapper.Map(model);
+
+            db.ShopCartRepository.Add(shopCart);
+
+            return View("CameraProduct", viewModel);
+        }
+
+
+        public IActionResult ShopCartbyId(int Id)
+        {
+            ShopCartMapper shopCartMapper = new ShopCartMapper();
+
+            return View("LaptopProduct");
         }
     }
 }

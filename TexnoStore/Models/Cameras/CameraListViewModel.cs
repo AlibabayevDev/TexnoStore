@@ -8,7 +8,7 @@ namespace TexnoStore.Models.Cameras
         public IEnumerable<CameraModel> Cameras { get; set; }
         public CameraModel Camera { get; set; }
 
-        public ShopCartModel ShopCartModel { get; set; }
+        public ShopCartModel ShopCart { get; set; }
 
         public List<ReviewModel> Reviews { get; set; }
 
