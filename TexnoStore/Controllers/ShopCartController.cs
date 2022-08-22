@@ -39,7 +39,11 @@ namespace TexnoStore.Controllers
             return PartialView(model);
         }
 
-        
+        public IActionResult ShopCartCount()
+        {
+            var allProductsList = Checkout();
+            return Json(allProductsList.Count);
+        }
 
         public IActionResult Delete(int id)
         {

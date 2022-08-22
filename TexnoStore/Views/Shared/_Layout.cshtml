@@ -28,6 +28,7 @@
 	<body>
 		<partial name="_Header" />
 
+
 		<nav id="navigation">
 			<div class="container">
 				<div id="responsive-nav">
@@ -149,4 +150,15 @@
 		<script src="~/js/main.js"></script>
 
 	</body>
+	<script>
+		$.ajax({
+				url: "/ShopCart/ShopCartCount",
+				success: function (data) {
+					$('#ShopCount').text(data);
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			});
+	</script>
 </html>

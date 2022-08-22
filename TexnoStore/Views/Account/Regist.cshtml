@@ -1,33 +1,236 @@
 ﻿@using TexnoStore.Models.Users
 
+@{
+	Layout = null;
+}
+
 @model UserViewModel
 
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Regist</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="~/css/regist.css">
+	<title>Login V5</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+	<link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="~/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" type="text/css" href="~/css/util.css">
+	<link rel="stylesheet" type="text/css" href="~/css/main.css">
 </head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('~/img/bg-01.jpg');">
+			<div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+				<form class="login100-form validate-form flex-sb flex-w" asp-action="Regist" asp-controller="Account" method="post">
+					<div class="p-t-31 p-b-9">
+						<span class="txt1">
+							Username
+						</span>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Username is required">
+						<input class="input100" placeholder="email:" type="email" tabindex="6" asp-for="@Model.loginModel.Email" required>
+						<span class="focus-input100"></span>
+					</div>
+					
+					<div class="p-t-13 p-b-9">
+						<span class="txt1">
+							Password
+						</span>
 
-<form asp-action="Regist" asp-controller="Account" method="post">
-  <div class="container">
-    <h1>Register</h1>
-    <p>Please fill in this form to create an account.</p>
-    <hr>
+						<a href="#" class="txt2 bo1 m-l-5">
+							Forgot?
+						</a>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" placeholder="password" type="password" tabindex="7" asp-for="@Model.loginModel.Password" required>
+						<span class="focus-input100"></span>
+					</div>
 
-    <input asp-for="user.Email" class="form-control mb-2" placeholder="Email" type="email">
-    <span asp-validation-for="@Model.user.Email" class="text-danger"></span>
+					<div class="p-t-13 p-b-9">
+						<span class="txt1">
+							Confirm Password
+						</span>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" placeholder="password" type="password" tabindex="7" asp-for="@Model.loginModel.RetypePassword" required>
+						<span class="focus-input100"></span>
+					</div>
 
-    <input asp-for="user.PasswordHash" class="form-control mb-2" placeholder="Password" type="password">
-	<span asp-validation-for="@Model.user.PasswordHash" class="text-danger"></span>
-    <span>@ViewBag.Error</span>
+					<div class="container-login100-form-btn m-t-17">
+						<input type="submit" class="login100-form-btn" value="Sign In"/> 
+					</div>
 
-    <button type="submit" class="registerbtn">Регистрация</button>
-  </div>
+					<div class="w-full text-center p-t-55">
+						<span class="txt2">
+							Not a member?
+						</span>
 
-  <div class="container signin">
-    <p>Already have an account? <a href="~/Account/Login">Sign in</a>.</p>
-  </div>
-</form>
+						<a href="#" class="txt2 bo1">
+							Sign up now
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body>
+	<div class="main">
+	<!-- start registration -->
+	<div class="registration">
+		<div class="registration_left">
+		<h2>new user? <span> create an account </span></h2>
+		<script>
+			(function() {
+		
+			// Create input element for testing
+			var inputs = document.createElement('input');
+			
+			// Create the supports object
+			var supports = {};
+			
+			supports.autofocus   = 'autofocus' in inputs;
+			supports.required    = 'required' in inputs;
+			supports.placeholder = 'placeholder' in inputs;
+		
+			// Fallback for autofocus attribute
+			if(!supports.autofocus) {
+				
+			}
+			
+			// Fallback for required attribute
+			if(!supports.required) {
+				
+			}
+		
+			// Fallback for placeholder attribute
+			if(!supports.placeholder) {
+				
+			}
+			
+			// Change text inside send button on submit
+			var send = document.getElementById('register-submit');
+			if(send) {
+				send.onclick = function () {
+					this.innerHTML = '...Sending';
+				}
+			}
+		
+		})();
+		</script>
+		 <div class="registration_form">
+		 <!-- Form -->
+			<form asp-action="Regist" asp-controller="Account" method="post">
+				<div>
+						<input asp-for="@Model.loginModel.Name" placeholder="first name:" type="text" required autofocus tabindex="1">
+				</div>
+				<div>
+					<label>
+						<input placeholder="last name:" asp-for="@Model.loginModel.LastName" type="text" required autofocus tabindex="2">
+					</label>
+				</div>
+				<div>
+					<label>
+						<input type="text" placeholder="email address:" asp-for="@Model.loginModel.Email" required autofocus tabindex="3">
+					</label>
+				</div>
+				<div>
+					<label>
+						<input placeholder="password" data-type="password" asp-for="@Model.loginModel.Password" type="password" tabindex="4" >
+						<span asp-validation-for="@Model.loginModel.Password" class="text-danger"></span>
+
+					</label>
+				</div>						
+				<div>
+					<label>
+						<input placeholder="retype password" asp-for="@Model.loginModel.RetypePassword" type="password" tabindex="5" >
+						<span asp-validation-for="@Model.loginModel.Password" class="text-danger"></span>
+					</label>
+				</div>	
+                <div class="hr" style="color:red">@TempData["Error"]</div>
+
+				<div>
+					<input type="submit" value="create an account" id="register-submit">
+				</div>
+				<div class="sky-form">
+					<label class="checkbox"><input type="checkbox" name="isMarried" value="true"/><i></i>i agree to TexnoStore.com &nbsp;<a class="terms" href="#"> terms of service</a> </label>
+				</div>
+
+			</form>
+
+			<!-- /Form -->
+		</div>
+	</div>
+	<div class="registration_left">
+		<h2>existing user</h2>
+		 <div class="registration_form">
+		 <!-- Form -->
+			<form id="registration_form" asp-action="Login" asp-controller="Account" method="post">
+				<div>
+					<label>
+						<input placeholder="email:" type="email" tabindex="6" asp-for="@Model.loginModel.Email" required>
+					</label>
+				</div>
+				<div>
+					<label>
+						<input placeholder="password" type="password" tabindex="7" asp-for="@Model.loginModel.Password" required>
+					</label>
+				</div>						
+				<div>
+					<input type="submit" value="sign in" id="register-submit">
+				</div>
+				
+				<div class="hr">@TempData["Message"]</div>
+
+				<div class="forget">
+					<a asp-action="ForgotPassword">Forgot password?</a>
+				</div>
+				  <img width="30" height="30" src="~/img/google.jpg"/>
+				  <a class="btn btn-info" asp-action="GoogleLogin">Login with google</a>
+			</form>
+			<!-- /Form -->
+			</div>
+	</div>
+	<div class="clearfix"></div>
+	</div>
+	<!-- end registration -->
+</div>
+</body>

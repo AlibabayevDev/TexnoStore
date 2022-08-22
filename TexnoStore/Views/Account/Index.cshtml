@@ -36,9 +36,9 @@
 <body>
 	
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+		<div class="container-login100" style="background-image: url('~/img/bg-01.jpg');">
 			<div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
-				<form class="login100-form validate-form flex-sb flex-w">
+				<form class="login100-form validate-form flex-sb flex-w" asp-action="Login" asp-controller="Account" method="post">
 					<span class="login100-form-title p-b-53">
 						Sign In With
 					</span>
@@ -48,8 +48,8 @@
 						Facebook
 					</a>
 
-					<a href="#" class="btn-google m-b-20">
-						<img src="images/icons/icon-google.png" alt="GOOGLE">
+					<a asp-action="GoogleLogin" class="btn-google m-b-20">
+						<img src="~/img/icons/icon-google.png" alt="GOOGLE">
 						Google
 					</a>
 					
@@ -59,7 +59,7 @@
 						</span>
 					</div>
 					<div class="wrap-input100 validate-input" data-validate = "Username is required">
-						<input class="input100" type="text" name="username" >
+						<input class="input100" placeholder="email:" type="email" tabindex="6" asp-for="@Model.loginModel.Email" required>
 						<span class="focus-input100"></span>
 					</div>
 					
@@ -68,19 +68,17 @@
 							Password
 						</span>
 
-						<a href="#" class="txt2 bo1 m-l-5">
+						<a asp-action="ForgotPassword" class="txt2 bo1 m-l-5">
 							Forgot?
 						</a>
 					</div>
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100" type="password" name="pass" >
+						<input class="input100" placeholder="password" type="password" tabindex="7" asp-for="@Model.loginModel.Password" required>
 						<span class="focus-input100"></span>
 					</div>
 
 					<div class="container-login100-form-btn m-t-17">
-						<button class="login100-form-btn">
-							Sign In
-						</button>
+						<input type="submit" class="login100-form-btn" value="Sign In"/> 
 					</div>
 
 					<div class="w-full text-center p-t-55">
@@ -88,7 +86,7 @@
 							Not a member?
 						</span>
 
-						<a href="#" class="txt2 bo1">
+						<a href="/Account/Regist" class="txt2 bo1">
 							Sign up now
 						</a>
 					</div>
@@ -117,23 +115,7 @@
 
 
 
-<head>
-	<title>Gretong a Ecommerce Category Flat Bootstarp Responsive Website Template | Register :: w3layouts</title>
-	<link href="~/css/bootstrap.css" rel='stylesheet' type='text/css' />
-	<script type='text/javascript' src="~/js/jquery-1.11.1.min.js"></script>
-	<link href="~/css/style3.css" rel='stylesheet' type='text/css' />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="keywords" content="Gretong Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
-	Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-	<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,900' rel='stylesheet' type='text/css'>
-	<link href="~/css/megamenu.css" rel="stylesheet" type="text/css" media="all" />
-	<script type="text/javascript" src="js/megamenu.js"></script>
-	<script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
-	<script src="~/js/menu_jquery.js"></script>
-</head>
+
 <body>
 	<div class="main">
 	<!-- start registration -->
