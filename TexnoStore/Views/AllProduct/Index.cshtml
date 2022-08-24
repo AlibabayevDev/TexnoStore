@@ -226,18 +226,10 @@
 						<!-- store products -->
 						<div class="row">
 						@{
-							foreach(LaptopModel produc in Model.LaptopModel)
+							foreach(var produc in Model.Products)
 							{
 
 								@Html.Partial("AllProducts",produc)
-							}
-							foreach(PhoneModel produc in Model.PhoneModel)
-							{
-								@Html.Partial("AllProducts",produc)
-							}
-						    foreach(CameraModel produc in Model.CameraModel)
-							{
-								@Html.Partial("AllCameras", produc)
 							}
 					    }
 							<!-- product -->

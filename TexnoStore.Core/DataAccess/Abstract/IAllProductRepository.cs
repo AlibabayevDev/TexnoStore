@@ -11,6 +11,6 @@ namespace TexnoStore.Core.DataAccess.Abstract
     {
         BaseEntity AllProducts(int id);
         ShopCart QuickViewProduct(int id);
-
+        List<BaseEntity> GetAllProducts();
     }
 }

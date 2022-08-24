@@ -7,6 +7,7 @@ namespace TexnoStore.Models
 {
     public class AllProductsListViewModel : BaseModel
     {
+        public IEnumerable<BaseModel> Products { get; set; }
         public IEnumerable<LaptopModel> LaptopModel { get; set; }
         public IEnumerable<PhoneModel> PhoneModel { get; set; }
         public IEnumerable<CameraModel> CameraModel { get; set; }

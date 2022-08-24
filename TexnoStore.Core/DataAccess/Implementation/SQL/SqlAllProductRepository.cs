@@ -53,7 +53,41 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             }
         }
 
+        public List<BaseEntity> GetAllProducts()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string cmdText = "select Id,Name,TypeId,MainImg,Price,LongDesc,AddDate,TypeId,OldPrice,Sale,ShortDesc,TypeId from Products";
 
+                using (SqlCommand cmd = new SqlCommand(cmdText, connection))
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    List<BaseEntity> products = new List<BaseEntity>();
+
+
+                    while (reader.Read())
+                    {
+                        BaseEntity product = new BaseEntity();
+
+                        product.ProductId = Convert.ToInt32(reader["Id"]);
+                        product.Name = Convert.ToString(reader["Name"]);
+                        product.OldPrice = Convert.ToDouble(reader["OldPrice"]);
+                        product.Price = Convert.ToDouble(reader["Price"]);
+                        product.Sale = Convert.ToInt16(reader["Sale"]);
+                        product.LongDesc = Convert.ToString(reader["LongDesc"]);
+                        product.MainImg = Convert.ToString(reader["MainImg"]);
+                        product.ProductType = Convert.ToInt16(reader["TypeId"]);
+                        product.ShortDesc = Convert.ToString(reader["ShortDesc"]);
+                        product.AddDate = Convert.ToDateTime(reader["AddDate"]);
+                        product.ProductType = Convert.ToInt16(reader["TypeId"]);
+                        products.Add(product);
+                    }
+
+                    return products;
+                }
+            }
+        }
 
         public ShopCart QuickViewProduct(int id)
         {

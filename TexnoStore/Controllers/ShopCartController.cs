@@ -39,6 +39,27 @@ namespace TexnoStore.Controllers
             return PartialView(model);
         }
 
+
+        public IActionResult ShopCartView()
+        {
+            var userid = db.LoginRepository.Get(User.Identity.Name);
+
+            var allProductsList = Checkout();
+            var model = new ShopCartListViewModel()
+            {
+                ShopCartModels = allProductsList
+            };
+
+
+            foreach (var price in model.ShopCartModels)
+            {
+                model.ShopCartCount++;
+                model.ShopCartPrice += price.Price * price.Count;
+            }
+            return View(model);
+        }
+
+
         public IActionResult ShopCartCount()
         {
             var allProductsList = Checkout();
@@ -84,36 +105,6 @@ namespace TexnoStore.Controllers
                 return new List<ShopCartModel>();
             }
 
-        }
-        public List<LaptopModel> LaptopsModels(List<Laptop> laptops)
-        {
-            LaptopMapper laptopMapper = new LaptopMapper();
-            List<LaptopModel> laptopsModels = new List<LaptopModel>();
-
-            for (int i = 0; i < laptops.Count; i++)
-            {
-                var laptop = laptops[i];
-                var laptopModel = laptopMapper.Map(laptop);
-
-                laptopsModels.Add(laptopModel);
-            }
-
-            return laptopsModels;
-        }
-        public List<PhoneModel> PhoneModels(List<Phone> phones)
-        {
-            PhoneMapper phoneMapper = new PhoneMapper();
-            List<PhoneModel> phonesModels = new List<PhoneModel>();
-
-            for (int i = 0; i < phones.Count; i++)
-            {
-                var phone = phones[i];
-                var phoneModel = phoneMapper.Map(phone);
-
-                phonesModels.Add(phoneModel);
-            }
-
-            return phonesModels;
         }
     }
 }

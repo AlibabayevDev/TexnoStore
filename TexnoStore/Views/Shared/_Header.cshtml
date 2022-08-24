@@ -12,7 +12,13 @@
 					</ul>
 
 					<ul class="header-links pull-right">
-						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
+						<li>
+							<select asp-for="@Model.ProductType" style="width:100px;height:25px;background-color:#1E1F29;color:white"> 
+										<option value="0" style="color:white"><i class="fa fa-dollar"></i> USD</option>
+										<option value="1" style="color:white"><i class="fa fa-ruble"></i> RUB</option>
+										<option value="2" style="color:white"><i class="fa fa-euro"></i> EURO</option>
+							</select>
+						</li>
 						<li><a class="fa fa-user-o" asp-action="Index" asp-controller="Account">@User.Identity?.Name</a></li>
 						<li><a href="/Account/Index"><i class="fa fa-user-o"></i> My Account</a></li>
 					</ul>
@@ -31,7 +37,7 @@
 						<div class="col-md-6">
 							<div class="header-search">
 								<form asp-action="Index" asp-controller="AllProduct">
-									<select class="input-select" asp-for="CategoryId">
+									<select class="input-select" asp-for="@Model.ProductType">
 										<option value="0">All Categories</option>
 										<option value="1">Laptop</option>
 										<option value="2">SmartPhone</option>

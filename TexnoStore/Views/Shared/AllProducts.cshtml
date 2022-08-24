@@ -13,7 +13,7 @@
 									</div>
 									</a>
 									<div class="product-body">
-										<p class="product-category">@Model.ProductId</p>
+										<p class="product-category">@Model.ProductTypeName</p>
 										<h3 class="product-name"><a href="@Url.Action("ProductName","Home", new { productId= @Model.ProductId, typeId= @Model.ProductType})">@Model.Name</a></h3>
 										<h4 class="product-price">$@Model.Price <del class="product-old-price">$@Model.OldPrice</del></h4>
 										<div class="product-rating">
