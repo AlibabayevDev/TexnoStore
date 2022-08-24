@@ -121,12 +121,16 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             {
                 connection.Open();
 
-                string cmdText = $"Update Users set Email = @Email, PasswordHash = @PasswordHash where Id = @Id";
+                string cmdText = $"Update Users set Email = @Email, PasswordHash = @PasswordHash, Name = @Name, LastName = @LastName, LoginProvider = @LoginProvider, ProviderKey = @ProviderKey where Email = @Email";
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {
                     cmd.Parameters.AddWithValue("@Id", login.Id);
                     cmd.Parameters.AddWithValue("@Email", login.Email);
                     cmd.Parameters.AddWithValue("@PasswordHash", login.PasswordHash);
+                    cmd.Parameters.AddWithValue("@Name", login.Name);
+                    cmd.Parameters.AddWithValue("@LastName", login.LastName);
+                    cmd.Parameters.AddWithValue("@LoginProvider", login.LoginProvider);
+                    cmd.Parameters.AddWithValue("@ProviderKey", login.ProviderKey);
 
                     int affectedCount = cmd.ExecuteNonQuery();
 
@@ -135,6 +139,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                 }
             }
         }
+
 
         public User Get(int id)
         {

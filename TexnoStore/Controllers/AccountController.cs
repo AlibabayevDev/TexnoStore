@@ -322,7 +322,18 @@ namespace TexnoStore.Controllers
                     ProviderKey = info.ProviderKey
                 };
 
+                var userExist = db.LoginRepository.Get(userInfo[1]);
 
+                if(userExist != null)
+                {
+                    if (userExist.PasswordHash != null)
+                    {
+                        user.PasswordHash = userExist.PasswordHash;
+                        db.LoginRepository.Update(user);
+                        return RedirectToAction("Index", "Allproduct");
+                    }
+                }
+            
                 IdentityResult identResult = await userManager.CreateAsync(user);
                 if (identResult.Succeeded)
                 {
