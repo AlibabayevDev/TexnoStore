@@ -10,4 +10,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TexnoStore.Core\TexnoStore.Core.csproj" />
+    <ProjectReference Include="..\TexnoStore\TexnoStore.csproj" />
+  </ItemGroup>
+
 </Project>
