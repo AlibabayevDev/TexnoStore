@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TexnoStore.Core\TexnoStore.Core.csproj" />
+    <ProjectReference Include="..\TexnoStoreWebCore\TexnoStoreWebCore.csproj" />
     <ProjectReference Include="..\TexnoStore\TexnoStore.csproj" />
   </ItemGroup>
 

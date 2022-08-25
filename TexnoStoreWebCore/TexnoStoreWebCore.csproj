@@ -10,9 +10,4 @@
     <ProjectReference Include="..\TexnoStore.Core\TexnoStore.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Abstract\" />
-    <Folder Include="Services\Implementations\" />
-  </ItemGroup>
-
 </Project>
