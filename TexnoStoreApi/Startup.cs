@@ -1,9 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using TexnoStore.Core.Domain.Entities;
 using TexnoStore.Core.Factory;
 using TexnoStore.Core.IdentityServer;
 using TexnoStore.IdentityServer;
+using TexnoStoreWebCore.Services.Abstract;
+using TexnoStoreWebCore.Services.Implementations;
 
 namespace TexnoStoreApi
 {
@@ -38,6 +43,28 @@ namespace TexnoStoreApi
             services.AddSingleton<IPasswordHasher<User>, CustomPasswordHasher>();
             services.AddSingleton<IUserStore<User>, UserStore>();
             services.AddSingleton<IRoleStore<Role>, RoleStore>();
+            services.AddScoped<ICameraService, CameraService>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = false,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["JWTt:Key"])),
+                    ValidateAudience = false,       
+                    RequireExpirationTime = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromMinutes(1)
+                };
+            });
 
             services.AddAuthentication(options =>
             {
