@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using TexnoStore.Core.Domain.Entities;
 using TexnoStore.Core.Factory;
@@ -24,7 +25,6 @@ namespace TexnoStoreApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
 
             services.AddSingleton((t) =>
             {
@@ -44,6 +44,39 @@ namespace TexnoStoreApi
             services.AddSingleton<IUserStore<User>, UserStore>();
             services.AddSingleton<IRoleStore<Role>, RoleStore>();
             services.AddScoped<ICameraService, CameraService>();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc($"v1", new OpenApiInfo
+                {
+                    Title = "Our Title",
+                    Version = "v1",
+                    Description = "Our test swagger client",
+                });
+
+                var jwtSecurityScheme = new OpenApiSecurityScheme
+                {
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    Name = "JWT Authentication",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
+
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+
+                c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                      { jwtSecurityScheme, Array.Empty<string>() }
+                });
+            });
 
             services.AddAuthentication(options =>
             {
@@ -96,13 +129,13 @@ namespace TexnoStoreApi
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSwagger();
+            app.UseSwaggerUI();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

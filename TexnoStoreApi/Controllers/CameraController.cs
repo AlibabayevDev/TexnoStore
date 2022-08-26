@@ -13,7 +13,8 @@ namespace TexnoStoreApi.Controllers
             this.cameraService = cameraService;
         }
 
-        [HttpGet] 
+        [HttpGet]
+        [Route("Get")]
         public IActionResult Get()
         {
             try

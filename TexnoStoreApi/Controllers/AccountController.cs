@@ -2,10 +2,11 @@
 
 namespace TexnoStoreApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class AccountController : ControllerBase
     {
-        [Route("api/controller")]
-
+        [HttpGet]
         public IActionResult Login()
         {
             
