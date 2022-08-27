@@ -18,7 +18,7 @@ namespace TexnoStoreApi.Controllers
         public IActionResult Get()
         {
             try
-            {
+            {  
                 var cameras = cameraService.Cameras();
                 if(cameras == null)
                     return BadRequest("Something went wrong");

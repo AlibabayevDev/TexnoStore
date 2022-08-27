@@ -25,7 +25,7 @@ namespace TexnoStoreApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddControllers();
             services.AddSingleton((t) =>
             {
                 var connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -91,7 +91,7 @@ namespace TexnoStoreApi
                 {
                     ValidateIssuerSigningKey = true,
                     ValidateIssuer = false,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["JWTt:Key"])),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("xecretKeywqejane")),
                     ValidateAudience = false,       
                     RequireExpirationTime = true,
                     ValidateLifetime = true,
