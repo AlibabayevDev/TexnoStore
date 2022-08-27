@@ -64,7 +64,9 @@ namespace TexnoStoreApi.Controllers
                     new Claim(ClaimTypes.Name, user.Id.ToString()),
                     new Claim(ClaimTypes.Email, user.Email)
                 }),
-                Expires = DateTime.Now.AddDays(20), //Token expires after 15
+                NotBefore = DateTime.UtcNow, //token create time
+                IssuedAt = DateTime.UtcNow,  // token create time
+                Expires = DateTime.Now.AddDays(15), //Token expires after 15
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
