@@ -91,7 +91,7 @@ namespace TexnoStoreApi
                 {
                     ValidateIssuerSigningKey = true,
                     ValidateIssuer = false,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("xecretKeywqejane")),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["JWT:Key"])),
                     ValidateAudience = false,       
                     RequireExpirationTime = true,
                     ValidateLifetime = true,

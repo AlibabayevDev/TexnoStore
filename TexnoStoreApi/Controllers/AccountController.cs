@@ -53,7 +53,7 @@ namespace TexnoStoreApi.Controllers
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
-            byte[] key = Encoding.ASCII.GetBytes("xecretKeywqejane");
+            byte[] key = Encoding.ASCII.GetBytes(configuration["JWT:Key"].ToString());
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
