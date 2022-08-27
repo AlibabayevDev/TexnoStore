@@ -149,13 +149,8 @@ namespace TexnoStore.Controllers
                     var user = userManager.CreateAsync(model.user, model.user.PasswordHash).Result;
                     if (user.Succeeded)
                     {
-                        var signInResult = signInManager.PasswordSignInAsync(model.user, model.user.PasswordHash, true, false).Result;
-                        
-                        if (signInResult.Succeeded)
-                        {
-                            return RedirectToActionPermanent("Index", "Home");
-                        }
-
+                        signInManager.SignInAsync(model.user,isPersistent:false);
+                        return RedirectToActionPermanent("Index", "Home");
                     }
                     else
                     {
@@ -196,11 +191,10 @@ namespace TexnoStore.Controllers
             return View("Complete", SelectModel);
         }
 
-        [Authorize]
         public IActionResult Logout()
         {
             signInManager.SignOutAsync();
-            return RedirectToAction("Login", "Account"); 
+            return RedirectToAction("Index", "Home"); 
         }
 
         public IActionResult AccessDenied()
@@ -208,6 +202,17 @@ namespace TexnoStore.Controllers
             return Content("You have no any access for this page");
         }
 
+        public IActionResult IsAuthenticated()
+        {
+            if(User.Identity.IsAuthenticated)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json(false);
+            }
+        }
 
         [AllowAnonymous]
         public IActionResult ForgotPassword()

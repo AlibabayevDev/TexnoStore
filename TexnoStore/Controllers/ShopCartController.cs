@@ -66,6 +66,7 @@ namespace TexnoStore.Controllers
             return Json(allProductsList.Count);
         }
 
+
         public IActionResult Delete(int id)
         {
             db.ShopCartRepository.Delete(id);
