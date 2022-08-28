@@ -51,14 +51,15 @@ namespace TexnoStore.Controllers
         {
             if((model.loginModel.Email == null) || (model.loginModel.Password == null))
             {
-                return View(model);
+                ViewBag.Error = "Username or password is incorrect";
+                return View("Index",model);
             }
 
             var user = userManager.FindByNameAsync(model.loginModel.Email).Result;
             if (user == null)
             {
-                TempData["Message"] = "Username or password is incorrect";
-                return View(model);
+                ViewBag.Error = "Username or password is incorrect";
+                return View("Index",model);
             }
             
             var signInResult = signInManager.PasswordSignInAsync(user, model.loginModel.Password, true, false).Result;
@@ -67,7 +68,8 @@ namespace TexnoStore.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            TempData["Message"] = "Username or password is incorrect";
+            ViewBag.Error = "Username or password is incorrect";
+
             return View("Index", model);
         }
 
@@ -87,7 +89,7 @@ namespace TexnoStore.Controllers
             }
             if (model.loginModel.Password != model.loginModel.RetypePassword)
             {
-                TempData["Error"] = "Passwords do not match";
+                ViewBag.Error1 = "Passwords do not match";
                 return View("Regist", model);
             }
             model.user = LoginMapper.Map(model.loginModel);
@@ -119,14 +121,14 @@ namespace TexnoStore.Controllers
                 }
                 catch (Exception ex)
                 {
-                    TempData["Error"] = "This email does not exist";
-                    return RedirectToAction("Regist", model);
+                    ViewBag.Error1 = "This email does not exist";
+                    return View(model);
                 }
             }
             else
             {
-                TempData["Error"] = "This Email is registered";
-                return RedirectToAction("Regist", model);
+                ViewBag.Error1 = "This Email is registered";
+                return View(model);
 
             }
             /*foreach (var i in user.Errors)
@@ -157,13 +159,14 @@ namespace TexnoStore.Controllers
                         foreach (var i in user.Errors)
                         {
                             model.ErrorMessage += i.Description;
-                            ViewBag.Error = model.ErrorMessage;
+                            ViewBag.Error1 = model.ErrorMessage;
                         }
                         return View(model); ;
                     }
                 }
             }
-            return RedirectToAction("Index","Home");
+            ViewBag.Error1 = "Passwords do not match";
+            return View();
         }
 
         public IActionResult RepeatSend()
@@ -186,7 +189,7 @@ namespace TexnoStore.Controllers
                 client.Send(message);
                 client.Disconnect(true);
             }
-            ViewBag.Message = "We resubmitted the code";
+            ViewBag.Error1 = "We resubmitted the code";
             SelectModel.loginModel = SelectModel.loginModel;
             return View("Complete", SelectModel);
         }
@@ -306,36 +309,54 @@ namespace TexnoStore.Controllers
             ExternalLoginInfo info = await signInManager.GetExternalLoginInfoAsync();
             if (info == null)
                 return RedirectToAction(nameof(Login));
-            try
-            {
-                db.LoginRepository.AddKey(info.ProviderKey);
-            }
-            catch(Exception ex)
-            {
-                TempData["Error"] = "Something went wrong";
-                return RedirectToAction("Index","Allproduct");
-            }
-        
+
+
             var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
             string[] userInfo = { info.Principal.FindFirst(ClaimTypes.Name).Value, info.Principal.FindFirst(ClaimTypes.Email).Value };
+
+            int index = userInfo[0].IndexOf(' ');
+            string name = userInfo[0].Split(' ').FirstOrDefault();
+            string lastname = userInfo[0].Split(' ').LastOrDefault();
+
             if (result.Succeeded)
-               return RedirectToAction("Index", "Allproduct");
+                return RedirectToAction("Index", "Allproduct");
             else
             {
                 User user = new User
                 {
                     Email = info.Principal.FindFirst(ClaimTypes.Email).Value,
+                    Name = name,
+                    LastName = lastname,
+                    LoginProvider = "Google",
+                    ProviderKey = info.ProviderKey
                 };
+
+                var userExist = db.LoginRepository.Get(userInfo[1]);
+
+                if (userExist != null)
+                {
+                    if (userExist.PasswordHash != null)
+                    {
+                        user.PasswordHash = userExist.PasswordHash;
+                        db.LoginRepository.Update(user);
+                        await signInManager.SignInAsync(user, false);
+
+                        return RedirectToAction("Index", "Allproduct");
+                    }
+                }
 
                 IdentityResult identResult = await userManager.CreateAsync(user);
                 if (identResult.Succeeded)
                 {
-                    identResult = await userManager.AddLoginAsync(user, info);
-                    if (identResult.Succeeded)
-                    {
-                        await signInManager.SignInAsync(user, false);
-                        return View(userInfo);
-                    }
+                    await signInManager.SignInAsync(user, false);
+                    return RedirectToAction("Index", "Allproduct");
+
+                    //identResult = await userManager.AddLoginAsync(user, info);
+                    //if (identResult.Succeeded)
+                    //{
+                    //    await signInManager.SignInAsync(user, false);
+                    //    return View(userInfo);
+                    //}
                 }
                 return AccessDenied();
             }

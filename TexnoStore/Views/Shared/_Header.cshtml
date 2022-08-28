@@ -18,7 +18,7 @@
 }
 .menu li a {
 	display: block;
-	padding: 15px 15px;
+	padding: 1px 15px;
 	color: #fff;
 	text-align: center;
 }
@@ -88,12 +88,11 @@
 									</li>*@
 									<li style="color:white;"> @User.Identity?.Name </li>
 									<li>
-										<a class="menu-caret" href="#">My Account</a>
+										<a class="menu-caret" href="#"><i class="fa fa-user-o"></i> My Account</a>
 										<ul>
 											<li id="login"></li>
 											<li><a href="#">My Orders</a></li>
 											<li><a href="#">My Desires</a></li>
-											<li><a href="#">Акция 4</a></li>
 											<li><a href="/Account/Logout">Go out</a></li>
 										</ul>
 									</li>
@@ -172,7 +171,6 @@
 
 		<script>
 			function ShopCartModal() {
-				alert("sal");
 				$.ajax({
 					url: "/ShopCart/ShopCartList",
 					success: function (data) {
