@@ -301,36 +301,45 @@ namespace TexnoStore.Controllers
             ExternalLoginInfo info = await signInManager.GetExternalLoginInfoAsync();
             if (info == null)
                 return RedirectToAction(nameof(Login));
-            try
-            {
-                db.LoginRepository.AddKey(info.ProviderKey);
-            }
-            catch(Exception ex)
-            {
-                TempData["Error"] = "Something went wrong";
-                return RedirectToAction("Index","Allproduct");
-            }
-        
+
+
             var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
             string[] userInfo = { info.Principal.FindFirst(ClaimTypes.Name).Value, info.Principal.FindFirst(ClaimTypes.Email).Value };
+
+            int index = userInfo[0].IndexOf(' ');
+            string name = userInfo[0].Split(' ').FirstOrDefault();
+            string lastname = userInfo[0].Split(' ').LastOrDefault();
+
             if (result.Succeeded)
-               return RedirectToAction("Index", "Allproduct");
+                return RedirectToAction("Index", "Allproduct");
             else
             {
                 User user = new User
                 {
                     Email = info.Principal.FindFirst(ClaimTypes.Email).Value,
+                    Name = name,
+                    LastName = lastname,
+                    LoginProvider = "Google",
+                    ProviderKey = info.ProviderKey
                 };
+
+                var userExist = db.LoginRepository.Get(userInfo[1]);
+
+                if (userExist != null)
+                {
+                    if (userExist.PasswordHash != null)
+                    {
+                        user.PasswordHash = userExist.PasswordHash;
+                        db.LoginRepository.Update(user);
+                        return RedirectToAction("Index", "Allproduct");
+                    }
+                }
 
                 IdentityResult identResult = await userManager.CreateAsync(user);
                 if (identResult.Succeeded)
                 {
-                    identResult = await userManager.AddLoginAsync(user, info);
-                    if (identResult.Succeeded)
-                    {
-                        await signInManager.SignInAsync(user, false);
-                        return View(userInfo);
-                    }
+                    await signInManager.SignInAsync(user, false);
+                    return RedirectToAction("Index", "Allproduct");
                 }
                 return AccessDenied();
             }
