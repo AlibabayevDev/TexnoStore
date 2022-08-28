@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MailKit.Net.Smtp;
 using Microsoft.IdentityModel.Tokens;
+using MimeKit;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -19,6 +21,7 @@ namespace TexnoStoreApi.Controllers
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly IConfiguration configuration;
+        private static string ConfirmPass { get; set; }
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager,IConfiguration configuration, IUnitOfWork db)
         {
             this.userManager = userManager;
@@ -120,6 +123,52 @@ namespace TexnoStoreApi.Controllers
             });
         }
 
+        [HttpPost]
+        [Route("Registr")]
+        public IActionResult Regist(RegistrationModel model)
+        {
+            if ((model.Email == null) || (model.Password == null))
+                return BadRequest("Email or password required");
 
+            if (model.Password != model.RetypePassword)
+                return BadRequest("Passwords don't mismatch");
+
+       
+            var user = userManager.FindByNameAsync(model.Email).Result;
+            if (user == null)
+            {
+                try
+                {
+                    Random rnd = new Random();
+                    ConfirmPass = rnd.Next(100000, 999999).ToString();
+                    var message = new MimeMessage();
+                    message.From.Add(new MailboxAddress("Adminstrator", "alibabaev375@mail.ru"));
+                    message.To.Add(new MailboxAddress("naren", model.Email));
+                    message.Subject = "Confirm Password";
+                    message.Body = new TextPart("plain")
+                    {
+                        Text = ConfirmPass
+                    };
+
+                    using (var client = new SmtpClient())
+                    {
+                        client.Connect("smtp.mail.ru", 25, false);
+                        client.Authenticate("alibabaev375@mail.ru", "UnhvOfx824cPnFhevo3g");
+                        client.Send(message);
+                        client.Disconnect(true);
+                    }
+
+                    return Ok(model);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return BadRequest("This Email is registered");      
+        }
+
+      
     }
 }
