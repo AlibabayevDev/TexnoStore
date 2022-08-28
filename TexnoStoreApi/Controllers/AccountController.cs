@@ -19,13 +19,11 @@ namespace TexnoStoreApi.Controllers
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly IConfiguration configuration;
-        private readonly IUnitOfWork db;
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager,IConfiguration configuration, IUnitOfWork db)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.configuration = configuration;
-            this.db = db;
         }
 
         [HttpPost]
@@ -107,7 +105,7 @@ namespace TexnoStoreApi.Controllers
         {
             var user = userManager.FindByEmailAsync(resetPassword.Email).Result;
             if (user == null)
-                return BadRequest("User was not found");
+                return NotFound("User was not found");
 
             var resetPassResult = userManager.ResetPasswordAsync(user, resetPassword.Token, resetPassword.Password).Result;
             if (resetPassResult.Succeeded == false)
@@ -121,6 +119,7 @@ namespace TexnoStoreApi.Controllers
                 Email = user.Email
             });
         }
+
 
     }
 }
