@@ -6,6 +6,8 @@ using System.Security.Claims;
 using System.Text;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Core.Domain.Entities;
+using TexnoStore.Email;
+using TexnoStoreWebCore.Models;
 using TexnoStoreWebCore.Models.Users;
 
 namespace TexnoStoreApi.Controllers
@@ -74,5 +76,51 @@ namespace TexnoStoreApi.Controllers
 
             return tokenHandler.WriteToken(token);
         }
+
+
+        [HttpPost]
+        [Route("ForgotPassword")]
+        public IActionResult ForgotPassword(string email)
+        {
+            var user = userManager.FindByEmailAsync(email).Result;
+
+            if (user == null)
+                return BadRequest("User was not found");
+
+            var token = userManager.GeneratePasswordResetTokenAsync(user);
+            var link = Url.Action("ResetPassword", "Account", new { token, email = user.Email }, Request.Scheme);
+            EmailHelper emailHelper = new EmailHelper();
+
+            bool emailResponse = emailHelper.SendEmailPasswordReset(user.Email, link);
+
+            if (emailResponse)
+                return Ok(link);
+
+            return BadRequest("Something went wrong");
+        }
+
+
+
+        [HttpPost]
+        [Route("ResetPassword")]
+        public IActionResult ResetPassword(ResetPassword resetPassword)
+        {
+            var user = userManager.FindByEmailAsync(resetPassword.Email).Result;
+            if (user == null)
+                return BadRequest("User was not found");
+
+            var resetPassResult = userManager.ResetPasswordAsync(user, resetPassword.Token, resetPassword.Password).Result;
+            if (resetPassResult.Succeeded == false)
+                return BadRequest("Something went wrong");
+
+            string token = GenerateToken(user);
+
+            return Ok(new LoginResponseModel
+            {
+                Token = token,
+                Email = user.Email
+            });
+        }
+
     }
 }
