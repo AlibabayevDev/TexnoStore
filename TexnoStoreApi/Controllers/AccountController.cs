@@ -33,6 +33,9 @@ namespace TexnoStoreApi.Controllers
         [Route("Login")]
         public IActionResult Login(LoginRequestModel model)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var user = userManager.FindByEmailAsync(model.Email).Result;
 
             if (user == null)
@@ -83,6 +86,9 @@ namespace TexnoStoreApi.Controllers
         [Route("ForgotPassword")]
         public IActionResult ForgotPassword(string email)
         {
+            if (!email.Contains($"@"))
+                ModelState.AddModelError(nameof(email), "Invalid mail");
+
             var user = userManager.FindByEmailAsync(email).Result;
 
             if (user == null)
@@ -106,6 +112,9 @@ namespace TexnoStoreApi.Controllers
         [Route("ResetPassword")]
         public IActionResult ResetPassword(ResetPassword resetPassword)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var user = userManager.FindByEmailAsync(resetPassword.Email).Result;
             if (user == null)
                 return NotFound("User was not found");
