@@ -43,7 +43,7 @@ namespace TexnoStoreApi
             services.AddSingleton<IPasswordHasher<User>, CustomPasswordHasher>();
             services.AddSingleton<IUserStore<User>, UserStore>();
             services.AddSingleton<IRoleStore<Role>, RoleStore>();
-            services.AddScoped<ICameraService, CameraService>();
+            services.AddSingleton<IUnitOfWorkService, UnitOfWorkService>();
 
             services.AddSwaggerGen(c =>
             {

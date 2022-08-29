@@ -7,8 +7,8 @@ namespace TexnoStoreApi.Controllers
     [ApiController]
     public class CameraController : ControllerBase
     {
-        private readonly ICameraService cameraService;
-        public CameraController(ICameraService cameraService)
+        private readonly IUnitOfWorkService cameraService;
+        public CameraController(IUnitOfWorkService cameraService)
         {
             this.cameraService = cameraService;
         }
@@ -19,7 +19,7 @@ namespace TexnoStoreApi.Controllers
         {
             try
             {  
-                var cameras = cameraService.Cameras();
+                var cameras = cameraService.CameraService.Cameras();
                 if(cameras == null)
                     return BadRequest("Something went wrong");
 
@@ -40,7 +40,7 @@ namespace TexnoStoreApi.Controllers
         {
             try
             {
-                var camera = cameraService.CameraById(id);
+                var camera = cameraService.CameraService.CameraById(id);
                 if (camera == null)
                     return BadRequest("Data not found");
 
