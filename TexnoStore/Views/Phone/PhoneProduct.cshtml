@@ -420,28 +420,76 @@
 										<!-- Review Form -->
 										<div class="col-md-3">
 											<div id="review-form">
-												<form class="review-form">
-													<input class="input" type="text" placeholder="Your Name">
-													<input class="input" type="email" placeholder="Your Email">
-													<textarea class="input" placeholder="Your Review"></textarea>
+												<form class="review-form"> @* asp-controller="Laptop" asp-action="Review" *@
+													<input asp-for="@Model.Phone.ProductId" id="stdId" hidden/>
+													<input asp-for="@Model.Review.Name" id="stdName" class="input" type="text" placeholder="Your Name">
+													<input asp-for="@Model.Review.Email" id="stdEmail" class="input" type="email" placeholder="Your Email">
+													<textarea  asp-for="@Model.Review.Message" id="stdMessage" class="input" placeholder="Your Review"></textarea>
 													<div class="input-rating">
 														<span>Your Rating: </span>
 														<div class="stars">
-															<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
-															<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
-															<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
-															<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-															<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+															<input id="star5" class="i-7" name="rating" value="5"  type="radio"><label for="star5"></label>
+															<input id="star4" class="i-7" name="rating" value="4"  type="radio"><label for="star4"></label>
+															<input id="star3" class="i-7" name="rating" value="3"  type="radio"><label for="star3"></label>
+															<input id="star2" class="i-7" name="rating" value="2"  type="radio"><label for="star2"></label>
+															<input id="star1" class="i-7" name="rating" value="1"  type="radio"><label for="star1"></label>
 														</div>
 													</div>
-													<button class="primary-btn">Submit</button>
-												</form>
+													<input onclick="BtnClick()" type="button"  value="Submit" class="primary-btn">
+													<p id="TempData"></p>
+												</form> 
 											</div>
 										</div>
 										<!-- /Review Form -->
+										<script>
+											function BtnClick()
+											{
+												var id=$("#stdId").val();
+												var name=$("#stdName").val();
+												var email=$("#stdEmail").val();
+												var message=$("#stdMessage").val();
+												var rating =$("input[name='rating']:checked").val();
+												var obj ={
+													ProductId:id,
+													Name: name,
+													Email: email,
+													Message: message,
+													Rating:rating
+												}
+
+												SubmitForm(obj);
+
+												var val = $('#stdName').val();
+												if(val.length >= 1){
+													$('#stdName').val('');
+												  }
+												var val = $('#stdEmail').val();
+												if(val.length >= 1){
+													$('#stdEmail').val('');
+												  }
+												var val = $('#stdMessage').val();
+												if(val.length >= 1){
+													$('#stdMessage').val('');
+												  }
+												document.getElementById("star5").checked = true;
+											}
+											function SubmitForm(obj){
+												$.ajax({
+													url:"/AllProduct/AddReview",
+													method :"POST",
+													data:obj,
+													success:function(data){
+														$('#TempData').text(data);
+													},
+													error: function(err)
+													{
+														console.error(err);
+													}
+												})
+												
+											}
+										</script>
 									</div>
-								</div>
-								<!-- /tab3  -->
 							</div>
 							<!-- /product tab content  -->
 						</div>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TexnoStore.Core.DataAccess.Abstract;
@@ -81,6 +82,24 @@ namespace TexnoStore.Controllers
             }
 
             return productsModels;
+        }
+
+
+        public JsonResult AddReview(ReviewModel model)
+        {
+            ReviewMapper reviewMapper = new ReviewMapper();
+            string ErrorMessage;
+            var review = reviewMapper.Map(model);
+            try
+            {
+                db.ReviewRepository.Add(review);
+                ErrorMessage = "Succesfully added";
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = "Something went wrong";
+            }
+            return Json(ErrorMessage);
         }
     }
 }

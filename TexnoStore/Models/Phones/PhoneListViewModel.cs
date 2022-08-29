@@ -7,5 +7,7 @@ namespace TexnoStore.Models.Phones
     {
         public IEnumerable<PhoneModel> Phones { get; set; }
         public PhoneModel Phone { get; set; }
+        public List<ReviewModel> Reviews { get; set; }
+        public ReviewModel Review { get; set; }
     }
 }

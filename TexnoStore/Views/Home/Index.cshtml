@@ -71,19 +71,10 @@
 								<div id="tab1" class="tab-pane active">
 									<div class="products-slick" data-nav="#slick-nav-1">
 										@{
-											foreach(LaptopModel produc in Model.LaptopModel)
+											foreach(var produc in Model.Products)
 											{
 												@Html.Partial("AllProducts",produc)
 											}
-											foreach(PhoneModel produc in Model.PhoneModel)
-											{
-												@Html.Partial("AllProducts",produc)
-											}
-											foreach(CameraModel produc in Model.CameraModel)
-								            {
-									           @Html.Partial("AllProducts", produc)
-							               	}
-
 										}
 									</div>
 									<div id="slick-nav-1" class="products-slick-nav"></div>
@@ -561,7 +552,7 @@
 
 	<script>
 			function initializeTimer() {
-			var endDate = new Date(2022,07,26);
+			var endDate = new Date(2022,08,01);
  
 			var currentDate = new Date();
 			var seconds = (endDate-currentDate) / 1000;
