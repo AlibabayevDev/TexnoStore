@@ -34,7 +34,7 @@ namespace TexnoStoreApi.Controllers
         public IActionResult Login(LoginRequestModel model)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return BadRequest("Invalid mail");
 
             var user = userManager.FindByEmailAsync(model.Email).Result;
 
