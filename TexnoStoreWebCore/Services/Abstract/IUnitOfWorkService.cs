@@ -10,5 +10,6 @@ namespace TexnoStoreWebCore.Services.Abstract
     {
         ICameraService CameraService { get; }
         ILaptopService LaptopService { get; }
+        IAllProductService AllProductService { get; }
     }
 }
