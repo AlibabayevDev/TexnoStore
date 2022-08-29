@@ -20,16 +20,16 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
         }
 
 
-        public Camera CameraProduct(int productId)
+        public Camera CameraProduct(int Id)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string cmdText = "select Category.CategoryName, Camera.Id, Camera.Company, Camera.OpticalZoom, Camera.Color, Camera.ProductId, Products.Name, Products.OldPrice, Products.TypeId, Products.Price, Products.Sale, Products.LongDesc, Camera.ImageId, Products.MainImg, Camera.CategoryId, Products.AddDate, Products.ShortDesc from Camera inner join Category on Category.Id = Camera.CategoryId inner join Products on Products.Id = Camera.ProductId where ProductId = @ProductId";
+                string cmdText = "select Category.CategoryName, Camera.Id, Camera.Company, Camera.OpticalZoom, Camera.Color, Camera.ProductId, Products.Name, Products.OldPrice, Products.TypeId, Products.Price, Products.Sale, Products.LongDesc, Camera.ImageId, Products.MainImg, Camera.CategoryId, Products.AddDate, Products.ShortDesc from Camera inner join Category on Category.Id = Camera.CategoryId inner join Products on Products.Id = Camera.ProductId where Camera.Id = @Id";
 
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {
-                    cmd.Parameters.AddWithValue("@ProductId", productId);
+                    cmd.Parameters.AddWithValue("@Id", Id);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 

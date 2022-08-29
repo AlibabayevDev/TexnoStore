@@ -18,5 +18,7 @@ namespace TexnoStoreWebCore.Services.Implementations
         public ICameraService CameraService => new CameraService(db);
 
         public ILaptopService LaptopService => new LaptopService(db);
+
+        public IAllProductService AllProductService => new AllProductService(db);
     }
 }
