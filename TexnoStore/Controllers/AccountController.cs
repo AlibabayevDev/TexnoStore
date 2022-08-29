@@ -1,13 +1,9 @@
 ﻿using MailKit.Net.Smtp;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
@@ -23,13 +19,13 @@ namespace TexnoStore.Controllers
 {
     public class AccountController : Controller
     {
-        public LoginMapper LoginMapper=new LoginMapper();
-        public static UserViewModel SelectModel=new UserViewModel();
+        public LoginMapper LoginMapper = new LoginMapper();
+        public static UserViewModel SelectModel = new UserViewModel();
         private static string ConfirmPass { get; set; }
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly IUnitOfWork db;
-        
+
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IUnitOfWork db)
         {
             this.userManager = userManager;
@@ -49,30 +45,32 @@ namespace TexnoStore.Controllers
         [HttpPost]
         public IActionResult Login(UserViewModel model)
         {
-            if((model.loginModel.Email == null) || (model.loginModel.Password == null))
+            if ((model.loginModel.Email == null) || (model.loginModel.Password == null))
             {
-                return View(model);
+                ViewBag.Error = "Username or password is incorrect";
+                return View("Index", model);
             }
 
             var user = userManager.FindByNameAsync(model.loginModel.Email).Result;
             if (user == null)
             {
-                TempData["Message"] = "Username or password is incorrect";
-                return View(model);
+                ViewBag.Error = "Username or password is incorrect";
+                return View("Index", model);
             }
-            
+
             var signInResult = signInManager.PasswordSignInAsync(user, model.loginModel.Password, true, false).Result;
 
-            if(signInResult.Succeeded)
+            if (signInResult.Succeeded)
             {
                 return RedirectToAction("Index", "Home");
             }
-            TempData["Message"] = "Username or password is incorrect";
+            ViewBag.Error = "Username or password is incorrect";
+
             return View("Index", model);
         }
 
         [HttpGet]
-        public IActionResult Regist( )
+        public IActionResult Regist()
         {
             return View();
         }
@@ -83,16 +81,16 @@ namespace TexnoStore.Controllers
         {
             if ((model.loginModel.Email == null) || (model.loginModel.Password == null))
             {
-                return View("Regist",model);
+                return View("Regist", model);
             }
             if (model.loginModel.Password != model.loginModel.RetypePassword)
             {
-                TempData["Error"] = "Passwords do not match";
+                ViewBag.Error1 = "Passwords do not match";
                 return View("Regist", model);
             }
             model.user = LoginMapper.Map(model.loginModel);
             var user = userManager.FindByNameAsync(model.loginModel.Email).Result;
-            if(user==null)
+            if (user == null)
             {
                 try
                 {
@@ -119,14 +117,14 @@ namespace TexnoStore.Controllers
                 }
                 catch (Exception ex)
                 {
-                    TempData["Error"] = "This email does not exist";
-                    return RedirectToAction("Regist", model);
+                    ViewBag.Error1 = "This email does not exist";
+                    return View(model);
                 }
             }
             else
             {
-                TempData["Error"] = "This Email is registered";
-                return RedirectToAction("Regist", model);
+                ViewBag.Error1 = "This Email is registered";
+                return View(model);
 
             }
             /*foreach (var i in user.Errors)
@@ -140,35 +138,31 @@ namespace TexnoStore.Controllers
 
         public IActionResult Complete(UserViewModel model)
         {
-            if(model.ConfirmPassword == ConfirmPass)
+            if (model.ConfirmPassword == ConfirmPass)
             {
                 model.user = LoginMapper.Map(SelectModel.loginModel);
                 if (model.user.PasswordHash != null)
                 {
-                    
+
                     var user = userManager.CreateAsync(model.user, model.user.PasswordHash).Result;
                     if (user.Succeeded)
                     {
-                        var signInResult = signInManager.PasswordSignInAsync(model.user, model.user.PasswordHash, true, false).Result;
-                        
-                        if (signInResult.Succeeded)
-                        {
-                            return RedirectToActionPermanent("Index", "Home");
-                        }
-
+                        signInManager.SignInAsync(model.user, isPersistent: false);
+                        return RedirectToActionPermanent("Index", "Home");
                     }
                     else
                     {
                         foreach (var i in user.Errors)
                         {
                             model.ErrorMessage += i.Description;
-                            ViewBag.Error = model.ErrorMessage;
+                            ViewBag.Error1 = model.ErrorMessage;
                         }
                         return View(model); ;
                     }
                 }
             }
-            return RedirectToAction("Index","Home");
+            ViewBag.Error1 = "Passwords do not match";
+            return View();
         }
 
         public IActionResult RepeatSend()
@@ -191,16 +185,15 @@ namespace TexnoStore.Controllers
                 client.Send(message);
                 client.Disconnect(true);
             }
-            ViewBag.Message = "We resubmitted the code";
+            ViewBag.Error1 = "We resubmitted the code";
             SelectModel.loginModel = SelectModel.loginModel;
             return View("Complete", SelectModel);
         }
 
-        [Authorize]
         public IActionResult Logout()
         {
             signInManager.SignOutAsync();
-            return RedirectToAction("Login", "Account"); 
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult AccessDenied()
@@ -208,6 +201,17 @@ namespace TexnoStore.Controllers
             return Content("You have no any access for this page");
         }
 
+        public IActionResult IsAuthenticated()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json(false);
+            }
+        }
 
         [AllowAnonymous]
         public IActionResult ForgotPassword()
@@ -231,7 +235,7 @@ namespace TexnoStore.Controllers
 
             EmailHelper emailHelper = new EmailHelper();
             bool emailResponse = emailHelper.SendEmailPasswordReset(user.Email, link);
-            
+
             if (emailResponse)
                 return RedirectToAction("ForgotPasswordConfirmation");
             else
@@ -331,6 +335,8 @@ namespace TexnoStore.Controllers
                     {
                         user.PasswordHash = userExist.PasswordHash;
                         db.LoginRepository.Update(user);
+                        await signInManager.SignInAsync(user, false);
+
                         return RedirectToAction("Index", "Allproduct");
                     }
                 }
@@ -340,6 +346,13 @@ namespace TexnoStore.Controllers
                 {
                     await signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Allproduct");
+
+                    //identResult = await userManager.AddLoginAsync(user, info);
+                    //if (identResult.Succeeded)
+                    //{
+                    //    await signInManager.SignInAsync(user, false);
+                    //    return View(userInfo);
+                    //}
                 }
                 return AccessDenied();
             }

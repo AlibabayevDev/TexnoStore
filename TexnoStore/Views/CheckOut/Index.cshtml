@@ -26,37 +26,42 @@
 			<div class="container">
 				<!-- row -->
 				<div class="row">
-
 					<div class="col-md-7">
 						<!-- Billing Details -->
 						<div class="billing-details">
 							<div class="section-title">
 								<h3 class="title">Billing address</h3>
 							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="first-name" placeholder="First Name">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="last-name" placeholder="Last Name">
-							</div>
-							<div class="form-group">
-								<input class="input" type="email" name="email" placeholder="Email">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="address" placeholder="Address">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="city" placeholder="City">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="country" placeholder="Country">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
-							</div>
-							<div class="form-group">
-								<input class="input" type="tel" name="tel" placeholder="Telephone">
-							</div>
+						<form id="order" asp-action="Order" asp-controller="CheckOut">
+								<input asp-for="ShopCart.ShopCartModels" hidden/>
+								<div class="form-group">
+									<input asp-for="OrderDetails.Name" id="stdName" class="input" type="text" placeholder="First Name" required>
+								</div>
+								<div class="form-group">
+									<input asp-for="OrderDetails.LastName" id="stdLastName" class="input" type="text" placeholder="Last Name" required>
+								</div>
+								<div class="form-group">
+									<input asp-for="OrderDetails.Email" id="stdEmail" class="input" type="email" placeholder="Email" required>
+								</div>
+								<div class="form-group">
+									<input asp-for="OrderDetails.Adress" id="stdAddress" class="input" type="text" placeholder="Address" required>
+								</div>
+								<div class="form-group">
+									<input asp-for="OrderDetails.City" id="stdCity" class="input" type="text" placeholder="City" required>
+								</div>
+								<div class="form-group">
+									<input asp-for="OrderDetails.Country" id="stdCountry" class="input" type="text" placeholder="Country" required>
+								</div>
+								<div class="form-group">
+									<input asp-for="OrderDetails.ZipCode" id="stdZipCode" class="input" type="text" placeholder="ZIP Code" required>
+								</div>
+								<div class="form-group">
+									<input asp-for="OrderDetails.Telephone" id="stdTel" class="input" type="tel" placeholder="Telephone" >
+								</div>
+								<div class="order-notes">
+									<input type="text" asp-for="OrderDetails.OrderNotes" class="input" placeholder="Order Notes"/>
+								</div>
+						</form>
 							
 						</div>
 						<!-- /Billing Details -->
@@ -65,9 +70,7 @@
 						<!-- /Shiping Details -->
 
 						<!-- Order notes -->
-						<div class="order-notes">
-							<textarea class="input" placeholder="Order Notes"></textarea>
-						</div>
+						
 						<!-- /Order notes -->
 					</div>
 
@@ -98,7 +101,7 @@
 							</div>
 							<div class="order-col">
 								<div><strong>TOTAL</strong></div>
-								<div><strong class="order-total">$2940.00</strong></div>
+								<div><strong class="order-total">$@Model.ShopCart.ShopCartPrice.00</strong></div>
 							</div>
 						</div>
 						<div class="payment-method">
@@ -134,17 +137,63 @@
 							</div>
 						</div>
 						<div class="input-checkbox">
-							<input type="checkbox" id="terms">
+							<input type="checkbox" id="terms" required>
 							<label for="terms">
 								<span></span>
 								I've read and accept the <a href="#">terms & conditions</a>
 							</label>
 						</div>
-						<a href="#" class="primary-btn order-submit">Place order</a>
+						<input form="order" type="submit" class="primary-btn order-submit" value="Place order"  />
 					</div>
 					<!-- /Order Details -->
 				</div>
+				
 				<!-- /row -->
 			</div>
 			<!-- /container -->
 		</div>
+
+
+		@*<script>
+			function BtnClick()
+			{
+				var name=$("#stdName").val();
+				var lastname=$("#stdLastName").val();
+				var email=$("#stdEmail").val();
+				var address=$("#stdAddress").val();
+				var city =$("#stdCity").val();
+				var country =$("#stdCountry").val();
+				var zipcode =$("#stdZipCode").val();
+				var tel = $("#stdTel").val();
+				var obj ={
+					OrderDetails
+					{
+						Name:name,
+						LastNam:lastname,
+						Email:email,
+						Address:address,
+						City:city,
+						Country:country,
+						ZipCode:zipcode,
+						Tel:tel
+					}
+				}
+
+				SubmitForm(obj);
+			}
+			function SubmitForm(obj){
+				$.ajax({
+					url:"/CheckOut/Order",
+					method :"POST",
+					data:obj,
+					success:function(data){
+						$('#TempData').text(data);
+					},
+					error: function(err)
+					{
+						console.error(err);
+					}
+				})
+												
+			}
+		</script>*@
