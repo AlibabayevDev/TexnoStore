@@ -42,7 +42,7 @@ namespace TexnoStoreWebCore.Services.Implementations
 
             var productModel = baseMapper.Map(allProduct);
 
-            return baseModel;
+            return productModel;
         }
 
         public ShopCartModel QuickViewProduct(int id)
