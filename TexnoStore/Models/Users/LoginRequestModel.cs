@@ -14,7 +14,6 @@ namespace TexnoStore.Models.Users
         [Display(Name = "Password"), MinLength(8), MaxLength(30), Required(ErrorMessage = "Password length is at least 8 characters")]
         public string Password { get; set; }
         public string RetypePassword { get; set; }
-        public string Index(bool isMarried) => $"isMarried: {isMarried}";
     }
     public class LoginResponseModel
     {
