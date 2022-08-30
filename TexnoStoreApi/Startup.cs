@@ -134,6 +134,7 @@ namespace TexnoStoreApi
             app.UseRouting();
             app.UseCookiePolicy();
             app.UseRequestResponseLoggingMiddleware();
+            app.UseErrorHandlerMiddleware();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSwagger();

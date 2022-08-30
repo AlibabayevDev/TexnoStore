@@ -40,7 +40,7 @@ namespace TexnoStoreApi.Middlewares
                                    $"Request Body: {ReadStreamInChunks(requestStream)}");
             context.Request.Body.Position = 0;
         }
-
+         
         private static string ReadStreamInChunks(Stream stream)
         {
             const int readChunkBufferLength = 4096;
