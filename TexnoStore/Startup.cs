@@ -52,6 +52,11 @@ namespace TexnoStore
             services.AddSingleton<IRoleStore<Role>, RoleStore>();
             services.AddSingleton<IUnitOfWorkService, UnitOfWorkService>();
 
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true; // asking client for cookies accept
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -83,7 +88,7 @@ namespace TexnoStore
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseCookiePolicy();
             app.UseRouting();
 
             app.UseAuthentication();

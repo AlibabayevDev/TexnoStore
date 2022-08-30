@@ -28,7 +28,7 @@ namespace TexnoStoreApi.Controllers
             }
             catch(Exception ex)
             {
-                return BadRequest("Something went wrong");
+                return base.BadRequest(new ProblemDetails() { Title = ex.Message, Detail = ex.ToString() });
             }
         }
 

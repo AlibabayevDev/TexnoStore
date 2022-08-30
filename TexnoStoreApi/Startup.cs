@@ -8,6 +8,7 @@ using TexnoStore.Core.Domain.Entities;
 using TexnoStore.Core.Factory;
 using TexnoStore.Core.IdentityServer;
 using TexnoStore.IdentityServer;
+using TexnoStoreApi.Middlewares;
 using TexnoStoreWebCore.Services.Abstract;
 using TexnoStoreWebCore.Services.Implementations;
 
@@ -131,7 +132,9 @@ namespace TexnoStoreApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCookiePolicy();
+            app.UseRequestResponseLoggingMiddleware();
+            app.UseErrorHandlerMiddleware();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSwagger();
