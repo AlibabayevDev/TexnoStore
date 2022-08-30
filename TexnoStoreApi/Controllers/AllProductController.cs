@@ -17,6 +17,7 @@ namespace TexnoStoreApi.Controllers
         [Route("GetAll")]
         public IActionResult GetAll()
         {
+            throw new Exception();
             try
             {
                 var allProduct = allProductService.AllProductService.GetAllProduct();
@@ -27,7 +28,7 @@ namespace TexnoStoreApi.Controllers
             }
             catch(Exception ex)
             {
-                return BadRequest("Something went wrong");
+                return base.BadRequest(new ProblemDetails() { Title = ex.Message, Detail = ex.ToString() });
             }
         }
 
