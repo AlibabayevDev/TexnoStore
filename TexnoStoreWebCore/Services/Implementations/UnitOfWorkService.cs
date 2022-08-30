@@ -20,5 +20,6 @@ namespace TexnoStoreWebCore.Services.Implementations
         public ILaptopService LaptopService => new LaptopService(db);
 
         public IAllProductService AllProductService => new AllProductService(db);
+        public IHomeService HomeService => new HomeService(db);
     }
 }

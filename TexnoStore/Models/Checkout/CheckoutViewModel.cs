@@ -1,4 +1,6 @@
-﻿namespace TexnoStore.Models.Checkout
+﻿using TexnoStoreWebCore.Models;
+
+namespace TexnoStore.Models.Checkout
 {
     public class CheckoutViewModel : BaseModel
     {

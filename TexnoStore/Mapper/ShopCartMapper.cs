@@ -6,7 +6,6 @@ namespace TexnoStore.Mapper
 {
 	public class ShopCartMapper
 	{
-		public readonly LaptopMapper laptopMapper = new LaptopMapper();
 		public ShopCart Map(ShopCartModel model)
 		{
 			return new ShopCart()

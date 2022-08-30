@@ -1,4 +1,6 @@
-﻿namespace TexnoStore.Models
+﻿using TexnoStoreWebCore.Models;
+
+namespace TexnoStore.Models
 {
 	public class ShopCartModel : BaseModel
 	{

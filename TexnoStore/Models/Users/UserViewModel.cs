@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TexnoStore.Core.Domain.Entities;
+using TexnoStoreWebCore.Models;
 
 namespace TexnoStore.Models.Users
 {

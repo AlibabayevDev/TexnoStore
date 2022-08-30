@@ -11,7 +11,7 @@ namespace TexnoStore.Controllers
     {
         private readonly IUnitOfWork db;
 
-        public PhoneController(IUnitOfWork db) : base(db)
+        public PhoneController(IUnitOfWork db) 
         {
             this.db = db;
         }

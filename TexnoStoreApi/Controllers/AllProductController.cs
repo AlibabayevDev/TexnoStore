@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TexnoStoreWebCore.Models;
 using TexnoStoreWebCore.Services.Abstract;
 
 namespace TexnoStoreApi.Controllers
@@ -65,6 +66,15 @@ namespace TexnoStoreApi.Controllers
             {
                 return BadRequest("Something went wrong");
             }
+        }
+
+        [HttpPost]
+        [Route("AddReview")]
+        public IActionResult AddReview(ReviewModel model)
+        {
+            var Message = allProductService.LaptopService.AddReview(model);
+
+            return Ok(Message);
         }
     }
 }

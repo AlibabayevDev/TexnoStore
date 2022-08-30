@@ -34,7 +34,7 @@ namespace TexnoStoreApi.Controllers
             return BadRequest("something went wrong");
         }
         [HttpGet]
-        [Route("GetLaptop")]
+        [Route("GetLaptop/{id}")]
         public IActionResult GetLaptop(int id)
         {
             try
@@ -49,13 +49,7 @@ namespace TexnoStoreApi.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("AddReview")]
-        public IActionResult AddReview(ReviewModel model)
-        {
-            var Message = service.LaptopService.AddReview(model);
+        
 
-            return Ok(Message);
-        }
     }
 }

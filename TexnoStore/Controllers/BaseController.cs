@@ -15,16 +15,14 @@ using TexnoStore.Models;
 using TexnoStore.Models.Cameras;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Models.Phones;
+using TexnoStoreWebCore.Models;
+using TexnoStoreWebCore.Models.Laptops;
 
 namespace TexnoStore.Controllers
 {
     public  class BaseController : Controller
     {
         private readonly IUnitOfWork db;
-        public BaseController(IUnitOfWork db)
-        {
-            this.db = db;
-        }
 
 		public AllProductsListViewModel Checkout()
         {

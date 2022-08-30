@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TexnoStore.Core.Domain.Entities.Laptop;
 using TexnoStore.Mapper;
 using TexnoStore.Models.Laptops;
+using TexnoStoreWebCore.Models.Laptops;
 
 namespace TexnoStore.Mapper.Laptops
 {

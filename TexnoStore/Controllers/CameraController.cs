@@ -12,7 +12,7 @@ namespace TexnoStore.Controllers
         private readonly IUnitOfWork db;
         public static CameraModel SelectedModel { get; set; }
 
-        public CameraController(IUnitOfWork db) : base(db)
+        public CameraController(IUnitOfWork db) 
         {
             this.db = db;
         }

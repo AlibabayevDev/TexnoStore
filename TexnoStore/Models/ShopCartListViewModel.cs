@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Models.Phones;
+using TexnoStoreWebCore.Models;
 
 namespace TexnoStore.Models
 {

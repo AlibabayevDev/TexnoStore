@@ -13,7 +13,7 @@ using TexnoStore.Mapper.Phones;
 using TexnoStore.Models;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Models.Phones;
-using BaseModel = TexnoStore.Models.BaseModel;
+using TexnoStoreWebCore.Models;
 
 namespace TexnoStore.Controllers
 {

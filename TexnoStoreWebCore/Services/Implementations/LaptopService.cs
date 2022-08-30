@@ -40,7 +40,7 @@ namespace TexnoStoreWebCore.Services.Implementations
 
 
         public LaptopModel LaptopProduct(int id)
-        {
+         {
             var laptops = db.LaptopRepository.Laptops();
 
             LaptopMapper laptopMapper = new LaptopMapper();

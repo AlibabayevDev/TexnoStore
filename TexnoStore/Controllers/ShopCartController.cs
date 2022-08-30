@@ -10,6 +10,7 @@ using TexnoStore.Mapper.Phones;
 using TexnoStore.Models;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Models.Phones;
+using TexnoStoreWebCore.Models.Laptops;
 
 namespace TexnoStore.Controllers
 {
