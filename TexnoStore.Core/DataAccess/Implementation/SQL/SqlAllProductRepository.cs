@@ -122,5 +122,27 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             }
         }
 
+        public bool Add(Review review)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string cmdText = "Insert into Review values(@Name,@Email,@Message,@StarCount,@ProductId)";
+
+                using (SqlCommand cmd = new SqlCommand(cmdText, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Name", review.Name);
+                    cmd.Parameters.AddWithValue("@Email", review.Email);
+                    cmd.Parameters.AddWithValue("@Message", review.Message);
+                    cmd.Parameters.AddWithValue("@StarCount", review.StarCount);
+                    cmd.Parameters.AddWithValue("@ProductId", review.ProductId);
+
+                    int affectedCount = cmd.ExecuteNonQuery();
+
+                    return affectedCount == 1;
+                }
+            }
+        }
     }
 }

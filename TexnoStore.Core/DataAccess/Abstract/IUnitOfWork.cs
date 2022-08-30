@@ -15,5 +15,6 @@ namespace TexnoStore.Core.DataAccess.Abstract
         IReviewRepository ReviewRepository { get; }
         IShopCartRepository ShopCartRepository { get; }
         ICameraRepository CameraRepository { get; }
+        ICheckOutRepository CheckOutRepository { get; }
     }
 }

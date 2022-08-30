@@ -71,19 +71,10 @@
 								<div id="tab1" class="tab-pane active">
 									<div class="products-slick" data-nav="#slick-nav-1">
 										@{
-											foreach(LaptopModel produc in Model.LaptopModel)
+											foreach(var produc in Model.Products)
 											{
 												@Html.Partial("AllProducts",produc)
 											}
-											foreach(PhoneModel produc in Model.PhoneModel)
-											{
-												@Html.Partial("AllProducts",produc)
-											}
-											foreach(CameraModel produc in Model.CameraModel)
-								            {
-									           @Html.Partial("AllProducts", produc)
-							               	}
-
 										}
 									</div>
 									<div id="slick-nav-1" class="products-slick-nav"></div>
@@ -102,25 +93,25 @@
 							<ul class="hot-deal-countdown">
 								<li>
 									<div>
-										<h3 id="days"></h3>
+										<h3 id="days">0</h3>
 										<span>Days</span>
 									</div>
 								</li>
 								<li>
 									<div>
-										<h3 id="hours"></h3>
+										<h3 id="hours">0</h3>
 										<span>Hours</span>
 									</div>
 								</li>
 								<li>
 									<div>
-										<h3 id="minutes"></h3>
+										<h3 id="minutes">0</h3>
 										<span>Mins</span>
 									</div>
 								</li>
 								<li>
 									<div>
-										<h3 id="seconds"></h3>
+										<h3 id="seconds">0</h3>
 										<span>Secs</span>
 									</div>
 								</li>
@@ -561,7 +552,7 @@
 
 	<script>
 			function initializeTimer() {
-			var endDate = new Date(2022,07,26);
+			var endDate = new Date(2022,08,01);
  
 			var currentDate = new Date();
 			var seconds = (endDate-currentDate) / 1000;

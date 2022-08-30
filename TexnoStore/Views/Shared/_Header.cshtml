@@ -1,26 +1,103 @@
 ﻿@using TexnoStore.Models.Laptops
-@using TexnoStore.Models
+@using TexnoStoreWebCore.Models
 @using TexnoStore.Models.Phones
 @model BaseModel
 <header>
+<style>
+.navbar-brand{display:inline-block;padding-top:.3125rem;padding-bottom:.3125rem;margin-right:1rem;font-size:1.25rem;line-height:inherit;white-space:nowrap}
+.menu {
+	width: 100%;
+	display: table;
+}
+.menu ul {
+	display: table-row;
+}
+.menu li {
+	display: table-cell;
+	position: relative;
+}
+.menu li a {
+	display: block;
+	padding: 1px 15px;
+	color: #fff;
+	text-align: center;
+}
+.menu-caret:after {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: .255em;
+	vertical-align: .255em;
+	content: "";
+	border-top: 3px solid;
+	border-right: 3px solid transparent;
+	border-bottom: 0;
+	border-left: 3px solid transparent;
+}
+.menu ul li:hover, .menu a:hover {
+
+}
+.menu li:hover ul  {
+	display: block;
+	position: absolute;
+	top: 100%;
+	left: 0px;
+	background: #666;
+	margin: 0;
+	padding: 10px 20px;
+	width: 150px;
+	z-index: 9999;
+}
+.menu ul ul  {
+	display: none;
+}
+.menu ul ul li  {
+	display: block;
+	background: #666;
+	padding: 5px 0;
+}
+.menu ul ul li a  {
+	display: block;
+	padding: 0;
+	background: #666;
+	text-align: left;
+}
+	</style>
 			<div id="top-header">
 				<div class="container">
 					<ul class="header-links pull-left">
-						<li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-						<li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
-						<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
+						<div class="menu">
+							<ul>
+								<li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
+								<li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
+								<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
+							</ul>
+						</div>
 					</ul>
 
 					<ul class="header-links pull-right">
-						<li>
-							<select asp-for="@Model.ProductType" style="width:100px;height:25px;background-color:#1E1F29;color:white"> 
-										<option value="0" style="color:white"><i class="fa fa-dollar"></i> USD</option>
-										<option value="1" style="color:white"><i class="fa fa-ruble"></i> RUB</option>
-										<option value="2" style="color:white"><i class="fa fa-euro"></i> EURO</option>
-							</select>
-						</li>
-						<li><a class="fa fa-user-o" asp-action="Index" asp-controller="Account">@User.Identity?.Name</a></li>
-						<li><a href="/Account/Index"><i class="fa fa-user-o"></i> My Account</a></li>
+						
+							<div class="menu">
+								<ul>
+									@*<li>
+										<select asp-for="@Model.ProductType" style="width:100px;height:25px;background-color:#1E1F29;color:white"> 
+													<option value="0" style="color:white"><i class="fa fa-dollar"></i> USD</option>
+													<option value="1" style="color:white"><i class="fa fa-ruble"></i> RUB</option>
+													<option value="2" style="color:white"><i class="fa fa-euro"></i> EURO</option>
+										</select>
+									</li>*@
+									<li style="color:white;"><i class="fa fa-user-o"></i>@User.Identity?.Name</li>
+									<li>
+										<a class="menu-caret" href="#"><i class="fa fa-user-o"></i> My Account</a>
+										<ul>
+											<li id="login"></li>
+											<li><a href="#">My Orders</a></li>
+											<li><a href="#">My Desires</a></li>
+											<li><a href="/Account/Logout">Go out</a></li>
+										</ul>
+									</li>
+								</ul>
+							</div>
 					</ul>
 				</div>
 			</div>
@@ -93,15 +170,6 @@
 		</header>
 
 		<script>
-			$.ajax({
-				url: "/ShopCart/ShopCartCount",
-				success: function (data) {
-					$('#ShopCount').text(data);
-				},
-				error: function (error) {
-					console.log(error);
-				}
-			});
 			function ShopCartModal() {
 				$.ajax({
 					url: "/ShopCart/ShopCartList",

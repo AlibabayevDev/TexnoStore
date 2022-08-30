@@ -1,5 +1,6 @@
 ﻿using TexnoStore.Core.Domain.Entities;
 using TexnoStore.Core.Domain.Entities.Cameras;
+using TexnoStoreWebCore.Models;
 
 namespace TexnoStore.Models.Cameras
 {

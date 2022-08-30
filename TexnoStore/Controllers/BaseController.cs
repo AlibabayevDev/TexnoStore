@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using TexnoStore.Core.DataAccess.Abstract;
+using TexnoStore.Core.Domain.Entities;
 using TexnoStore.Core.Domain.Entities.Cameras;
 using TexnoStore.Core.Domain.Entities.Laptop;
 using TexnoStore.Core.Domain.Entities.Phone;
@@ -14,16 +15,14 @@ using TexnoStore.Models;
 using TexnoStore.Models.Cameras;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Models.Phones;
+using TexnoStoreWebCore.Models;
+using TexnoStoreWebCore.Models.Laptops;
 
 namespace TexnoStore.Controllers
 {
     public  class BaseController : Controller
     {
         private readonly IUnitOfWork db;
-        public BaseController(IUnitOfWork db)
-        {
-            this.db = db;
-        }
 
 		public AllProductsListViewModel Checkout()
         {
@@ -110,6 +109,20 @@ namespace TexnoStore.Controllers
             return cameraModels;
         }
 
+        public List<BaseModel> BaseModels(List<BaseEntity> products)
+        {
+            BaseMapper baseMapper = new BaseMapper();
+            List<BaseModel> productsModels = new List<BaseModel>();
 
+            for (int i = 0; i < products.Count; i++)
+            {
+                var product = products[i];
+                var productModel = baseMapper.Map(product);
+
+                productsModels.Add(productModel);
+            }
+
+            return productsModels;
+        }
     }
 }

@@ -160,6 +160,23 @@
 				error: function (error) {
 					console.log(error);
 				}
+		});
+
+		$.ajax({
+				url: "/Account/IsAuthenticated",
+				success: function (data) {
+					if(data===true)
+					{
+						$('#login').text('Hello again');
+					}
+					else
+					{
+						$('#login').html('<a href="/Account/Index">Sign In</a>');
+					}
+				},
+				error: function (error) {
+					console.log(error);
+				}
 			});
 	</script>
 </html>

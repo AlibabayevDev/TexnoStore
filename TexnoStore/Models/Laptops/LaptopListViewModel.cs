@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using TexnoStore.Core.Domain.Entities;
+using TexnoStoreWebCore.Models;
+using TexnoStoreWebCore.Models.Laptops;
 
 namespace TexnoStore.Models.Laptops
 {

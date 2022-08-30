@@ -8,7 +8,7 @@ namespace TexnoStore.IdentityServer
     {
         public string HashPassword(User user, string password)
         {
-            password = SecurityUtil.ComputeSha256Hash(user.PasswordHash);
+            password = SecurityUtil.ComputeSha256Hash(password);
 
             return password;
         }

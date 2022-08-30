@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TexnoStoreWebCore.Models;
-using TexnoStoreWebCore.Models.Laptops;
 
 namespace TexnoStoreWebCore.Services.Abstract
 {
-    public interface ILaptopService
+    public interface IHomeService
     {
-        List<LaptopModel> Laptops();
-        LaptopModel LaptopProduct(int id);
-        string AddReview(ReviewModel model);
+        void AddToCard(ShopCartModel model);
+        List<BaseModel> AllProducts();
     }
 }

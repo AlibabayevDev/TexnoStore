@@ -48,11 +48,32 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {
                     cmd.Parameters.AddWithValue("@Email", login.Email);
-                    cmd.Parameters.AddWithValue("@PasswordHash", login.PasswordHash);
+                    if (login.PasswordHash == null)
+                    {
+                        cmd.Parameters.AddWithValue("@PasswordHash", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@PasswordHash", login.PasswordHash);
+                    }
                     cmd.Parameters.AddWithValue("@Name", login.Name);
                     cmd.Parameters.AddWithValue("@LastName", login.LastName);
-                    cmd.Parameters.AddWithValue("@LoginProvider", "Google");
-                    cmd.Parameters.AddWithValue("@ProviderKey", login.ProviderKey);
+                    if (login.LoginProvider == null)
+                    {
+                        cmd.Parameters.AddWithValue("@LoginProvider", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@LoginProvider", login.LoginProvider);
+                    }
+                    if (login.ProviderKey == null)
+                    {
+                        cmd.Parameters.AddWithValue("@ProviderKey", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@ProviderKey", login.ProviderKey);
+                    }
 
                     int affectedCount = cmd.ExecuteNonQuery();
 

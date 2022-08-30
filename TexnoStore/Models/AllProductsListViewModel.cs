@@ -2,6 +2,8 @@
 using TexnoStore.Models.Cameras;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Models.Phones;
+using TexnoStoreWebCore.Models;
+using TexnoStoreWebCore.Models.Laptops;
 
 namespace TexnoStore.Models
 {

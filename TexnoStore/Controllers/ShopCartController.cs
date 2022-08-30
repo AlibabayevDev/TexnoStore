@@ -10,6 +10,7 @@ using TexnoStore.Mapper.Phones;
 using TexnoStore.Models;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Models.Phones;
+using TexnoStoreWebCore.Models.Laptops;
 
 namespace TexnoStore.Controllers
 {
@@ -22,21 +23,29 @@ namespace TexnoStore.Controllers
         }
         public IActionResult ShopCartList()
         {
-            var userid = db.LoginRepository.Get(User.Identity.Name);
-
-            var allProductsList = Checkout();
-            var model = new ShopCartListViewModel()
+            if(User.Identity.IsAuthenticated)
             {
-                ShopCartModels = allProductsList
-            };
+                var userid = db.LoginRepository.Get(User.Identity.Name);
 
-            
-            foreach(var price in model.ShopCartModels)
-            {
-                model.ShopCartCount++;
-                model.ShopCartPrice += price.Price*price.Count;
+                var allProductsList = Checkout();
+                var model = new ShopCartListViewModel()
+                {
+                    ShopCartModels = allProductsList
+                };
+
+
+                foreach (var price in model.ShopCartModels)
+                {
+                    model.ShopCartCount++;
+                    model.ShopCartPrice += price.Price * price.Count;
+                }
+                return PartialView(model);
             }
-            return PartialView(model);
+            var emptyModel = new ShopCartListViewModel()
+            {
+                ShopCartModels = new List<ShopCartModel>()
+            };
+            return PartialView(emptyModel);
         }
 
 
@@ -65,6 +74,7 @@ namespace TexnoStore.Controllers
             var allProductsList = Checkout();
             return Json(allProductsList.Count);
         }
+
 
         public IActionResult Delete(int id)
         {

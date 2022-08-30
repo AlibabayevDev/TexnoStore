@@ -1,5 +1,6 @@
 ﻿using TexnoStore.Core.Domain.Entities;
 using TexnoStore.Models;
+using TexnoStoreWebCore.Models;
 
 namespace TexnoStore.Mapper
 {

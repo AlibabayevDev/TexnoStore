@@ -1,45 +1,30 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using TexnoStore.Core.DataAccess.Abstract;
-using TexnoStore.Core.Domain.Entities.Laptop;
-using TexnoStore.Core.Domain.Entities.Phone;
-using TexnoStore.Mapper;
-using TexnoStore.Mapper.Laptops;
-using TexnoStore.Mapper.Phones;
 using TexnoStore.Models;
-using TexnoStore.Models.Laptops;
-using TexnoStore.Models.Phones;
+using TexnoStoreWebCore.Models;
+using TexnoStoreWebCore.Services.Abstract;
 
 namespace TexnoStore.Controllers
 {
     public class HomeController : BaseController
     {
         private readonly IUnitOfWork db;
-        public HomeController(IUnitOfWork db) : base(db)
+        private readonly IUnitOfWorkService service;
+        public HomeController(IUnitOfWork db,IUnitOfWorkService service)
         {
+            this.service = service;
             this.db = db;
         }
         public IActionResult Index()
         {
-            var laptops = db.LaptopRepository.Laptops();
-            var phones = db.PhoneRepository.Phones();
-            var cameras = db.CameraRepository.Cameras();
-
-            var laptopsModels = LaptopsModels(laptops);
-            var phonesModels = PhoneModels(phones);
-            var cameraModels = CameraModels(cameras);
-
+            var products = service.HomeService.AllProducts();
+            
             var viewModel = new AllProductsListViewModel()
             {
-                PhoneModel = phonesModels,
-                LaptopModel = laptopsModels,
-                CameraModel = cameraModels
+                Products=products
             };
 
-            if (viewModel.LaptopModel.Equals(0) && viewModel.PhoneModel.Equals(0) &&viewModel.CameraModel.Equals(0))
+            if (viewModel.Products.Equals(0)==null)
             {
                 return RedirectToAction("ProductNotFound", "Error");
             }
@@ -48,15 +33,6 @@ namespace TexnoStore.Controllers
         public IActionResult Home()
         {
             return View();
-        }
-
-        public IActionResult QuickView(int id,int type)
-        {
-            var product = db.AllProductRepository.QuickViewProduct(id);
-            ShopCartMapper mapper = new ShopCartMapper();
-            var model = mapper.Map(product);
-
-            return PartialView(model);
         }
 
         public IActionResult ProductName(int productId, int typeId)
@@ -80,18 +56,13 @@ namespace TexnoStore.Controllers
             return View();
         }
 
-        public IActionResult AddToCard(ShopCartModel model)
+        public IActionResult AddToCard(TexnoStoreWebCore.Models.ShopCartModel model)
         {
             var name = User.Identity.Name;
             var userid = db.LoginRepository.Get(User.Identity.Name);
+            model.UserId = userid.Id;
 
-            ShopCartMapper shopCartMapper = new ShopCartMapper();
-            ShopCartModel shopCartModel = new ShopCartModel();
-            shopCartModel.ProductId = model.ProductId;
-            shopCartModel.UserId = userid.Id;
-            shopCartModel.Count = model.Count;
-            var shopCart = shopCartMapper.Map(shopCartModel);
-            db.ShopCartRepository.Add(shopCart);
+            service.HomeService.AddToCard(model);
 
             return PartialView("Success");
         }

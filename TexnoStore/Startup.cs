@@ -14,6 +14,8 @@ using TexnoStore.IdentityServer;
 using TexnoStore.Core.DataAccess.Implementation.SQL;
 using TexnoStore.Core.IdentityServer;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using TexnoStoreWebCore.Services.Implementations;
+using TexnoStoreWebCore.Services.Abstract;
 
 namespace TexnoStore
 {
@@ -48,6 +50,7 @@ namespace TexnoStore
             services.AddSingleton<IPasswordHasher<User>, CustomPasswordHasher>();
             services.AddSingleton<IUserStore<User>, UserStore>();
             services.AddSingleton<IRoleStore<Role>, RoleStore>();
+            services.AddSingleton<IUnitOfWorkService, UnitOfWorkService>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

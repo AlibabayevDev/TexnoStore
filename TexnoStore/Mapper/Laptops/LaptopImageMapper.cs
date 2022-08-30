@@ -1,6 +1,6 @@
-﻿
-using TexnoStore.Core.Domain.Entities.Laptop;
+﻿using TexnoStore.Core.Domain.Entities.Laptop;
 using TexnoStore.Models.Laptops;
+using TexnoStoreWebCore.Models.Laptops;
 
 namespace TexnoStore.Mapper.Laptops
 {

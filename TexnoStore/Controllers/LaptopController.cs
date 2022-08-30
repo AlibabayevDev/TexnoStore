@@ -13,36 +13,28 @@ using TexnoStore.Core.Domain.Entities.Phone;
 using TexnoStore.Mapper.Phones;
 using TexnoStore.Core.Domain.Entities.Laptop;
 using System;
+using TexnoStoreWebCore.Services.Abstract;
+using TexnoStoreWebCore.Models.Laptops;
 
 namespace TexnoStore.Controllers
 {
     public class LaptopController : BaseController
     {
         public static LaptopModel SelectedModel { get;set;}
-        private readonly IUnitOfWork db;
+        private readonly IUnitOfWorkService service;
         private readonly UserManager<User> userManager;
-        public LaptopController(IUnitOfWork db) : base(db)
+        public LaptopController(IUnitOfWorkService service)
         {
-           this.db = db;
+           this.service = service;
         }
 
         public IActionResult Index()
         {
-            var laptops = db.LaptopRepository.Laptops();
+            var laptops = service.LaptopService.Laptops();
 
-            LaptopMapper laptopMapper = new LaptopMapper();
-            List<LaptopModel> laptopModels = new List<LaptopModel>();
-
-            for(int i=0;i<laptops.Count; i++)
-            {
-                var laptop = laptops[i];
-                var laptopModel = laptopMapper.Map(laptop);
-
-                laptopModels.Add(laptopModel);
-            }
             var model = new LaptopListViewModel
             {
-                Laptops = laptopModels,
+                Laptops = laptops,
             };
 
             return View(model);
@@ -50,101 +42,13 @@ namespace TexnoStore.Controllers
 
         public IActionResult LaptopProduct(int id)
         {
-            var laptops = db.LaptopRepository.Laptops();
+            var laptop = service.LaptopService.LaptopProduct(id);
 
-            LaptopMapper laptopMapper = new LaptopMapper();
-            List<LaptopModel> laptopModels = new List<LaptopModel>();
-
-            for (int i = 0; i < laptops.Count; i++)
-            {
-                var laptop = laptops[i];
-                var laptopModel = laptopMapper.Map(laptop);
-
-                laptopModels.Add(laptopModel);
-            }
             var model = new LaptopListViewModel
             {
-                Laptop = laptopModels.FirstOrDefault(x => x.Id == id),
+                Laptop = laptop
             };
-            SelectedModel = model.Laptop;
             return View(model);
-        }
-
-        public string ErrorMessage { get; set; }
-
-        public JsonResult AddReview(ReviewModel model)
-        {
-            ReviewMapper reviewMapper = new ReviewMapper();
-
-            var review = reviewMapper.Map(model);
-            try
-            {
-                db.ReviewRepository.Add(review);
-                ErrorMessage = "Succesfully added";
-
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage = "Something went wrong";
-            }
-            return Json(ErrorMessage);
-        }
-        public IActionResult Review(LaptopListViewModel viewModel,int rating)
-        {
-            viewModel.Laptop = SelectedModel;
-
-            if (ModelState.IsValid == false)
-            {
-                var errors = ModelState.SelectMany(x => x.Value.Errors).Select(x => x.ErrorMessage).ToList();
-                var errorMessage = errors.Aggregate((message, value) =>
-                {
-                    if (message.Length == 0)
-                        return value;
-
-                    return message + ", " + value;
-                });
-
-                TempData["Message"] = errorMessage;
-                return RedirectToAction("LaptopProduct", new {id=viewModel.Laptop.Id});
-            }
-
-            ReviewMapper reviewMapper = new ReviewMapper();
-            viewModel.Review.Rating = rating;
-            viewModel.Review.ProductId = SelectedModel.Id;
-
-            var review = reviewMapper.Map(viewModel.Review);
-            try
-            {
-                db.ReviewRepository.Add(review);
-            }
-            catch(Exception ex)
-            {
-                TempData["Message"] = "Something went wrong";
-            }
-
-      
-            return LaptopProduct(viewModel.Laptop.Id);
-        }
-        public IActionResult ShopCart(LaptopListViewModel viewModel)
-		{
-            var name=User.Identity.Name;
-            var userid = db.LoginRepository.Get(User.Identity.Name);
-
-            ShopCartMapper shopCartMapper = new ShopCartMapper();
-            ShopCartModel shopCartModel = new ShopCartModel();
-            shopCartModel.ProductId = viewModel.Laptop.ProductId;
-            shopCartModel.UserId = userid.Id;
-            shopCartModel.Count = viewModel.ShopCart.Count;
-            var shopCart = shopCartMapper.Map(shopCartModel);
-            db.ShopCartRepository.Add(shopCart);
-
-            return View("LaptopProduct",viewModel);
-        }
-        public  IActionResult ShopCartbyId(int Id)
-        {
-            ShopCartMapper shopCartMapper = new ShopCartMapper();
-
-            return View("LaptopProduct");
         }
     }
 }

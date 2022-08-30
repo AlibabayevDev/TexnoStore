@@ -67,7 +67,7 @@ namespace TexnoStoreApi.Controllers
                 new[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.Email.ToString()),
                     new Claim(ClaimTypes.Email, user.Email)
                 }),
                 NotBefore = DateTime.UtcNow, //token create time
