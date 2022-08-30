@@ -17,7 +17,6 @@ namespace TexnoStoreApi.Controllers
         [Route("GetAll")]
         public IActionResult GetAll()
         {
-            throw new Exception();
             try
             {
                 var allProduct = allProductService.AllProductService.GetAllProduct();
