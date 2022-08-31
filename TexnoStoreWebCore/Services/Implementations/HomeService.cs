@@ -46,5 +46,26 @@ namespace TexnoStoreWebCore.Services.Implementations
 
             return productsModels;
         }
+
+        public int ProductName(int productId, int typeId)
+        {
+            if (typeId == 1)
+            {
+                var laptop = db.LaptopRepository.LaptopProduct(productId);
+                return laptop.Id;
+            }
+            else if (typeId == 2)
+            {
+                var phone = db.PhoneRepository.PhoneProduct(productId);
+                return phone.Id;
+            }
+            else if (typeId == 3)
+            {
+                var camera = db.CameraRepository.CameraProduct(productId);
+                return camera.Id;
+            }
+
+            return 0;
+        }
     }
 }

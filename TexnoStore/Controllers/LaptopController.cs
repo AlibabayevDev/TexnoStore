@@ -20,9 +20,7 @@ namespace TexnoStore.Controllers
 {
     public class LaptopController : BaseController
     {
-        public static LaptopModel SelectedModel { get;set;}
         private readonly IUnitOfWorkService service;
-        private readonly UserManager<User> userManager;
         public LaptopController(IUnitOfWorkService service)
         {
            this.service = service;

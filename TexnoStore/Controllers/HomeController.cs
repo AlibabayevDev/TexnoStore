@@ -40,7 +40,7 @@ namespace TexnoStore.Controllers
         {
             if (typeId == 1)
             {
-                var laptop = db.LaptopRepository.LaptopProduct(productId);
+                var laptop = service.LaptopService.LaptopProduct(productId);
                 return RedirectToAction("LaptopProduct", "Laptop", new { id = laptop.Id });
             }
             else if (typeId == 2)
