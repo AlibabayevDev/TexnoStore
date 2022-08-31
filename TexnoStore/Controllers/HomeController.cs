@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Models;
+using TexnoStoreWebCore.Mapper;
 using TexnoStoreWebCore.Models;
 using TexnoStoreWebCore.Services.Abstract;
 
@@ -55,7 +56,14 @@ namespace TexnoStore.Controllers
 
             return View();
         }
+        public IActionResult QuickView(int id, int type)
+        {
+            var product = db.AllProductRepository.QuickViewProduct(id);
+            ShopCartMapper mapper = new ShopCartMapper();
+            var model = mapper.Map(product);
 
+            return PartialView(model);
+        }
         public IActionResult AddToCard(TexnoStoreWebCore.Models.ShopCartModel model)
         {
             var name = User.Identity.Name;
