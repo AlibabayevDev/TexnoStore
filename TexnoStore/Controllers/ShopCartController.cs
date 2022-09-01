@@ -79,7 +79,7 @@ namespace TexnoStore.Controllers
 
         public IActionResult Delete(int id)
         {
-            db.ShopCartRepository.Delete(id);
+            service.ShopCartService.Delete(id);
             return RedirectToAction("ShopCartList");
         }
 

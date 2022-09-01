@@ -11,7 +11,6 @@ namespace TexnoStoreWebCore.Services.Abstract
     {
         List<ShopCartModel> ShopCartList(int id);
         double ShopCartPrice(int id);
-        int ShopCartCount(int id);
-
+        void Delete(int id);
     }
 }

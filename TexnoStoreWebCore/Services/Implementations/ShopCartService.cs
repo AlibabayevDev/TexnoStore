@@ -63,5 +63,10 @@ namespace TexnoStoreWebCore.Services.Implementations
             return ShopCarts;
 
         }
+
+        public void Delete(int id)
+        {
+            db.ShopCartRepository.Delete(id);
+        }
     }
 }
