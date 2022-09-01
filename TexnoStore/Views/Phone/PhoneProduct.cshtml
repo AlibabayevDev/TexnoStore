@@ -73,18 +73,42 @@
 								</label>
 							</div>
 
-							<div class="add-to-cart">
-								<div class="qty-label">
-									Qty
-									<div class="input-number">
-										<input type="number">
-										<span class="qty-up">+</span>
-										<span class="qty-down">-</span>
+							<form>
+									<input hidden asp-for="@Model.Phone.ProductId" id="stdProductId"/>
+									<div class="add-to-cart">
+										<div class="qty-label">
+											Qty
+											<div class="input-number">
+												<input asp-for="@Model.ShopCart.Count" type="number" step="1" min="1" max="12" value="1" id="stdCount">
+												<span class="qty-up">+</span>
+												<span class="qty-down">-</span>
+											</div>
+										</div>
+										<button type="button" value="Create" onclick="AddToCardQuick(this)" data-id="@Model.Phone.ProductId" class="add-to-cart-btn" ><i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
-								</div>
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-							</div>
-
+							</form>
+							<script>
+											function AddToCardQuick(elem) {
+												var id = $("#stdProductId").val();
+												var count = $("#stdCount").val();
+												var obj = {
+													ProductId: id,
+													Count:count
+												}
+												$.ajax({
+													url: "/Home/AddToCard",
+													method: "POST",
+													data: obj,
+													success: function (data) {
+														$('#createModal').html(data);
+														$("#createModal").modal("show");
+													},
+													error: function (err) {
+														console.error(err);
+													}
+												})
+}
+										</script>
 							<ul class="product-btns">
 								<li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
 								<li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li>

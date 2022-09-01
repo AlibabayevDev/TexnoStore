@@ -26,6 +26,7 @@ function ShowDeleteModal(elem) {
 }
 
 function AddToCard() {
+	alert("test");
 	var id = $("#stdProductId").val();
 	var productType = $("#stdProductType").val();
 	var count = $("#qty").val();

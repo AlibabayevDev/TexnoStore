@@ -25,7 +25,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string cmdText = "select Category.CategoryName, Camera.Id, Camera.Company, Camera.OpticalZoom, Camera.Color, Camera.ProductId, Products.Name, Products.OldPrice, Products.TypeId, Products.Price, Products.Sale, Products.LongDesc, Camera.ImageId, Products.MainImg, Camera.CategoryId, Products.AddDate, Products.ShortDesc from Camera inner join Category on Category.Id = Camera.CategoryId inner join Products on Products.Id = Camera.ProductId where Camera.Id = @Id";
+                string cmdText = "select Category.CategoryName, Camera.Id, Camera.Company, Camera.OpticalZoom, Camera.Color, Camera.ProductId, Products.Name, Products.OldPrice, Products.TypeId, Products.Price, Products.Sale, Products.LongDesc, Camera.ImageId, Products.MainImg, Camera.CategoryId, Products.AddDate, Products.ShortDesc from Camera inner join Category on Category.Id = Camera.CategoryId inner join Products on Products.Id = Camera.ProductId where Camera.ProductId = @Id";
 
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {
