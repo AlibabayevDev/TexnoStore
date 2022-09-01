@@ -169,10 +169,12 @@
 					if(data===true)
 					{
 						$('#login').text('My Account');
+						$('#logout').html('<a href="/Account/LogOut">Log Out</a>');
 					}
 					else
 					{
 						$('#login').html('<a href="/Account/Index">Sign In</a>');
+						$('#logout').html('<a href="/Account/Regist">Create Account</a>');
 					}
 				},
 				error: function (error) {
