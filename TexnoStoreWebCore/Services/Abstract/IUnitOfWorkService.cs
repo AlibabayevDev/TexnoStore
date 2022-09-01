@@ -13,5 +13,6 @@ namespace TexnoStoreWebCore.Services.Abstract
         IAllProductService AllProductService { get; }
         IHomeService HomeService { get; }
         IPhoneService PhoneService { get; }
+        IShopCartService ShopCartService { get; }
     }
 }

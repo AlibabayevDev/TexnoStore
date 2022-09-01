@@ -4,6 +4,7 @@ using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Mapper;
 using TexnoStore.Models;
 using TexnoStore.Models.Checkout;
+using TexnoStoreWebCore.Models;
 
 namespace TexnoStore.Controllers
 {

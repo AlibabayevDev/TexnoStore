@@ -1,6 +1,7 @@
 ﻿using TexnoStore.Core.Domain.Entities;
 using TexnoStore.Mapper.Laptops;
 using TexnoStore.Models;
+using TexnoStoreWebCore.Models;
 
 namespace TexnoStore.Mapper
 {

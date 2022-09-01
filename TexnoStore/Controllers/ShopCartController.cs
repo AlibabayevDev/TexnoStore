@@ -10,35 +10,36 @@ using TexnoStore.Mapper.Phones;
 using TexnoStore.Models;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Models.Phones;
+using TexnoStoreWebCore.Models;
 using TexnoStoreWebCore.Models.Laptops;
+using TexnoStoreWebCore.Services.Abstract;
 
 namespace TexnoStore.Controllers
 {
     public class ShopCartController : Controller
     {
         private readonly IUnitOfWork db;
-        public ShopCartController(IUnitOfWork db)
+        private readonly IUnitOfWorkService service;
+        public ShopCartController(IUnitOfWork db,IUnitOfWorkService service)
         {
+            this.service = service;
             this.db = db;
         }
         public IActionResult ShopCartList()
         {
             if(User.Identity.IsAuthenticated)
             {
-                var userid = db.LoginRepository.Get(User.Identity.Name);
+                var user = db.LoginRepository.Get(User.Identity.Name);
 
-                var allProductsList = Checkout();
+                var allProductsList = service.ShopCartService.ShopCartList(user.Id);
                 var model = new ShopCartListViewModel()
                 {
-                    ShopCartModels = allProductsList
+                    ShopCartModels = allProductsList,
+                    
+                    ShopCartCount = allProductsList.Count,
+                    ShopCartPrice = service.ShopCartService.ShopCartPrice(user.Id),
                 };
 
-
-                foreach (var price in model.ShopCartModels)
-                {
-                    model.ShopCartCount++;
-                    model.ShopCartPrice += price.Price * price.Count;
-                }
                 return PartialView(model);
             }
             var emptyModel = new ShopCartListViewModel()
