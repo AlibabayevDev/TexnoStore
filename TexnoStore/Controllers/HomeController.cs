@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Models;
 using TexnoStoreWebCore.Mapper;
@@ -45,12 +46,12 @@ namespace TexnoStore.Controllers
             }
             else if (typeId == 2)
             {
-                var phone = db.PhoneRepository.PhoneProduct(productId);
+                var phone = service.PhoneService.PhoneProduct(productId);
                 return RedirectToAction("PhoneProduct", "Phone", new { id = phone.Id });
             }
             else if(typeId == 3)
             {
-                var camera = db.CameraRepository.CameraProduct(productId);
+                var camera = service.CameraService.CameraById(productId);
                 return RedirectToAction("CameraProduct", "Camera", new { id = camera.Id });
             }
 
@@ -58,21 +59,24 @@ namespace TexnoStore.Controllers
         }
         public IActionResult QuickView(int id, int type)
         {
-            var product = db.AllProductRepository.QuickViewProduct(id);
-            ShopCartMapper mapper = new ShopCartMapper();
-            var model = mapper.Map(product);
+            var model = service.AllProductService.QuickViewProduct(id);
 
             return PartialView(model);
         }
+
         public IActionResult AddToCard(TexnoStoreWebCore.Models.ShopCartModel model)
         {
-            var name = User.Identity.Name;
-            var userid = db.LoginRepository.Get(User.Identity.Name);
-            model.UserId = userid.Id;
+            if(User.Identity.IsAuthenticated)
+            {
+                var name = User.Identity.Name;
+                var userid = db.LoginRepository.Get(User.Identity.Name);
+                model.UserId = userid.Id;
 
-            service.HomeService.AddToCard(model);
+                service.HomeService.AddToCard(model);
 
-            return PartialView("Success");
+                return PartialView("Success");
+            }
+            return Json(false);
         }
     }
 }

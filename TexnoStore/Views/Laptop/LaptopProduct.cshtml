@@ -76,9 +76,7 @@
 										</div>
 										<button type="button" value="Create" onclick="AddToCardQuick(this)" data-id="@Model.Laptop.ProductId" class="add-to-cart-btn" ><i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
-
 							</form>
-							
 							<script>
 											function AddToCardQuick(elem) {
 												var id = $("#stdProductId").val();
@@ -92,8 +90,14 @@
 													method: "POST",
 													data: obj,
 													success: function (data) {
-														$('#createModal').html(data);
-														$("#createModal").modal("show");
+														if(data)
+														{
+															$('#createModal').html(data);
+															$("#createModal").modal("show");
+														}
+														else{
+															window.location.href= "/Account/Index";														
+														}
 													},
 													error: function (err) {
 														console.error(err);

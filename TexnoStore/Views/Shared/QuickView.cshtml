@@ -86,8 +86,14 @@
 		                method: "POST",
 		                data: obj,
 		                success: function (data) {
-			                $('#createModal').html(data);
-							$("#createModal").modal("show");
+			                if(data)
+							{
+								$('#createModal').html(data);
+								$("#createModal").modal("show");
+							}
+							else{
+								window.location.href= "/Account/Index";	
+                            }
 		                },
 		                error: function (err) {
 			                console.error(err);
