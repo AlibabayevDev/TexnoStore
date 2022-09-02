@@ -10,5 +10,6 @@ namespace TexnoStoreWebCore.Services.Abstract
     public interface ICheckOutService
     {
         List<ShopCartModel> CheckOutProducts(int id);
+        bool Order(int id,OrderDetailsModel model);
     }
 }

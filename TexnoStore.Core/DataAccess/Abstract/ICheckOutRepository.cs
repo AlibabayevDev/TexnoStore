@@ -6,5 +6,6 @@ namespace TexnoStore.Core.DataAccess.Abstract
     {
         bool Insert(OrderDetails model);
         bool InsertOrderProducts(int id);
+        bool InsertOrderProducts(List<ShopCart> ShopCarts, OrderDetails model);
     }
 }

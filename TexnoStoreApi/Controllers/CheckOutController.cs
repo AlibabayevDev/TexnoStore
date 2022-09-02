@@ -21,11 +21,13 @@ namespace TexnoStoreApi.Controllers
     {
         private readonly IUnitOfWorkService service;
         private readonly IUnitOfWork db;
+
         public CheckOutController(IUnitOfWorkService service,IUnitOfWork db)
         {
             this.db = db;
             this.service = service;
         }
+
 
         [HttpGet]
         [Route("CheckOutProducts")]
@@ -44,6 +46,23 @@ namespace TexnoStoreApi.Controllers
             
         }
 
+        [HttpPost]
+        [Route("Order")]
+        public IActionResult OrderGoods(OrderDetailsModel model,int userId)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (service.CheckOutService.Order(userId, model))
+                {
+                    return Ok("Order successfully checkout");
+                }
+                else
+                {
+                    return BadRequest("Error");
+                }
+            }
+            return BadRequest("Login to order a product");
+        }
 
     }
 }

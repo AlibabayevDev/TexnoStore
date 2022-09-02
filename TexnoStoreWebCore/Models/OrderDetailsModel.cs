@@ -1,4 +1,4 @@
-﻿namespace TexnoStore.Models
+﻿namespace TexnoStoreWebCore.Models
 {
     public class OrderDetailsModel
     {

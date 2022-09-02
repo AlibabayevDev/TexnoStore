@@ -37,7 +37,10 @@ namespace TexnoStore.Controllers
 
         public IActionResult Order(CheckoutViewModel viewModel)
         {
-            var userId = db.LoginRepository.Get(User.Identity.Name);
+            var user = db.LoginRepository.Get(User.Identity.Name);
+
+            service.CheckOutService.Order(user.Id, viewModel.OrderDetails);
+            /*var userId = db.LoginRepository.Get(User.Identity.Name);
             var shopCarts = db.ShopCartRepository.GetAll(userId.Id);
 
             var mapper = new ShopCartMapper();
@@ -59,7 +62,7 @@ namespace TexnoStore.Controllers
             foreach(var item in shopCarts)
             {
                 db.CheckOutRepository.InsertOrderProducts(item.Id);
-            }
+            }*/
             return View();
         }
     }

@@ -41,32 +41,27 @@ namespace TexnoStoreWebCore.Services.Implementations
             return ShopCarts;
         }
 
-        //public IActionResult Order(CheckoutViewModel viewModel)
-        //{
-        //    var userId = db.LoginRepository.Get(User.Identity.Name);
-        //    var shopCarts = db.ShopCartRepository.GetAll(userId.Id);
+        public bool Order(int Id,OrderDetailsModel model)
+        {
+            try
+            {
+                var shopCarts = db.ShopCartRepository.GetAll(Id);
+                var checkOutMapper = new CheckOutMapper();
+                var orderDetails = checkOutMapper.Map(model);
 
-        //    var mapper = new ShopCartMapper();
-        //    List<ShopCartModel> ShopCarts = new List<ShopCartModel>();
+                //db.CheckOutRepository.InsertOrderProducts(shopCarts, orderDetails);
 
-        //    for (int i = 0; i < shopCarts.Count; i++)
-        //    {
-        //        var shopCart = shopCarts[i];
-        //        var shopCartModel = mapper.Map(shopCart);
-
-        //        ShopCarts.Add(shopCartModel);
-        //    }
-        //    viewModel.ShopCart.ShopCartModels = ShopCarts;
-
-        //    var checkOutMapper = new CheckOutMapper();
-        //    var orderDetails = checkOutMapper.Map(viewModel.OrderDetails);
-
-        //    db.CheckOutRepository.Insert(orderDetails);
-        //    foreach (var item in shopCarts)
-        //    {
-        //        db.CheckOutRepository.InsertOrderProducts(item.Id);
-        //    }
-        //    return View();
-        //}
+                db.CheckOutRepository.Insert(orderDetails);
+                foreach (var item in shopCarts)
+                {
+                    db.CheckOutRepository.InsertOrderProducts(item.Id);
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
