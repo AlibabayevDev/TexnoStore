@@ -5,43 +5,30 @@ using TexnoStore.Mapper;
 using TexnoStore.Models;
 using TexnoStore.Models.Checkout;
 using TexnoStoreWebCore.Models;
+using TexnoStoreWebCore.Services.Abstract;
 
 namespace TexnoStore.Controllers
 {
     public class CheckOutController : Controller
     {
         public readonly IUnitOfWork db;
-        public CheckOutController(IUnitOfWork db)
+        public readonly IUnitOfWorkService service;
+
+        public CheckOutController(IUnitOfWork db,IUnitOfWorkService service)
         {
+            this.service = service;
             this.db = db;
         }
         public IActionResult Index()
         {
-            var userId = db.LoginRepository.Get(User.Identity.Name);
-
-            var shopCarts = db.ShopCartRepository.GetAll(userId.Id);
-            double shopCartPrice = 0;
-
-            var mapper = new ShopCartMapper();
-            List<ShopCartModel> ShopCarts = new List<ShopCartModel>();
-
-            for (int i = 0; i < shopCarts.Count; i++)
-            {
-                var shopCart = shopCarts[i];
-                var shopCartModel = mapper.Map(shopCart);
-                shopCartModel.Price *= shopCartModel.Count;
-                shopCartPrice += shopCartModel.Price;
-
-                ShopCarts.Add(shopCartModel);
-
-            }
+            var user = db.LoginRepository.Get(User.Identity.Name);
 
             var viewModel = new CheckoutViewModel()
             {
                 ShopCart = new Models.ShopCartListViewModel()
                 {
-                    ShopCartModels = ShopCarts,
-                    ShopCartPrice = shopCartPrice
+                    ShopCartModels = service.CheckOutService.CheckOutProducts(user.Id),
+                    ShopCartPrice = service.ShopCartService.ShopCartPrice(user.Id)
                 },
                 
             };

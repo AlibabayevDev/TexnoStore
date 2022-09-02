@@ -23,5 +23,6 @@ namespace TexnoStoreWebCore.Services.Implementations
         public IHomeService HomeService => new HomeService(db);
         public IPhoneService PhoneService => new PhoneService(db);
         public IShopCartService ShopCartService => new ShopCartService(db);
+        public ICheckOutService CheckOutService => new CheckOutService(db);
     }
 }

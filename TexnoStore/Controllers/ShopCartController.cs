@@ -49,27 +49,6 @@ namespace TexnoStore.Controllers
             return PartialView(emptyModel);
         }
 
-
-        public IActionResult ShopCartView()
-        {
-            var userid = db.LoginRepository.Get(User.Identity.Name);
-
-            var allProductsList = Checkout();
-            var model = new ShopCartListViewModel()
-            {
-                ShopCartModels = allProductsList
-            };
-
-
-            foreach (var price in model.ShopCartModels)
-            {
-                model.ShopCartCount++;
-                model.ShopCartPrice += price.Price * price.Count;
-            }
-            return View(model);
-        }
-
-
         public IActionResult ShopCartCount()
         {
             var allProductsList = Checkout();
