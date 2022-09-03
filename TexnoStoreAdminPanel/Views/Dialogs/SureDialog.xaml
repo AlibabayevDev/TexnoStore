@@ -1,0 +1,43 @@
+﻿<Window x:Class="PaymentOrder.AdminPanel.Views.Dialogs.SureDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Height="200" Width="400"
+        WindowStyle="None" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True" Background="Transparent">
+    <Border BorderThickness="5" BorderBrush="Black" CornerRadius="10" Background="LightGray">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Viewbox>
+                <TextBlock Text="{Binding DialogText,FallbackValue=Are you sure?}" Width="400" 
+                        FontSize="30" 
+                        TextWrapping="Wrap"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        TextAlignment="Center"                         
+                        ></TextBlock>
+            </Viewbox>
+
+            <Viewbox Grid.Row="1">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Accept" Name="Accept"
+                    Margin="1" HorizontalAlignment="Left"
+                    VerticalAlignment="Top" Width="60"
+                     Click="YesClick" IsCancel="True" Background="DarkGray"></Button>
+                    <Button Content="Cancel" Name="Cancel"
+                    Margin="1" HorizontalAlignment="Left"
+                    VerticalAlignment="Top" Width="60"
+                     Click="NoClick" IsCancel="True" Background="DarkGray"></Button>
+                </StackPanel>
+            </Viewbox>
+        </Grid>
+    </Border>
+</Window>

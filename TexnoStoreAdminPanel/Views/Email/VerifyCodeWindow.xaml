@@ -1,0 +1,56 @@
+﻿<Window x:Class="BankApp.AdminPanel.Views.Email.VerifyCodeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BankApp.AdminPanel.Views.Email"
+        mc:Ignorable="d"
+        Title="VerifyCodeWindow"  Height="510" Width="700" ResizeMode="NoResize" Background="#303030"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid>
+            <Border>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="150"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <StackPanel>
+
+                            <TextBlock Text="Please enter the verification code" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 10" FontSize="30" Foreground="White"/>
+                            <Separator VerticalAlignment="Bottom"></Separator>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <TextBlock Foreground="White" FontSize="25" HorizontalAlignment="Center">Enter verification code</TextBlock>
+                    </Grid>
+                    <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                        <Border Width="300" Height="50" CornerRadius="0,3.2,3.2,0">
+                            <Border Width="300" Height="50" CornerRadius="3.2">
+                                <TextBox Text = "{Binding VerificationCode, Mode=TwoWay}" Name="email" Foreground="Black" BorderThickness="0" Width="300" Height="50" Background="WhiteSmoke" FontSize="18" TextAlignment="Left" VerticalAlignment="Center" >
+                                </TextBox>
+                            </Border>
+                        </Border>
+                    </WrapPanel>
+                    <Grid Grid.Row="4">
+                        <StackPanel Visibility="{Binding IncorrectCode}">
+                            <TextBlock Text="The verification code is incorrect" HorizontalAlignment="Center" FontSize="25" Foreground="Red"/>
+                        </StackPanel>
+                        <Border CornerRadius="3.2" Width="200" Height="50" Grid.ColumnSpan="2">
+                            <Button Command="{Binding Verify}"  Cursor="Hand" x:Name="login" Background="Black" Opacity="0.5" Foreground="White" FontSize="20"
+                    Content="Verify" FontWeight="Bold">
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="3.2"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

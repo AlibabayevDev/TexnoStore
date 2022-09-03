@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\Icons_Login\background_main1.jpg" />
+    <None Remove="Images\Icons_Login\businessman.png" />
+    <None Remove="Images\Icons_Login\email.png" />
+    <None Remove="Images\Icons_Login\password.png" />
+    <None Remove="Images\Main_Icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
+    <Folder Include="Views\SearchWindows\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TexnoStore.Core\TexnoStore.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Icons_Login\background_main1.jpg" />
+    <Resource Include="Images\Icons_Login\businessman.png" />
+    <Resource Include="Images\Icons_Login\email.png" />
+    <Resource Include="Images\Icons_Login\password.png" />
+    <Resource Include="Images\Main_Icon.png" />
+  </ItemGroup>
+
+</Project>
