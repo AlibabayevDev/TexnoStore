@@ -1,8 +1,10 @@
-﻿@model LaptopListViewModel
-
+﻿@using TexnoStoreWebCore.Models.Laptops
+@model LaptopListViewModel
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
 <!DOCTYPE html>
 <html lang="en">
-
 	<body>
 		<div class="section">
 			<!-- container -->
@@ -222,7 +224,7 @@
 						@{
 							foreach(LaptopModel laptop in Model.Laptops)
 							{
-								@Html.Partial("AllLaptops",laptop)
+								@Html.Partial("AllProducts",laptop)
 							}
 					    }
 							<!-- product -->
@@ -280,6 +282,9 @@
 				<!-- /row -->
 			</div>
 			<!-- /container -->
+		</div>
+
+		<div class="modal fade" id="createModal">
 		</div>
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>

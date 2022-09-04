@@ -497,6 +497,9 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         phone.LongDesc = Convert.ToString(reader["LongDesc"]);
                         phone.MainImg = Convert.ToString(reader["MainImg"]);
                         phone.AddDate = Convert.ToDateTime(reader["AddDate"]);
+                        phone.ProductType = Convert.ToInt16(reader["TypeId"]);
+                        phone.ProductTypeName = Convert.ToString(reader["ProductType"]);
+                        phone.ProductId = Convert.ToInt16(reader["ProductId"]);
                         laptops.Add(phone);
                     }
 
@@ -506,8 +509,46 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
 
         }
 
+        public Phone PhoneProduct(int productId)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string cmdText = "select Enum.ProductType,Phone.Id,Products.TypeId,Phone.ProductId ,Products.Name,Products.OldPrice, Products.Price, Products.Sale ,Products.LongDesc,Phone.ImageId,Products.MainImg, Phone.CategoryId,Products.AddDate from Phone inner join Category on Phone.CategoryId = Category.Id inner join Products on Phone.ProductId = Products.Id inner join Enum on Enum.Id = Products.TypeId where @ProductId=ProductId";
 
+                using (SqlCommand cmd = new SqlCommand(cmdText, connection))
+                {
+                    cmd.Parameters.AddWithValue("@ProductId", productId);
 
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    Phone phone = new Phone();
+
+                    while (reader.Read())
+                    {
+                        phone.ImageId = Convert.ToInt32(reader["ImageId"]);
+                        phone.Id = Convert.ToInt32(reader["Id"]);
+                        phone.PhonesImages = new PhonesImages()
+                        {
+                            Img = Images(phone.Id)
+                        };
+                        phone.Name = Convert.ToString(reader["Name"]);
+                        phone.OldPrice = Convert.ToDouble(reader["OldPrice"]);
+                        phone.Price = Convert.ToDouble(reader["Price"]);
+                        phone.Sale = Convert.ToInt16(reader["Sale"]);
+                        phone.LongDesc = Convert.ToString(reader["LongDesc"]);
+                        phone.MainImg = Convert.ToString(reader["MainImg"]);
+                        phone.AddDate = Convert.ToDateTime(reader["AddDate"]);
+                        phone.ProductType = Convert.ToInt16(reader["TypeId"]);
+                        phone.ProductTypeName = Convert.ToString(reader["ProductType"]);
+                        phone.ProductId = Convert.ToInt16(reader["ProductId"]);
+                    }
+
+                    return phone;
+                }
+            }
+
+        }
         public List<Phone> SearchPhones(string Name)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))

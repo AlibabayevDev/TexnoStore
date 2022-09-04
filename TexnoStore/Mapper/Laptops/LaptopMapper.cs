@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TexnoStore.Core.Domain.Entities.Laptop;
 using TexnoStore.Mapper;
 using TexnoStore.Models.Laptops;
+using TexnoStoreWebCore.Models.Laptops;
 
 namespace TexnoStore.Mapper.Laptops
 {
@@ -20,7 +21,7 @@ namespace TexnoStore.Mapper.Laptops
             {
                 Id = model.Id,
                 Name = model.Name,
-                LongDesc = model.LognDesc,
+                LongDesc = model.LongDesc,
                 Price = model.Price,
                 OldPrice = model.OldPrice,
                 Sale = model.Sale,
@@ -40,6 +41,9 @@ namespace TexnoStore.Mapper.Laptops
                 Series = model.Series,
                 Weight = model.Weight,
                 ShortDesc= model.ShortDesc,
+                ProductId = model.ProductId,
+                ProductType = model.ProductType,
+                ProductTypeName = model.ProductTypeName,
             };
             return laptop;
         }
@@ -50,7 +54,7 @@ namespace TexnoStore.Mapper.Laptops
             {
                 Id = entity.Id,
                 Name = entity.Name,
-                LognDesc = entity.LongDesc,
+                LongDesc = entity.LongDesc,
                 Price = entity.Price,
                 OldPrice = entity.OldPrice,
                 Sale = entity.Sale,
@@ -70,6 +74,9 @@ namespace TexnoStore.Mapper.Laptops
                 Series = entity.Series,
                 Weight = entity.Weight,
                 ShortDesc = entity.ShortDesc,
+                ProductId = entity.ProductId,
+                ProductType = entity.ProductType,
+                ProductTypeName = entity.ProductTypeName,
             };
             return laptop;
         }

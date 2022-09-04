@@ -1,37 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TexnoStore.Core.DataAccess.Abstract;
-using TexnoStore.Core.Domain.Entities.Laptop;
-using TexnoStore.Core.Domain.Entities.Phone;
-using TexnoStore.Mapper.Laptops;
-using TexnoStore.Mapper.Phones;
 using TexnoStore.Models;
-using TexnoStore.Models.Laptops;
-using TexnoStore.Models.Phones;
+using TexnoStoreWebCore.Mapper;
+using TexnoStoreWebCore.Models;
+using TexnoStoreWebCore.Services.Abstract;
 
 namespace TexnoStore.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly IUnitOfWork db;
-        public HomeController(IUnitOfWork db)
+        private readonly IUnitOfWorkService service;
+        public HomeController(IUnitOfWork db,IUnitOfWorkService service)
         {
+            this.service = service;
             this.db = db;
         }
         public IActionResult Index()
         {
-            var laptops = db.LaptopRepository.Laptops();
-            var phones = db.PhoneRepository.Phones();
-
-            var laptopsModels = LaptopsModels(laptops);
-            var phonesModels = PhoneModels(phones);
-
+            var products = service.HomeService.AllProducts();
+            
             var viewModel = new AllProductsListViewModel()
             {
-                PhoneModel = phonesModels,
-                LaptopModel = laptopsModels
+                Products=products
             };
-            if (viewModel.LaptopModel.Equals(0) && viewModel.PhoneModel.Equals(0))
+
+            if (viewModel.Products.Equals(0)==null)
             {
                 return RedirectToAction("ProductNotFound", "Error");
             }
@@ -42,39 +37,46 @@ namespace TexnoStore.Controllers
             return View();
         }
 
-
-
-        public List<LaptopModel> LaptopsModels(List<Laptop> laptops)
+        public IActionResult ProductName(int productId, int typeId)
         {
-            LaptopMapper laptopMapper = new LaptopMapper();
-            List<LaptopModel> laptopsModels = new List<LaptopModel>();
-
-            for (int i = 0; i < laptops.Count; i++)
+            if (typeId == 1)
             {
-                var laptop = laptops[i];
-                var laptopModel = laptopMapper.Map(laptop);
-
-                laptopsModels.Add(laptopModel);
+                var laptop = service.LaptopService.LaptopProduct(productId);
+                return RedirectToAction("LaptopProduct", "Laptop", new { id = laptop.Id });
+            }
+            else if (typeId == 2)
+            {
+                var phone = service.PhoneService.PhoneProduct(productId);
+                return RedirectToAction("PhoneProduct", "Phone", new { id = phone.Id });
+            }
+            else if(typeId == 3)
+            {
+                var camera = service.CameraService.CameraById(productId);
+                return RedirectToAction("CameraProduct", "Camera", new { id = camera.Id });
             }
 
-            return laptopsModels;
+            return View();
+        }
+        public IActionResult QuickView(int id, int type)
+        {
+            var model = service.AllProductService.QuickViewProduct(id);
+
+            return PartialView(model);
         }
 
-
-        public List<PhoneModel> PhoneModels(List<Phone> phones)
+        public IActionResult AddToCard(TexnoStoreWebCore.Models.ShopCartModel model)
         {
-            PhoneMapper phoneMapper = new PhoneMapper();
-            List<PhoneModel> phonesModels = new List<PhoneModel>();
-
-            for (int i = 0; i < phones.Count; i++)
+            if(User.Identity.IsAuthenticated)
             {
-                var phone = phones[i];
-                var phoneModel = phoneMapper.Map(phone);
+                var name = User.Identity.Name;
+                var userid = db.LoginRepository.Get(User.Identity.Name);
+                model.UserId = userid.Id;
 
-                phonesModels.Add(phoneModel);
+                service.HomeService.AddToCard(model);
+
+                return PartialView("Success");
             }
-
-            return phonesModels;
+            return Json(false);
         }
     }
 }

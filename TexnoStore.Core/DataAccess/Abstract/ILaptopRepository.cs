@@ -12,6 +12,7 @@ namespace TexnoStore.Core.DataAccess.Abstract
     {
         List<Laptop> Laptops();
         List<Laptop> SearchLaptops(string Name);
+        Laptop LaptopProduct(int ProductId);
 
     }
 }

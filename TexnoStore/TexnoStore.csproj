@@ -2,10 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>3505dd00-7a9d-45e9-becf-50b60d41f5b2</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="MailKit" Version="3.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
       <PrivateAssets>all</PrivateAssets>
@@ -16,11 +19,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\ShopCart\" />
     <Folder Include="wwwroot\img\Predator\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TexnoStore.Core\TexnoStore.Core.csproj" />
+    <ProjectReference Include="..\TexnoStoreWebCore\TexnoStoreWebCore.csproj" />
   </ItemGroup>
 
 </Project>

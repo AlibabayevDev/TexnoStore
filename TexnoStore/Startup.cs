@@ -9,6 +9,13 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using TexnoStore.Core.Factory;
+using TexnoStore.Core.Domain.Entities;
+using TexnoStore.IdentityServer;
+using TexnoStore.Core.DataAccess.Implementation.SQL;
+using TexnoStore.Core.IdentityServer;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using TexnoStoreWebCore.Services.Implementations;
+using TexnoStoreWebCore.Services.Abstract;
 
 namespace TexnoStore
 {
@@ -32,7 +39,38 @@ namespace TexnoStore
 
                 return DbFactory.Create(connectionString);
             });
+            services.AddIdentity<User, Role>(opts => {
+                opts.Password.RequiredLength = 5;   // ??????????? ?????
+                opts.Password.RequireNonAlphanumeric = false;   // ????????? ?? ?? ?????????-???????? ???????
+                opts.Password.RequireLowercase = false; // ????????? ?? ??????? ? ?????? ????????
+                opts.Password.RequireUppercase = false; // ????????? ?? ??????? ? ??????? ????????
+                opts.Password.RequireDigit = false; // ????????? ?? ?????
+            }).AddDefaultTokenProviders(); ;
 
+            services.AddSingleton<IPasswordHasher<User>, CustomPasswordHasher>();
+            services.AddSingleton<IUserStore<User>, UserStore>();
+            services.AddSingleton<IRoleStore<Role>, RoleStore>();
+            services.AddSingleton<IUnitOfWorkService, UnitOfWorkService>();
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true; // asking client for cookies accept
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/account/google-login"; // Must be lowercase
+            })
+           .AddGoogle(options =>
+            {
+                options.ClientId = Configuration["Authentication:Google:ClientId"];
+                options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                options.SignInScheme = IdentityConstants.ExternalScheme;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -50,7 +88,7 @@ namespace TexnoStore
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseCookiePolicy();
             app.UseRouting();
 
             app.UseAuthentication();

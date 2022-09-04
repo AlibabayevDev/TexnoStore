@@ -5,60 +5,48 @@ using System.Linq;
 using TexnoStore.Models;
 using TexnoStore.Mapper.Laptops;
 using TexnoStore.Models.Laptops;
+using TexnoStore.Mapper;
+using Microsoft.AspNetCore.Identity;
+using TexnoStore.Core.Domain.Entities;
+using TexnoStore.Models.Phones;
+using TexnoStore.Core.Domain.Entities.Phone;
+using TexnoStore.Mapper.Phones;
+using TexnoStore.Core.Domain.Entities.Laptop;
+using System;
+using TexnoStoreWebCore.Services.Abstract;
+using TexnoStoreWebCore.Models.Laptops;
 
 namespace TexnoStore.Controllers
 {
-    public class LaptopController : Controller
+    public class LaptopController : BaseController
     {
-        private readonly IUnitOfWork db;
-
-        public LaptopController(IUnitOfWork db)
+        private readonly IUnitOfWorkService service;
+        public LaptopController(IUnitOfWorkService service)
         {
-            this.db = db;
+           this.service = service;
         }
 
         public IActionResult Index()
         {
-            var laptops = db.LaptopRepository.Laptops();
+            var laptops = service.LaptopService.Laptops();
 
-            LaptopMapper laptopMapper = new LaptopMapper();
-            List<LaptopModel> laptopModels = new List<LaptopModel>();
-
-            for(int i=0;i<laptops.Count; i++)
-            {
-                var laptop = laptops[i];
-                var laptopModel = laptopMapper.Map(laptop);
-
-                laptopModels.Add(laptopModel);
-            }
             var model = new LaptopListViewModel
             {
-                Laptops = laptopModels,
+                Laptops = laptops,
             };
+
             return View(model);
         }
 
         public IActionResult LaptopProduct(int id)
         {
-            var laptops = db.LaptopRepository.Laptops();
+            var laptop = service.LaptopService.LaptopProduct(id);
 
-            LaptopMapper laptopMapper = new LaptopMapper();
-            List<LaptopModel> laptopModels = new List<LaptopModel>();
-
-            for (int i = 0; i < laptops.Count; i++)
-            {
-                var laptop = laptops[i];
-                var laptopModel = laptopMapper.Map(laptop);
-
-                laptopModels.Add(laptopModel);
-            }
             var model = new LaptopListViewModel
             {
-                Laptops = laptopModels.Where(x => x.Id == id)
+                Laptop = laptop
             };
-
-            return View(model.Laptops.FirstOrDefault());
+            return View(model);
         }
-
     }
 }

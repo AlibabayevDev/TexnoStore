@@ -19,14 +19,16 @@ namespace TexnoStore.Mapper.Phones
             {
                 Id = model.Id,
                 Name = model.Name,
-                LongDesc = model.LognDesc,
+                LongDesc = model.LongDesc,
                 Price = model.Price,
                 OldPrice = model.OldPrice,
                 Sale = model.Sale,
-                CategoryId = model.CategoryId,
                 PhonesImages = laptopImageMapper.Map(model.PhonesImages),
                 ImageId = model.ImageId,
                 MainImg = model.MainImg,
+                ProductTypeName = model.ProductTypeName,
+                ProductId = model.ProductId,
+                ProductType = model.ProductType,
             };
             return laptop;
         }
@@ -37,14 +39,16 @@ namespace TexnoStore.Mapper.Phones
             {
                 Id = entity.Id,
                 Name = entity.Name,
-                LognDesc = entity.LongDesc,
+                LongDesc = entity.LongDesc,
                 Price = entity.Price,
                 OldPrice = entity.OldPrice,
                 Sale = entity.Sale,
-                CategoryId = entity.CategoryId,
                 PhonesImages = laptopImageMapper.Map(entity.PhonesImages),
                 ImageId = entity.ImageId,
                 MainImg= entity.MainImg,
+                ProductTypeName = entity.ProductTypeName,
+                ProductType = entity.ProductType,
+                ProductId = entity.ProductId,
             };
             return laptop;
         }

@@ -1,0 +1,92 @@
+﻿@using TexnoStore.Models.Users
+
+@{
+	Layout = null;
+}
+
+@model UserViewModel
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login V5</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+	<link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="~/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" type="text/css" href="~/css/util.css">
+	<link rel="stylesheet" type="text/css" href="~/css/main.css">
+</head>
+<body>
+	
+	<div class="limiter" >
+		<div class="container-login100" style="background-image: url(~/img/bt-ndsf);">
+			<div class="wrap-login100 p-l-110 p-r-110 p-t-1 p-b-1">
+				<form class="login100-form validate-form flex-sb flex-w" asp-action="Login" asp-controller="Account" method="post">
+					<span class="login100-form-title p-b-1">
+						Sign In With
+					</span>
+
+					<a href="#" class="btn-face m-b-20">
+						<i class="fa fa-facebook-official"></i>
+						Facebook
+					</a>
+
+					<a asp-action="GoogleLogin" class="btn-google m-b-20">
+						<img src="~/img/icons/icon-google.png" alt="GOOGLE">
+						Google
+					</a>
+					
+					<div class="p-t-5 p-b-5">
+						<span class="txt1">
+							Username
+						</span>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Username is required">
+						<input class="input100" placeholder="email:" type="email" tabindex="6" asp-for="@Model.loginModel.Email" required>
+						<span class="focus-input100"></span>
+					</div>
+					
+					<div class="p-t-13 p-b-9">
+						<span class="txt1">
+							Password
+						</span>
+
+						<a asp-action="ForgotPassword" class="txt2 bo1 m-l-5">
+							Forgot?
+						</a>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" placeholder="password" type="password" tabindex="7" asp-for="@Model.loginModel.Password" required>
+						<span class="focus-input100"></span>
+					</div>
+					<span style="color:red;font-size:20px">@ViewBag.Error</span>
+					<div class="container-login100-form-btn m-t-37">
+						<input type="submit" class="login100-form-btn" value="Sign In"/> 
+					</div>
+
+					<div class="w-full text-center p-t-15">
+						<span class="txt2">
+							Not a member?
+						</span>
+
+						<a href="/Account/Regist" class="txt2 bo1">
+							Sign up now
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+
+</body>
+</html>

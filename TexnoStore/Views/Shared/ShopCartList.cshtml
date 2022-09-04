@@ -1,0 +1,47 @@
+﻿@using TexnoStore.Models
+@using TexnoStoreWebCore.Models
+@using TexnoStore.Models.Laptops
+
+@model ShopCartListViewModel
+										<div class="cart-list" id="shopCartModal">
+											@{
+												@foreach(ShopCartModel product in Model.ShopCartModels)
+												{
+													<div class="product-widget">
+													<a href="@Url.Action("ProductName","Home", new { productId= @product.ProductId, typeId= @product.ProductType})">
+													<div class="product-img">
+															<img src="~/img/@product.MainImg" alt="">
+														</div>
+													</a>
+														
+														<div class="product-body">
+															<h3 class="product-name"><a href="@Url.Action("ProductName","Home", new { productId= @product.ProductId, typeId= @product.ProductType})">@product.Name</a></h3>
+															<h4 class="product-price"><span class="qty">@product.Count x</span>$@product.Price.00</h4>
+														</div>
+														<button class="delete" onclick="ShowDeleteModal(this)" data-toggle="modal" data-id="@product.Id" id="btnDel"><i class="fa fa-close"></i></button>
+													</div>
+
+												}
+											}
+										</div>
+										<div class="cart-summary">
+											<small>@Model.ShopCartCount Item(s) selected</small>
+											<h5>SUBTOTAL: $@Model.ShopCartPrice.00</h5>
+										</div>
+										<div class="cart-btns">
+											<a href="/ShopCart/ShopCartView">View Cart</a>
+											<a href="/CheckOut/Index">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+										</div>
+										<script>
+											function ShowDeleteModal(elem) {
+											var dataId = $(elem).data("id");
+											$.ajax({
+												url: "/ShopCart/Delete?id=" + dataId,
+												success: function (data) {
+													 $('#shopCart').html(data);
+												},
+												error: function (error) {
+													console.log(error);
+												}
+											});
+										}</script>

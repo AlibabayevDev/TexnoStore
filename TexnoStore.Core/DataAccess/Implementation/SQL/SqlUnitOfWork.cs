@@ -20,6 +20,10 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
         public ILaptopRepository LaptopRepository => new SqlLaptopRepository(connectionString);
         public IPhoneRepository PhoneRepository => new SqlPhoneRepository(connectionString);
         public IAllProductRepository AllProductRepository => new SqlAllProductRepository(connectionString);
-
+        public ILoginRepository LoginRepository => new SqlLoginRepository(connectionString);
+        public IReviewRepository ReviewRepository => new SqlReviewRepository(connectionString);
+        public IShopCartRepository ShopCartRepository => new SqlShopCartRepository(connectionString);
+        public ICameraRepository CameraRepository => new SqlCameraRepository(connectionString);
+        public ICheckOutRepository CheckOutRepository => new SqlCheckOutRepository(connectionString);
     }
 }

@@ -507,6 +507,9 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         laptop.OperatingSystem = Convert.ToString(reader["OperatingSystem"]);
                         laptop.HardDrive = Convert.ToString(reader["HardDrive"]);
                         laptop.ShortDesc = Convert.ToString(reader["ShortDesc"]);
+                        laptop.ProductId = Convert.ToInt16(reader["ProductId"]);
+                        laptop.ProductType = Convert.ToInt16(reader["TypeId"]);
+                        laptop.ProductTypeName = Convert.ToString(reader["ProductType"]);
                         laptop.AddDate = Convert.ToDateTime(reader["AddDate"]);
 
                         laptops.Add(laptop);
@@ -519,7 +522,62 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
         }
 
 
+        public Laptop LaptopProduct(int productId)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string cmdText = "select Category.CategoryName,Laptop.Id,Laptop.Brand,Laptop.Series,Laptop.Processor,Laptop.HardDrive,Laptop.RAM,Laptop.OperatingSystem,Laptop.GraphicsCoprocessor,Laptop.ScreenMatrix,Laptop.Weight,Laptop.ScreenSize,Laptop.Display,Laptop.ProductId, Products.Name,Products.OldPrice,Products.TypeId, Products.Price, Products.Sale ,Products.LongDesc,Laptop.ImageId,Products.MainImg, Laptop.CategoryId , Products.AddDate,Products.ShortDesc from Laptop inner join Category on Laptop.CategoryId = Category.Id inner join Products on Laptop.ProductId = Products.Id where ProductId=@ProductId";
 
+                using (SqlCommand cmd = new SqlCommand(cmdText, connection))
+                {
+                    cmd.Parameters.AddWithValue("@ProductId", productId);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    Laptop laptop = new Laptop();
+
+                    while (reader.Read())
+                    {
+                        laptop.ImageId = Convert.ToInt32(reader["ImageId"]);
+                        laptop.Id = Convert.ToInt32(reader["Id"]);
+                        laptop.LaptopsImages = new LaptopsImages()
+                        {
+                            Img = Images(laptop.Id)
+                        };
+                        laptop.Name = Convert.ToString(reader["Name"]);
+                        laptop.OldPrice = Convert.ToDouble(reader["OldPrice"]);
+                        laptop.Price = Convert.ToDouble(reader["Price"]);
+                        laptop.Sale = Convert.ToInt16(reader["Sale"]);
+                        laptop.LongDesc = Convert.ToString(reader["LongDesc"]);
+                        laptop.MainImg = Convert.ToString(reader["MainImg"]);
+                        laptop.ScreenMatrix = Convert.ToString(reader["ScreenMatrix"]);
+                        laptop.RAM = Convert.ToString(reader["RAM"]);
+                        laptop.Weight = Convert.ToString(reader["Weight"]);
+                        laptop.Series = Convert.ToString(reader["Series"]);
+                        laptop.Brand = Convert.ToString(reader["Brand"]);
+                        laptop.GraphicsCoprocessor = Convert.ToString(reader["GraphicsCoprocessor"]);
+                        laptop.Processor = Convert.ToString(reader["Processor"]);
+                        laptop.ScreenSize = Convert.ToString(reader["ScreenSize"]);
+                        laptop.Display = Convert.ToString(reader["Display"]);
+                        laptop.OperatingSystem = Convert.ToString(reader["OperatingSystem"]);
+                        laptop.HardDrive = Convert.ToString(reader["HardDrive"]);
+                        laptop.ShortDesc = Convert.ToString(reader["ShortDesc"]);
+                        laptop.ProductId = Convert.ToInt16(reader["ProductId"]);
+                        laptop.ProductType = Convert.ToInt16(reader["TypeId"]);
+                        laptop.Category = new Category()
+                        {
+                            CategoryName = Convert.ToString(reader["CategoryName"])
+                        };
+                        laptop.AddDate = Convert.ToDateTime(reader["AddDate"]);
+                    }
+
+                    return laptop;
+                }
+            }
+
+        }
+        
         public List<Laptop> SearchLaptops(string Name)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -563,9 +621,6 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             }
 
         }
-
-
-
 
         public List<Image> Images(int Id)
         {

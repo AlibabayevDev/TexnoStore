@@ -11,6 +11,7 @@ namespace TexnoStore.Core.DataAccess.Abstract
     public interface IPhoneRepository : IMainRepository
     {
         List<Phone> Phones();
+        Phone PhoneProduct(int productId);
         List<Phone> SearchPhones(string Name);
 
     }

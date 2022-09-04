@@ -1,6 +1,6 @@
 ﻿@using TexnoStore.Models.Phones
 
-@model PhoneModel
+@model PhoneListViewModel
 	<body>
 		<!-- SECTION -->
 		<div class="section">
@@ -12,10 +12,10 @@
 					<div class="col-md-5 col-md-push-2">
 						<div id="product-main-img">
 							@{
-									for(int i=0;i<@Model.PhonesImages.Image.Count;i++)
+									for(int i=0;i<@Model.Phone.PhonesImages.Image.Count;i++)
 									{
 										<div class="product-preview">
-											<img src="~/img/@Model.PhonesImages.Image[i].ImgName" alt="" style="max-height:500px;max-width:400px;">
+											<img src="~/img/@Model.Phone.PhonesImages.Image[i].ImgName" alt="" style="max-height:500px;max-width:400px;">
 										</div>
 									}
 							}
@@ -27,10 +27,10 @@
 					<div class="col-md-2  col-md-pull-5">
 						<div id="product-imgs">
 							@{
-								for(int i=0;i<Model.PhonesImages.Image.Count;i++)
+								for(int i=0;i<Model.Phone.PhonesImages.Image.Count;i++)
 								{
 									<div class="product-preview">
-										<img src="~/img/@Model.PhonesImages.Image[i].ImgName" alt="">
+										<img src="~/img/@Model.Phone.PhonesImages.Image[i].ImgName" alt="">
 									</div>
 								}
 						}
@@ -53,10 +53,10 @@
 								<a class="review-link" href="#">10 Review(s) | Add your review</a>
 							</div>
 							<div>
-								<h3 class="product-price">$@Model.Price<del class="product-old-price">$@Model.OldPrice</del></h3>
+								<h3 class="product-price">$@Model.Phone.Price<del class="product-old-price">$@Model.Phone.OldPrice</del></h3>
 								<span class="product-available">In Stock</span>
 							</div>
-							<p>@Model.LognDesc</p>
+							<p>@Model.Phone.LongDesc</p>
 
 							<div class="product-options">
 								<label>
@@ -73,18 +73,48 @@
 								</label>
 							</div>
 
-							<div class="add-to-cart">
-								<div class="qty-label">
-									Qty
-									<div class="input-number">
-										<input type="number">
-										<span class="qty-up">+</span>
-										<span class="qty-down">-</span>
+							<form>
+									<input hidden asp-for="@Model.Phone.ProductId" id="stdProductId"/>
+									<div class="add-to-cart">
+										<div class="qty-label">
+											Qty
+											<div class="input-number">
+												<input asp-for="@Model.ShopCart.Count" type="number" step="1" min="1" max="12" value="1" id="stdCount">
+												<span class="qty-up">+</span>
+												<span class="qty-down">-</span>
+											</div>
+										</div>
+										<button type="button" value="Create" onclick="AddToCardQuick(this)" data-id="@Model.Phone.ProductId" class="add-to-cart-btn" ><i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
-								</div>
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-							</div>
-
+							</form>
+							<script>
+											function AddToCardQuick(elem) {
+												var id = $("#stdProductId").val();
+												var count = $("#stdCount").val();
+												var obj = {
+													ProductId: id,
+													Count:count
+												}
+												$.ajax({
+													url: "/Home/AddToCard",
+													method: "POST",
+													data: obj,
+													success: function (data) {
+														if(data)
+														{
+															$('#createModal').html(data);
+															$("#createModal").modal("show");
+														}
+														else{
+															window.location.href= "/Account/Index";														
+														}
+													},
+													error: function (err) {
+														console.error(err);
+													}
+												})
+}
+										</script>
 							<ul class="product-btns">
 								<li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
 								<li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li>
@@ -420,28 +450,76 @@
 										<!-- Review Form -->
 										<div class="col-md-3">
 											<div id="review-form">
-												<form class="review-form">
-													<input class="input" type="text" placeholder="Your Name">
-													<input class="input" type="email" placeholder="Your Email">
-													<textarea class="input" placeholder="Your Review"></textarea>
+												<form class="review-form"> @* asp-controller="Laptop" asp-action="Review" *@
+													<input asp-for="@Model.Phone.ProductId" id="stdId" hidden/>
+													<input asp-for="@Model.Review.Name" id="stdName" class="input" type="text" placeholder="Your Name">
+													<input asp-for="@Model.Review.Email" id="stdEmail" class="input" type="email" placeholder="Your Email">
+													<textarea  asp-for="@Model.Review.Message" id="stdMessage" class="input" placeholder="Your Review"></textarea>
 													<div class="input-rating">
 														<span>Your Rating: </span>
 														<div class="stars">
-															<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
-															<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
-															<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
-															<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-															<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+															<input id="star5" class="i-7" name="rating" value="5"  type="radio"><label for="star5"></label>
+															<input id="star4" class="i-7" name="rating" value="4"  type="radio"><label for="star4"></label>
+															<input id="star3" class="i-7" name="rating" value="3"  type="radio"><label for="star3"></label>
+															<input id="star2" class="i-7" name="rating" value="2"  type="radio"><label for="star2"></label>
+															<input id="star1" class="i-7" name="rating" value="1"  type="radio"><label for="star1"></label>
 														</div>
 													</div>
-													<button class="primary-btn">Submit</button>
-												</form>
+													<input onclick="BtnClick()" type="button"  value="Submit" class="primary-btn">
+													<p id="TempData"></p>
+												</form> 
 											</div>
 										</div>
 										<!-- /Review Form -->
+										<script>
+											function BtnClick()
+											{
+												var id=$("#stdId").val();
+												var name=$("#stdName").val();
+												var email=$("#stdEmail").val();
+												var message=$("#stdMessage").val();
+												var rating =$("input[name='rating']:checked").val();
+												var obj ={
+													ProductId:id,
+													Name: name,
+													Email: email,
+													Message: message,
+													Rating:rating
+												}
+
+												SubmitForm(obj);
+
+												var val = $('#stdName').val();
+												if(val.length >= 1){
+													$('#stdName').val('');
+												  }
+												var val = $('#stdEmail').val();
+												if(val.length >= 1){
+													$('#stdEmail').val('');
+												  }
+												var val = $('#stdMessage').val();
+												if(val.length >= 1){
+													$('#stdMessage').val('');
+												  }
+												document.getElementById("star5").checked = true;
+											}
+											function SubmitForm(obj){
+												$.ajax({
+													url:"/AllProduct/AddReview",
+													method :"POST",
+													data:obj,
+													success:function(data){
+														$('#TempData').text(data);
+													},
+													error: function(err)
+													{
+														console.error(err);
+													}
+												})
+												
+											}
+										</script>
 									</div>
-								</div>
-								<!-- /tab3  -->
 							</div>
 							<!-- /product tab content  -->
 						</div>

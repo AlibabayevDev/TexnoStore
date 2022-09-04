@@ -1,6 +1,6 @@
 ﻿@using TexnoStore.Models.Laptops
 
-@model LaptopModel
+@model LaptopListViewModel
 
 
 	<body>
@@ -10,37 +10,30 @@
 			<div class="container">
 				<!-- row -->
 				<div class="row">
-					<!-- Product main img -->
 					<div class="col-md-5 col-md-push-2">
 						<div id="product-main-img">
 							@{
-									for(int i=0;i<@Model.LaptopsImages.Image.Count;i++)
+									for(int i=0;i<@Model.Laptop.LaptopsImages.Image.Count;i++)
 									{
 										<div class="product-preview">
-											<img src="~/img/@Model.LaptopsImages.Image[i].ImgName" alt="" width="150px" height="400px" >
+											<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="" width="150px" height="400px" >
 										</div>
 									}
 							}
 						</div>
 					</div>
-					<!-- /Product main img -->
-
-					<!-- Product thumb imgs -->
 					<div class="col-md-2  col-md-pull-5">
 						<div id="product-imgs">
 							@{
-								for(int i=0;i<Model.LaptopsImages.Image.Count;i++)
+								for(int i=0;i<Model.Laptop.LaptopsImages.Image.Count;i++)
 								{
 									<div class="product-preview">
-										<img src="~/img/@Model.LaptopsImages.Image[i].ImgName" alt="">
+										<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="">
 									</div>
 								}
 						}
 						</div>
 					</div>
-					<!-- /Product thumb imgs -->
-
-					<!-- Product details -->
 					<div class="col-md-5">
 						<div class="product-details">
 							<h2 class="product-name">@Model.Name</h2>
@@ -55,50 +48,64 @@
 								<a class="review-link" href="#">10 Review(s) | Add your review</a>
 							</div>
 							<div>
-								<h3 class="product-price" id="final_price">$@Model.Price</h3><del class="product-old-price" id="">$@Model.OldPrice</del>
+								<h3 class="product-price" id="final_price">$@Model.Laptop.Price</h3><del class="product-old-price" id="">$@Model.Laptop.OldPrice</del>
 								<span class="product-available">In Stock</span>
 							</div>
-							<p>@Model.ShortDesc</p>
-							<div class="Test">
-								<div class="form_radio_btn">
-									<input id="radio-1" type="radio" name="radio" value="1">
-									<label for="radio-1">i7-9750H / GTX 1660Ti</label>
-								</div>
-								<div class="form_radio_btn">
-									<input id="radio-2" type="radio" name="radio" value="2">
-									<label for="radio-2">i7-12700H / RTX 3060 / 17"</label>
-								</div>
-								<div class="form_radio_btn">
-									<input id="radio-3" type="radio" name="radio" value="3">
-									<label for="radio-3">i7-11800H / RTX3060</label>
-								</div>
-								<input type="button" value="Get Value">
-							</div>
-								
+							<p>@Model.Laptop.ShortDesc</p>
+							<form>
+									<input hidden asp-for="@Model.Laptop.ProductId" id="stdProductId"/>
 
-							<div class="product-options">
-								<label for="Processor_edition">
-									Params
-									<select class="input-select" id="processor_edition" name="processor">
-										<option value="90">i7-9750H / GTX 1660Ti</option>
-										<option value="150">i7-12700H / RTX 3060 / 17"</option>
-										<option value="190">i7-11800H / RTX3060</option>
-									</select>
-								</label>
-								
-							</div>
+									@{
+										for(int i=0;i<5;i++)
+										{
+											<div class="form_radio_btn" id=radio>
+												<input id="radio-@i" type="radio" name="ImageId" value="@i">
+												<label for="radio-@i">i7-9750H / GTX 1660Ti</label>
+											</div>
+										}
+									}
 
-							<div class="add-to-cart">
-								<div class="qty-label">
-									Qty
-									<div class="input-number">
-										<input type="number">
-										<span class="qty-up">+</span>
-										<span class="qty-down">-</span>
+									<div class="add-to-cart">
+										<div class="qty-label">
+											Qty
+											<div class="input-number">
+												<input asp-for="@Model.ShopCart.Count" type="number" step="1" min="1" max="12" value="1" id="stdCount">
+												<span class="qty-up">+</span>
+												<span class="qty-down">-</span>
+											</div>
+										</div>
+										<button type="button" value="Create" onclick="AddToCardQuick(this)" data-id="@Model.Laptop.ProductId" class="add-to-cart-btn" ><i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
-								</div>
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-							</div>
+							</form>
+							<script>
+											function AddToCardQuick(elem) {
+												var id = $("#stdProductId").val();
+												var count = $("#stdCount").val();
+												var obj = {
+													ProductId: id,
+													Count:count
+												}
+												$.ajax({
+													url: "/Home/AddToCard",
+													method: "POST",
+													data: obj,
+													success: function (data) {
+														if(data)
+														{
+															$('#createModal').html(data);
+															$("#createModal").modal("show");
+														}
+														else{
+															window.location.href= "/Account/Index";														
+														}
+													},
+													error: function (err) {
+														console.error(err);
+													}
+												})
+}
+										</script>
+							
 
 							<ul class="product-btns">
 								<li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
@@ -140,7 +147,7 @@
 								<div id="tab1" class="tab-pane fade in active">
 									<div class="row">
 										<div class="col-md-12">
-											<p>@Model.LognDesc</p>
+											<p>@Model.Laptop.LongDesc</p>
 										</div>
 									</div>
 								</div>
@@ -158,67 +165,67 @@
 														<tr class="odd-row">
 															<th class="first">Производитель</th>
 															<td class="last">
-																<p itemprop="brand">@Model.Brand</p>
+																<p itemprop="brand">@Model.Laptop.Brand</p>
 															</td>
 														</tr>
 														<tr>
 															<th class="first">Модель</th>
 															<td class="last">
-																<p>@Model.Series</p>
+																<p>@Model.Laptop.Series</p>
 															</td>
 														</tr>
 														<tr class="odd-row">
 															<th class="first">Диагональ дисплея</th>
 															<td class="last">
-																<p>@Model.ScreenSize"</p>
+																<p>@Model.Laptop.ScreenSize"</p>
 															</td>
 														</tr>
 														<tr>
 															<th class="first">Разрешение</th>
 															<td class="last">
-																<p>@Model.Display</p>
+																<p>@Model.Laptop.Display</p>
 															</td>
 														</tr>
 														<tr class="odd-row">
 															<th class="first">Тип матрицы</th>
 															<td class="last">
-																<p>@Model.ScreenMatrix</p>
+																<p>@Model.Laptop.ScreenMatrix</p>
 															</td>
 														</tr>
 														<tr>
 															<th class="first">Процессор</th>
 															<td class="last">
-																<p>@Model.Processor</p>
+																<p>@Model.Laptop.Processor</p>
 															</td>
 														</tr>
 														<tr class="odd-row">
 															<th class="first">Объем оперативной памяти</th>
 															<td class="last">
-																<p>@Model.RAM ГБ</p>
+																<p>@Model.Laptop.RAM ГБ</p>
 															</td>
 														</tr>
 														<tr>
 															<th class="first">Объем SSD</th>
 															<td class="last">
-																<p>@Model.HardDrive</p>
+																<p>@Model.Laptop.HardDrive</p>
 															</td>
 														</tr>
 														<tr class="odd-row">
 															<th class="first">Видеокарта</th>
 															<td class="last">
-																<p>@Model.GraphicsCoprocessor</p>
+																<p>@Model.Laptop.GraphicsCoprocessor</p>
 															</td>
 														</tr>
 														<tr class="odd-row">
 															<th class="first">Операционная система</th>
 															<td class="last">
-																<p>@Model.OperatingSystem</p>
+																<p>@Model.Laptop.OperatingSystem</p>
 															</td>
 														</tr>
 														<tr>
 															<th class="first">Вес</th>
 															<td class="last">
-															<p>@Model.Weight Кг</p>
+															<p>@Model.Laptop.Weight Кг</p>
 															</td>
 														</tr>
 														<tr class="odd-row">
@@ -342,38 +349,7 @@
 															<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
 														</div>
 													</li>
-													<li>
-														<div class="review-heading">
-															<h5 class="name">John</h5>
-															<p class="date">27 DEC 2018, 8:0 PM</p>
-															<div class="review-rating">
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star-o empty"></i>
-															</div>
-														</div>
-														<div class="review-body">
-															<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-														</div>
-													</li>
-													<li>
-														<div class="review-heading">
-															<h5 class="name">John</h5>
-															<p class="date">27 DEC 2018, 8:0 PM</p>
-															<div class="review-rating">
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star-o empty"></i>
-															</div>
-														</div>
-														<div class="review-body">
-															<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-														</div>
-													</li>
+													
 												</ul>
 												<ul class="reviews-pagination">
 													<li class="active">1</li>
@@ -389,25 +365,75 @@
 										<!-- Review Form -->
 										<div class="col-md-3">
 											<div id="review-form">
-												<form class="review-form">
-													<input class="input" type="text" placeholder="Your Name">
-													<input class="input" type="email" placeholder="Your Email">
-													<textarea class="input" placeholder="Your Review"></textarea>
+												<form class="review-form"> @* asp-controller="Laptop" asp-action="Review" *@
+													<input asp-for="@Model.Laptop.Id" id="stdId" hidden/>
+													<input asp-for="@Model.Review.Name" id="stdName" class="input" type="text" placeholder="Your Name">
+													<input asp-for="@Model.Review.Email" id="stdEmail" class="input" type="email" placeholder="Your Email">
+													<textarea  asp-for="@Model.Review.Message" id="stdMessage" class="input" placeholder="Your Review"></textarea>
 													<div class="input-rating">
 														<span>Your Rating: </span>
 														<div class="stars">
-															<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
-															<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
-															<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
-															<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-															<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+															<input id="star5" class="i-7" name="rating" value="5"  type="radio"><label for="star5"></label>
+															<input id="star4" class="i-7" name="rating" value="4"  type="radio"><label for="star4"></label>
+															<input id="star3" class="i-7" name="rating" value="3"  type="radio"><label for="star3"></label>
+															<input id="star2" class="i-7" name="rating" value="2"  type="radio"><label for="star2"></label>
+															<input id="star1" class="i-7" name="rating" value="1"  type="radio"><label for="star1"></label>
 														</div>
 													</div>
-													<button class="primary-btn">Submit</button>
-												</form>
+													<input onclick="BtnClick()" type="button"  value="Submit" class="primary-btn">
+													<p id="TempData"></p>
+												</form> 
 											</div>
 										</div>
 										<!-- /Review Form -->
+										<script>
+											function BtnClick()
+											{
+												var id=$("#stdId").val();
+												var name=$("#stdName").val();
+												var email=$("#stdEmail").val();
+												var message=$("#stdMessage").val();
+												var rating =$("input[name='rating']:checked").val();
+												var obj ={
+													ProductId:id,
+													Name: name,
+													Email: email,
+													Message: message,
+													Rating:rating
+												}
+
+												SubmitForm(obj);
+
+												var val = $('#stdName').val();
+												if(val.length >= 1){
+													$('#stdName').val('');
+												  }
+												var val = $('#stdEmail').val();
+												if(val.length >= 1){
+													$('#stdEmail').val('');
+												  }
+												var val = $('#stdMessage').val();
+												if(val.length >= 1){
+													$('#stdMessage').val('');
+												  }
+												document.getElementById("star5").checked = true;
+											}
+											function SubmitForm(obj){
+												$.ajax({
+													url:"/AllProduct/AddReview",
+													method :"POST",
+													data:obj,
+													success:function(data){
+														$('#TempData').text(data);
+													},
+													error: function(err)
+													{
+														console.error(err);
+													}
+												})
+												
+											}
+										</script>
 									</div>
 								</div>
 								<!-- /tab3  -->
@@ -559,7 +585,6 @@
 			</div>
 			<!-- /container -->
 		</div>
-		<!-- /Section -->
 
 		<!-- NEWSLETTER -->
 		<div id="newsletter" class="section">
@@ -597,22 +622,37 @@
 		</div>
 
 
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script>
-		$(document).ready(function(){
-			$("input[type='button']").click(function(){
-        		var radioValue = $("input[name='radio']:checked").val();
-				if(radioValue==1){
-					@Model.Price += 300;
-					$('h3#final_price').text('$'+@Model.Price+300);
-				}
-				else
-				{
-					radioValue=@Model.Price + 600;
-					$('h3#final_price').text('$'+radioValue);
-				}
+		let b='#radio-';
+		$('#radio').click(function(){
+		for(var i=0;i<5;i++)
+		{
+			var radioValue;
+				$(b+i).click(function(){
+				radioValue=@Model.Laptop.Price + i;
+				$('h3#final_price').text('$'+radioValue);		
+				});
+		}
 			});
-		});
+		
+
+
+			
+
+			
+
+			//$("input[type='button']").click(function(){
+   //     		var radioValue = $("input[name='radio']:checked").val();
+			//	if(radioValue==1){
+			//		radioValue += 300;
+			//		$('h3#final_price').text('$'+radioValue);
+			//	}
+			//	else
+			//	{
+			//		radioValue=@Model.Laptop.Price + 600;
+			//		$('h3#final_price').text('$'+radioValue);
+			//	}
+			//});
 	</script>
 
 	</body>

@@ -1,12 +1,9 @@
 ﻿@using TexnoStore.Models.Laptops
 @using TexnoStore.Models.Phones
 @using TexnoStore.Models
-
+@using TexnoStore.Models.Cameras
 
 @model AllProductsListViewModel
-
-<!DOCTYPE html>
-<html lang="en">
 
 	<body>
 		<!-- SECTION -->
@@ -226,14 +223,10 @@
 						<!-- store products -->
 						<div class="row">
 						@{
-							foreach(LaptopModel produc in Model.LaptopModel)
+							foreach(var produc in Model.Products)
 							{
 
-								@Html.Partial("AllLaptops",produc)
-							}
-							foreach(PhoneModel produc in Model.PhoneModel)
-							{
-								@Html.Partial("AllPhones",produc)
+								@Html.Partial("AllProducts",produc)
 							}
 					    }
 							<!-- product -->
@@ -292,12 +285,5 @@
 			</div>
 			<!-- /container -->
 		</div>
-		<script src="js/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/slick.min.js"></script>
-		<script src="js/nouislider.min.js"></script>
-		<script src="js/jquery.zoom.min.js"></script>
-		<script src="js/main.js"></script>
 
 	</body>
-</html>

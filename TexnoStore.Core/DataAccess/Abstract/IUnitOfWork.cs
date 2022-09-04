@@ -11,6 +11,10 @@ namespace TexnoStore.Core.DataAccess.Abstract
         ILaptopRepository LaptopRepository { get; }
         IPhoneRepository PhoneRepository { get; }
         IAllProductRepository AllProductRepository { get; }
-
+        ILoginRepository LoginRepository { get; }
+        IReviewRepository ReviewRepository { get; }
+        IShopCartRepository ShopCartRepository { get; }
+        ICameraRepository CameraRepository { get; }
+        ICheckOutRepository CheckOutRepository { get; }
     }
 }

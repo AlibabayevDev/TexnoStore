@@ -1,77 +1,64 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TexnoStore.Core.DataAccess.Abstract;
+using TexnoStore.Core.Domain.Entities;
 using TexnoStore.Core.Domain.Entities.Laptop;
 using TexnoStore.Core.Domain.Entities.Phone;
+using TexnoStore.Mapper;
 using TexnoStore.Mapper.Laptops;
 using TexnoStore.Mapper.Phones;
 using TexnoStore.Models;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Models.Phones;
+using TexnoStoreWebCore.Models;
 
 namespace TexnoStore.Controllers
 {
     public class AllProductController : Controller
     {
         private readonly IUnitOfWork db;
-
         public AllProductController(IUnitOfWork db)
         {
             this.db = db;
         }
 
-        public IActionResult Index(BaseEntity model)
+        public IActionResult Index(BaseModel model)
         {
             if (model.Name == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            if (model.CategoryId == 0)
+            if (model.ProductType == 0)
             {
-                var laptops = db.LaptopRepository.Laptops();
-                var phones=db.PhoneRepository.Phones();
-
-                var laptopsModels = LaptopsModels(laptops).Where(x => x.Name.ToUpper().Contains(model.Name.ToUpper()) || x.Name.ToUpper().Contains(model.Name.ToUpper()));
-                var phonesModels = PhoneModels(phones).Where(x => x.Name.ToUpper().Contains(model.Name.ToUpper()) || x.Name.ToUpper().Contains(model.Name.ToUpper())); 
-
+                var products = db.AllProductRepository.GetAllProducts();
+                var prodcutsModels = BaseModels(products).Where(x => x.Name.ToUpper().Contains(model.Name.ToUpper()) || x.LongDesc.ToUpper().Contains(model.Name.ToUpper()) || x.ShortDesc.ToUpper().Contains(model.Name.ToUpper()));
                 var viewModel = new AllProductsListViewModel()
                 {
-                    PhoneModel = phonesModels,
-                    LaptopModel = laptopsModels
+                    Products = prodcutsModels,
                 };
-                if(viewModel.LaptopModel.Equals(0)  && viewModel.PhoneModel.Equals(0))
-                {
-                    return RedirectToAction("ProductNotFound", "Error");
-                }
-
-                return View(viewModel);
-
-            }
-            else if(model.CategoryId == 1)
-            {
-                var laptops = db.LaptopRepository.Laptops();
-                var laptopsModels = LaptopsModels(laptops).Where(x => x.Name.ToUpper().Contains(model.Name.ToUpper()) || x.Name.ToUpper().Contains(model.Name.ToUpper()));
-
-                var viewModel = new AllProductsListViewModel()
-                {
-                    PhoneModel = new List<PhoneModel>(),
-                    LaptopModel = laptopsModels
-                };
-
                 return View(viewModel);
             }
-            else if(model.CategoryId == 2)
+            else if(model.ProductType == 1)
             {
-                var phones = db.PhoneRepository.Phones();
-
-                var phonesModels = PhoneModels(phones).Where(x => x.Name.ToUpper().Contains(model.Name.ToUpper()) || x.Name.ToUpper().Contains(model.Name.ToUpper()));
+                var products = db.AllProductRepository.GetAllProducts();
+                var prodcutsModels = BaseModels(products).Where(x => (x.Name.ToUpper().Contains(model.Name.ToUpper()) || x.LongDesc.ToUpper().Contains(model.Name.ToUpper()) || x.ShortDesc.ToUpper().Contains(model.Name.ToUpper())) && x.ProductType==1);
                 var viewModel = new AllProductsListViewModel()
                 {
-                    PhoneModel = phonesModels,
-                    LaptopModel = new List<LaptopModel>()
+                    Products = prodcutsModels,
                 };
-
+                return View(viewModel);
+            }
+            else if(model.ProductType == 2)
+            {
+                var products = db.AllProductRepository.GetAllProducts();
+                var prodcutsModels = BaseModels(products).Where(x => (x.Name.ToUpper().Contains(model.Name.ToUpper()) || x.LongDesc.ToUpper().Contains(model.Name.ToUpper()) || x.ShortDesc.ToUpper().Contains(model.Name.ToUpper())) && x.ProductType == 2);
+                var viewModel = new AllProductsListViewModel()
+                {
+                    Products = prodcutsModels,
+                };
                 return View(viewModel);
             }
 
@@ -80,35 +67,39 @@ namespace TexnoStore.Controllers
         }
 
 
-        public List<LaptopModel> LaptopsModels(List<Laptop> laptops)
+
+        public List<BaseModel> BaseModels(List<BaseEntity> products)
         {
-            LaptopMapper laptopMapper = new LaptopMapper();
-            List<LaptopModel> laptopsModels = new List<LaptopModel>();
+            BaseMapper baseMapper = new BaseMapper();
+            List<BaseModel> productsModels = new List<BaseModel>();
 
-            for (int i = 0; i < laptops.Count; i++)
+            for (int i = 0; i < products.Count; i++)
             {
-                var laptop = laptops[i];
-                var laptopModel = laptopMapper.Map(laptop);
+                var product = products[i];
+                var productModel = baseMapper.Map(product);
 
-                laptopsModels.Add(laptopModel);
+                productsModels.Add(productModel);
             }
 
-            return laptopsModels;
+            return productsModels;
         }
-        public List<PhoneModel> PhoneModels(List<Phone> phones)
+
+
+        public JsonResult AddReview(ReviewModel model)
         {
-            PhoneMapper phoneMapper = new PhoneMapper();
-            List<PhoneModel> phonesModels = new List<PhoneModel>();
-
-            for (int i = 0; i < phones.Count; i++)
+            ReviewMapper reviewMapper = new ReviewMapper();
+            string ErrorMessage;
+            var review = reviewMapper.Map(model);
+            try
             {
-                var phone = phones[i];
-                var phoneModel = phoneMapper.Map(phone);
-
-                phonesModels.Add(phoneModel);
+                db.ReviewRepository.Add(review);
+                ErrorMessage = "Succesfully added";
             }
-
-            return phonesModels;
+            catch (Exception ex)
+            {
+                ErrorMessage = "Something went wrong";
+            }
+            return Json(ErrorMessage);
         }
     }
 }

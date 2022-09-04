@@ -19,13 +19,18 @@
 		<link type="text/css" rel="stylesheet" href="~/css/style.css"/>
 		<link type="text/css" rel="stylesheet" href="~/css/style2.css"/>
 		<link type="text/css" rel="stylesheet" href="~/css/specs-table.css"/>
+		<link rel="stylesheet" href="~/css/quickView/css/core-style.css">
+		<link type="text/css" rel="stylesheet" href="~/css/MyAccount.css" />
+		<link rel="stylesheet" href="~/css/font-awesome.min.css">
 
+		<script type="text/javascript" src="~/css/quickView/js/LaptopQuick.js"></script>
 		@RenderSection("HeadArea", false)
     </head>
 
 
 	<body>
 		<partial name="_Header" />
+
 
 		<nav id="navigation">
 			<div class="container">
@@ -42,7 +47,10 @@
 				</div>
 			</div>
 		</nav>
-
+		<div class="modal fade" id="createModal">
+		</div>
+		<div class="modal fade" id="LoginModal">
+		</div>
         @RenderBody()
 
 		<footer id="footer">
@@ -147,4 +155,37 @@
 		<script src="~/js/main.js"></script>
 
 	</body>
+	<script>
+		$.ajax({
+				url: "/ShopCart/ShopCartCount",
+				success: function (data) {
+					$('#ShopCount').text(data);
+				},
+				error: function (error) {
+					console.log(error);
+				}
+		});
+
+		$.ajax({
+				url: "/Account/IsAuthenticated",
+				success: function (data) {
+					if(data===true)
+					{
+						$('#login').text('My Account');
+						$('#logout').html('<a href="/Account/LogOut">Log Out</a>');
+					}
+					else
+					{
+						$('#login').html('<a href="/Account/Index">Sign In</a>');
+						$('#logout').html('<a href="/Account/Regist">Create Account</a>');
+					}
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			});
+	</script>
 </html>
+
+			
+<partial name="_CookieConsentPartial" />

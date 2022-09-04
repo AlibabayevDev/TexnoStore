@@ -1,0 +1,103 @@
+﻿@using TexnoStoreWebCore.Models
+@model ShopCartModel
+<div id="quickview" tabindex="-1" role="dialog" aria-labelledby="quickview" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+                    <div class="modal-body">
+                        <div class="quickview_body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 col-lg-5">
+                                        <div class="quickview_pro_img">
+                                            <img src="~/img/@Model.MainImg" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-7">
+                                        <div class="quickview_pro_des">
+                                            <h4 class="title">@Model.Name</h4>
+                                            <div class="top_seller_product_rating mb-15">
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                            </div>
+                                            <h5 class="price">$@Model.Price <span>$@Model.OldPrice</span></h5>
+                                            <p style="width:350px">@Model.ShortDesc</p>
+                                            <a href="@Url.Action("ProductName","Home", new { productId= @Model.Id, typeId= @Model.ProductType})">View Full Product Details</a>
+                                        </div>
+                                        <!-- Add to Cart Form -->
+                                        <form class="cart">
+											<input asp-for="@Model.Id" id="stdProductId" hidden/>
+                                            <input asp-for="@Model.ProductType" hidden id="stdProductType" />
+
+                                            <div class="quantity">
+                                                <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
+
+                                                <input asp-for="@Model.Count" type="number" class="qty-text" id="qty" step="1" min="1" max="12" name="quantity" value="1">
+
+                                                <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                            </div>
+                                            <input type="button" onclick="AddToCard()" data-target="#myModal" class="cart-submit" value="Add to cart" />
+                                            <!-- Wishlist -->
+                                            <div class="modal_pro_wishlist">
+                                                <a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a>
+                                            </div>
+                                            <!-- Compare -->
+                                            <div class="modal_pro_compare">
+                                                <a href="#"><i class="fa fa-exchange"></i> add to compare</a>
+                                            </div>
+                                        </form>
+
+                                        <div class="share_wf mt-30">
+                                            <p>Share With Friend</p>
+                                            <div class="_icon">
+                                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <script>
+                function AddToCard() {
+					var id=$("#stdProductId").val();
+	                var productType = $("#stdProductType").val();
+	                var count = $("#qty").val();
+	                var obj = {
+		                ProductId: id,
+		                ProductType: productType,
+                        Count : count
+	                }
+                    console.log(obj);
+	                $.ajax({
+		                url: "/Home/AddToCard",
+		                method: "POST",
+		                data: obj,
+		                success: function (data) {
+			                if(data)
+							{
+								$('#createModal').html(data);
+								$("#createModal").modal("show");
+							}
+							else{
+								window.location.href= "/Account/Index";	
+                            }
+		                },
+		                error: function (err) {
+			                console.error(err);
+		                }
+	                })
+                }
+            </script>

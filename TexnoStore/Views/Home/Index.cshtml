@@ -1,9 +1,9 @@
-@{
+﻿@{
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using TexnoStore.Models
 @using TexnoStore.Models.Phones
-
+@using TexnoStore.Models.Cameras
 
 @model AllProductsListViewModel
 
@@ -71,14 +71,9 @@
 								<div id="tab1" class="tab-pane active">
 									<div class="products-slick" data-nav="#slick-nav-1">
 										@{
-											foreach(LaptopModel produc in Model.LaptopModel)
+											foreach(var produc in Model.Products)
 											{
-
-												@Html.Partial("AllLaptops",produc)
-											}
-											foreach(PhoneModel produc in Model.PhoneModel)
-											{
-												@Html.Partial("AllPhones",produc)
+												@Html.Partial("AllProducts",produc)
 											}
 										}
 									</div>
@@ -98,25 +93,25 @@
 							<ul class="hot-deal-countdown">
 								<li>
 									<div>
-										<h3>02</h3>
+										<h3 id="days">0</h3>
 										<span>Days</span>
 									</div>
 								</li>
 								<li>
 									<div>
-										<h3>10</h3>
+										<h3 id="hours">0</h3>
 										<span>Hours</span>
 									</div>
 								</li>
 								<li>
 									<div>
-										<h3>34</h3>
+										<h3 id="minutes">0</h3>
 										<span>Mins</span>
 									</div>
 								</li>
 								<li>
 									<div>
-										<h3>60</h3>
+										<h3 id="seconds">0</h3>
 										<span>Secs</span>
 									</div>
 								</li>
@@ -273,7 +268,7 @@
 												<div class="product-btns">
 													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
 													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+													<button class="quick-view" data-toggle="modal" data-target="#quickview"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
 												</div>
 											</div>
 											<div class="add-to-cart">
@@ -550,4 +545,83 @@
 				</div>
 			</div>
 		</div>
-	</body>
+		<div class="modal fade" id="createModal">
+		</div>
+
+	</body> 
+
+	<script>
+			function initializeTimer() {
+			var endDate = new Date(2022,08,25);
+ 
+			var currentDate = new Date();
+			var seconds = (endDate-currentDate) / 1000;
+			if (seconds > 0) {
+				var minutes = seconds/60; 
+				var hours = minutes/60;
+				var days = hours / 24;
+				minutes = (hours - Math.floor(hours)) * 60; 
+				days = Math.floor(days);
+				hours =  Math.floor(hours)- days * 24; 
+ 
+				seconds = Math.floor((minutes - Math.floor(minutes)) * 60); 
+				minutes = Math.floor(minutes); 
+ 
+				setTimePage(days, hours,minutes,seconds); 
+ 
+				function secOut() {
+				  if (seconds == 0) { 
+					  if (minutes == 0) { 
+						  if (hours == 0) { 
+				  			   if(days == 0){
+				  					showMessage(timerId); 
+				  				}
+				  				else{
+				  					days--; 
+				  					hours = 24; 
+									minutes = 59; 
+									seconds = 59; 
+				  				}
+						  }
+						  else {
+							  hours--; 
+							  minutes = 59; 
+							  seconds = 59; 
+						  }
+					  }
+					  else {
+						  minutes--; 
+						  seconds = 59; 
+					  }
+				  }
+				  else {
+					  seconds--; 
+				  }
+				  setTimePage(days, hours,minutes,seconds); 
+				}
+				timerId = setInterval(secOut, 1000) 
+			}
+			else {
+				alert("Установленая дата уже прошла");
+			}
+		}
+
+		window.onload = function()
+		{
+			 initializeTimer();
+		}
+
+
+		function setTimePage(d,h,m,s) { 
+			var days = document.getElementById("days");
+			var hours = document.getElementById("hours"); 
+			var minutes = document.getElementById("minutes"); 
+			var seconds = document.getElementById("seconds"); 
+ 
+			days.innerHTML = d;
+			hours.innerHTML = h;
+			minutes.innerHTML = m;
+			seconds.innerHTML = s;
+ 
+		}
+	</script>
