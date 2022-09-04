@@ -11,8 +11,6 @@ namespace TexnoStore.Mapper.Phones
 {
     public class PhoneMapper 
     {
-        private readonly CategoryMapper categoryMapper = new CategoryMapper();
-
         private readonly PhoneImageMapper laptopImageMapper = new PhoneImageMapper();
 
         public Phone Map(PhoneModel model)
@@ -25,7 +23,6 @@ namespace TexnoStore.Mapper.Phones
                 Price = model.Price,
                 OldPrice = model.OldPrice,
                 Sale = model.Sale,
-                Category = categoryMapper.Map(model.Category),
                 CategoryId = model.CategoryId,
                 PhonesImages = laptopImageMapper.Map(model.PhonesImages),
                 ImageId = model.ImageId,
@@ -44,7 +41,6 @@ namespace TexnoStore.Mapper.Phones
                 Price = entity.Price,
                 OldPrice = entity.OldPrice,
                 Sale = entity.Sale,
-                Category = categoryMapper.Map(entity.Category),
                 CategoryId = entity.CategoryId,
                 PhonesImages = laptopImageMapper.Map(entity.PhonesImages),
                 ImageId = entity.ImageId,

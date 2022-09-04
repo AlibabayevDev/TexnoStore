@@ -473,7 +473,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string cmdText = "select Category.CategoryName,Phone.Id, Phone.Name,Phone.OldPrice, Phone.Price, Phone.Sale ,Phone.LongDesc,Phone.ImageId,Phone.MainImg, Phone.CategoryId,Phone.AddDate from Phone inner join Category on Phone.CategoryId = Category.Id";
+                string cmdText = "select Enum.ProductType,Phone.Id,Products.TypeId,Phone.ProductId ,Products.Name,Products.OldPrice, Products.Price, Products.Sale ,Products.LongDesc,Phone.ImageId,Products.MainImg, Phone.CategoryId,Products.AddDate from Phone inner join Category on Phone.CategoryId = Category.Id inner join Products on Phone.ProductId = Products.Id inner join Enum on Enum.Id = Products.TypeId";
 
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {
@@ -496,12 +496,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         phone.Sale = Convert.ToInt16(reader["Sale"]);
                         phone.LongDesc = Convert.ToString(reader["LongDesc"]);
                         phone.MainImg = Convert.ToString(reader["MainImg"]);
-                        phone.Category = new Category()
-                        {
-                            CategoryName = Convert.ToString(reader["CategoryName"])
-                        };
                         phone.AddDate = Convert.ToDateTime(reader["AddDate"]);
-
                         laptops.Add(phone);
                     }
 
@@ -510,6 +505,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             }
 
         }
+
 
 
         public List<Phone> SearchPhones(string Name)
