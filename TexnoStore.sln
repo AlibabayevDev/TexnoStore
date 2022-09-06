@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TexnoStoreApi", "TexnoStore
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TexnoStoreWebCore", "TexnoStoreWebCore\TexnoStoreWebCore.csproj", "{C2196D0C-8069-49F4-A11C-6E2D0D36A020}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TexnoStore.AdminPanel", "TexnoStoreAdminPanel\TexnoStore.AdminPanel.csproj", "{BF9BC0BB-9143-4C53-B6A9-D55AD279904B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{C2196D0C-8069-49F4-A11C-6E2D0D36A020}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2196D0C-8069-49F4-A11C-6E2D0D36A020}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2196D0C-8069-49F4-A11C-6E2D0D36A020}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BF9BC0BB-9143-4C53-B6A9-D55AD279904B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF9BC0BB-9143-4C53-B6A9-D55AD279904B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF9BC0BB-9143-4C53-B6A9-D55AD279904B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF9BC0BB-9143-4C53-B6A9-D55AD279904B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
