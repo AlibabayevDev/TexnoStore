@@ -345,7 +345,7 @@
 												<table id="demoGrid" width="100%" cellspacing="0">
 													<thead>
 														<tr>
-															<th></th>
+															<th class="sorting_disabled"></th>
 															<th></th>
 														</tr>
 													</thead>
@@ -382,8 +382,18 @@
 												</table>
 											</div>
 											<script>
-													$('#demoGrid').dataTable({
-													});
+												$('#demoGrid').dataTable({
+													bFilter: false, bInfo: false, "aoColumnDefs": [
+														{ 'bSortable': false, 'aTargets': [1] }
+													],
+													"aoColumnDefs": [{
+														"bSortable": false,
+														"aTargets": ["sorting_disabled"]
+													}],
+													"order": [
+														[1, 'asc']
+													],
+												});
 											</script>
 											</div>
 										</div>
