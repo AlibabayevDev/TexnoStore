@@ -2,7 +2,16 @@
 
 @model LaptopListViewModel
 
+<head>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="~/DataTables/datatables.js" rel="stylesheet"></script>
 
+	<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+	<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+@*	<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+*@	<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+</head>
 	<body>
 		<!-- SECTION -->
 		<div class="section">
@@ -15,9 +24,9 @@
 							@{
 									for(int i=0;i<@Model.Laptop.LaptopsImages.Image.Count;i++)
 									{
-										<div class="product-preview">
-											<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="" width="150px" height="400px" >
-										</div>
+													<div class="product-preview">
+														<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="" width="150px" height="400px" >
+													</div>
 									}
 							}
 						</div>
@@ -27,9 +36,9 @@
 							@{
 								for(int i=0;i<Model.Laptop.LaptopsImages.Image.Count;i++)
 								{
-									<div class="product-preview">
-										<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="">
-									</div>
+												<div class="product-preview">
+													<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="">
+												</div>
 								}
 						}
 						</div>
@@ -58,10 +67,10 @@
 									@{
 										for(int i=0;i<5;i++)
 										{
-											<div class="form_radio_btn" id=radio>
-												<input id="radio-@i" type="radio" name="ImageId" value="@i">
-												<label for="radio-@i">i7-9750H / GTX 1660Ti</label>
-											</div>
+														<div class="form_radio_btn" id=radio>
+															<input id="radio-@i" type="radio" name="ImageId" value="@i">
+															<label for="radio-@i">i7-9750H / GTX 1660Ti</label>
+														</div>
 										}
 									}
 
@@ -332,32 +341,50 @@
 										<!-- Reviews -->
 										<div class="col-md-6">
 											<div id="reviews">
-												<ul class="reviews">
-													<li>
-														<div class="review-heading">
-															<h5 class="name">John</h5>
-															<p class="date">27 DEC 2018, 8:0 PM</p>
-															<div class="review-rating">
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star"></i>
-																<i class="fa fa-star-o empty"></i>
-															</div>
-														</div>
-														<div class="review-body">
-															<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-														</div>
-													</li>
-													
-												</ul>
-												<ul class="reviews-pagination">
-													<li class="active">1</li>
-													<li><a href="#">2</a></li>
-													<li><a href="#">3</a></li>
-													<li><a href="#">4</a></li>
-													<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-												</ul>
+											<div style="width:90%; margin:0 auto;">
+												<table id="demoGrid" width="100%" cellspacing="0">
+													<thead>
+														<tr>
+															<th></th>
+															<th></th>
+														</tr>
+													</thead>
+													<tbody>
+														@foreach (var review in Model.Reviews)
+														{
+															<tr style="border: 1px solid black;">
+																<td style="border: 1px solid black;">
+																	<div class="reviews">
+																		<div class="review-heading">
+																			<h5 class="name">@review.Name</h5>
+																			<p class="date">27 DEC 2018, 8:0 PM</p>
+																			<div class="review-rating">
+																				<i class="fa fa-star"></i>
+																				<i class="fa fa-star"></i>
+																				<i class="fa fa-star"></i>
+																				<i class="fa fa-star"></i>
+																				<i class="fa fa-star-o empty"></i>
+																			</div>
+																		</div>
+																	</div>																		
+																</td>
+																<td style="border: 1px solid black;">
+																	
+																			<div class="review-heading">
+																				<p style="width: 400px;">@review.Message</p>
+																			</div>
+																		
+																	
+																</td>
+															</tr>
+														}
+													</tbody>
+												</table>
+											</div>
+											<script>
+													$('#demoGrid').dataTable({
+													});
+											</script>
 											</div>
 										</div>
 										<!-- /Reviews -->

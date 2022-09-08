@@ -1,0 +1,52 @@
+﻿<head>
+        <script type="text/javascript" src="~/datatables.min.js"></script>
+
+</head>
+<div class=" mb-3 mt-3">
+    <table id="CardTable" style="width:100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Client</th>
+                <th>TypeCard</th>
+                <th>CardNumber</th>
+                <th>EndDate</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (int i = 0; i < 30; i++)
+            {
+                <tr>
+                    <td>card.NO</td>
+                    <td>card.Client.Name</td>
+                    <td>card.TypeCard</td>
+                    <td>card.CardNumber</td>
+                    <td>card.EndDate</td>
+
+                    <td><button class="btn btn-primary bgupdate" onclick="ShowSaveModal(this)" data-target="#myModalAdd" id="btnUpdate"><i class='fas fa-download'></i> Update</button></td>
+                    <td><button class="btn btn-danger bgdelete" onclick="ShowDeleteModal(this)" data-toggle="modal" data-target="#DelModal" id="btnDel"><i class='fas fa-trash-alt'></i> Delete</button></td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>No</th>
+                <th>Client</th>
+                <th>TypeCard</th>
+                <th>CardNumber</th>
+                <th>EndDate</th>
+            </tr>
+        </tfoot>
+    </table>
+
+    <button class="btn btn-primary bgupdate" onclick="ShowSaveModal(this)" data-toggle="modal" data-id="0" id="myBtnAdd"><i class='fas fa-download'></i> Add</button>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#CardTable').DataTable();
+    });
+</script>
