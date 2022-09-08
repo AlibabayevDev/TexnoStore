@@ -11,8 +11,6 @@ namespace TexnoStore.Mapper.Phones
 {
     public class PhoneMapper 
     {
-        private readonly CategoryMapper categoryMapper = new CategoryMapper();
-
         private readonly PhoneImageMapper laptopImageMapper = new PhoneImageMapper();
 
         public Phone Map(PhoneModel model)

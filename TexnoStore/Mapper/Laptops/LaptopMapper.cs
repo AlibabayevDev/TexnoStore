@@ -12,7 +12,6 @@ namespace TexnoStore.Mapper.Laptops
 {
     public class LaptopMapper 
     {
-        private readonly CategoryMapper categoryMapper = new CategoryMapper();
 
         private readonly LaptopImageMapper laptopImageMapper = new LaptopImageMapper();
 
