@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Core.Domain.Entities;
+using TexnoStore.Core.Domain.Entities.Phone;
 using TexnoStore.Core.Extensions;
 
 namespace TexnoStore.Core.DataAccess.Implementation.SQL
@@ -19,7 +20,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             this.connectionString = connectionString;
         }
 
-        public  bool Add(Review review)
+        public bool Add(Review review)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -38,6 +39,37 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                     int affectedCount = cmd.ExecuteNonQuery();
 
                     return affectedCount == 1;
+                }
+            }
+        }
+
+        public List<Review> GetAll(int productId)
+        {
+            using(SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string cmdText = "select * from Review where ProductId=@productId";
+                using(SqlCommand cmd = new SqlCommand(cmdText,connection))
+                {
+                    cmd.Parameters.AddWithValue("@ProductId", productId);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    List<Review> reviews = new List<Review>();
+
+                    while (reader.Read())
+                    {
+                        Review review = new Review();
+                        review.Name = Convert.ToString(reader["Name"]);
+                        review.Email = Convert.ToString(reader["email"]);
+                        review.Message = Convert.ToString(reader["message"]);
+                        review.StarCount = Convert.ToInt16(reader["starCount"]);
+                        review.ProductId = Convert.ToInt16(reader["ProductId"]);
+                        reviews.Add(review);
+                    }
+
+                    return reviews;
                 }
             }
         }

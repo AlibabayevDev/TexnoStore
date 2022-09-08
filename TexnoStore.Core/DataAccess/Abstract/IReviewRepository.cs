@@ -10,5 +10,6 @@ namespace TexnoStore.Core.DataAccess.Abstract
     public interface IReviewRepository
     {
         bool Add(Review review);
+        List<Review> GetAll(int Id);
     }
 }

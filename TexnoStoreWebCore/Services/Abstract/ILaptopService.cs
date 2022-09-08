@@ -12,6 +12,7 @@ namespace TexnoStoreWebCore.Services.Abstract
     {
         List<LaptopModel> Laptops();
         LaptopModel LaptopProduct(int id);
+        List<ReviewModel> Reviews(int id);
         string AddReview(ReviewModel model);
     }
 }

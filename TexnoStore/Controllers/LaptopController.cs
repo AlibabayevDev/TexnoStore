@@ -29,7 +29,6 @@ namespace TexnoStore.Controllers
         public IActionResult Index()
         {
             var laptops = service.LaptopService.Laptops();
-
             var model = new LaptopListViewModel
             {
                 Laptops = laptops,
@@ -41,10 +40,11 @@ namespace TexnoStore.Controllers
         public IActionResult LaptopProduct(int id)
         {
             var laptop = service.LaptopService.LaptopProduct(id);
-
+            var reviews = service.LaptopService.Reviews(id);
             var model = new LaptopListViewModel
             {
-                Laptop = laptop
+                Laptop = laptop,
+                Reviews = reviews
             };
             return View(model);
         }

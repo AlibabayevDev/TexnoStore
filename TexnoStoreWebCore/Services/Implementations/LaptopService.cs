@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TexnoStore.Core.DataAccess.Abstract;
+using TexnoStore.Core.Domain.Entities.Laptop;
 using TexnoStoreWebCore.Mapper;
 using TexnoStoreWebCore.Mapper.Laptops;
 using TexnoStoreWebCore.Models;
@@ -55,6 +56,22 @@ namespace TexnoStoreWebCore.Services.Implementations
             }
 
             return laptopModels.FirstOrDefault(x => x.Id == id);
+        }
+
+        public List<ReviewModel> Reviews(int id)
+        {
+            var reviews = db.ReviewRepository.GetAll(id);
+            ReviewMapper mapper = new ReviewMapper();
+            List<ReviewModel> reviewsModels = new List<ReviewModel>();
+            for (int i = 0; i < reviews.Count; i++)
+            {
+                var laptop = reviews[i];
+                var laptopModel = mapper.Map(laptop);
+
+                reviewsModels.Add(laptopModel);
+            }
+
+            return reviewsModels;
         }
 
         public string AddReview(ReviewModel model)
