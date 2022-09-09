@@ -339,10 +339,10 @@
 										<!-- /Rating -->
 
 										<!-- Reviews -->
-										<div class="col-md-6">
+										<div class="col-md-6" style="position:relative">
 											<div id="reviews">
-											<div style="width:90%; margin:0 auto;">
-												<table id="demoGrid" width="100%" cellspacing="0">
+											<div style="margin:0 auto;">
+												<table id="demoGrid" width="100%" cellspacing="0" >
 													<thead>
 														<tr>
 															<th class="sorting_disabled"></th>
@@ -356,7 +356,7 @@
 																<td style="border: 1px solid black;">
 																	<div class="reviews">
 																		<div class="review-heading">
-																			<h5 class="name">@review.Name</h5>
+																			<h5 style="width:60px" class="name">@review.Name</h5>
 																			<p class="date">27 DEC 2018, 8:0 PM</p>
 																			<div class="review-rating">
 																				<i class="fa fa-star"></i>
@@ -369,12 +369,9 @@
 																	</div>																		
 																</td>
 																<td style="border: 1px solid black;">
-																	
-																			<div class="review-heading">
-																				<p style="width: 400px;">@review.Message</p>
-																			</div>
-																		
-																	
+																	<div class="review-heading">
+																		<p style="position:relative">@review.Message</p>
+																	</div>
 																</td>
 															</tr>
 														}
