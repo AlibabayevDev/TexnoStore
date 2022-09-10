@@ -23,7 +23,7 @@ namespace TexnoStore.Controllers
             
             var viewModel = new AllProductsListViewModel()
             {
-                Products=products
+                Products=products,
             };
 
             if (viewModel.Products.Equals(0)==null)

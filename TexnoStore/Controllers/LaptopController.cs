@@ -48,7 +48,6 @@ namespace TexnoStore.Controllers
                 CountReview=reviews.Count,
                 MiddleStarCount = service.ReviewService.MiddleStarCount(reviews)
             };
-            var test = reviews.Where(x => x.Rating == 2).Count() * 100 / reviews.Count;
             return View(model);
         }
     }

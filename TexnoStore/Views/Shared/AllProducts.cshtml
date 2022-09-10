@@ -17,11 +17,56 @@
 										<h3 class="product-name"><a href="@Url.Action("ProductName","Home", new { productId= @Model.ProductId, typeId= @Model.ProductType})">@Model.Name</a></h3>
 										<h4 class="product-price">$@Model.Price <del class="product-old-price">$@Model.OldPrice</del></h4>
 										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
+										@{
+											for (int i = 0; i < 1; i++)
+											{
+												if (Model.MiddleStarCount >= 4.5)
+												{
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													break;
+												}
+												if (Model.MiddleStarCount >= 3.5)
+												{
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star-o empty"></i>
+													break;
+												}
+												if (Model.MiddleStarCount >= 2.5)
+												{
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star-o empty"></i>
+													<i class="fa fa-star-o empty"></i>
+													break;
+												}
+												if (Model.MiddleStarCount >= 1.5)
+												{
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star-o empty"></i>
+													<i class="fa fa-star-o empty"></i>
+													<i class="fa fa-star-o empty"></i>
+													break;
+												}
+												if (Model.MiddleStarCount >= 0.5)
+												{
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star-o empty"></i>
+													<i class="fa fa-star-o empty"></i>
+													<i class="fa fa-star-o empty"></i>
+													<i class="fa fa-star-o empty"></i>
+													break;
+												}
+											}
+										}
 										</div>
 										<div class="product-btns">
 											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>

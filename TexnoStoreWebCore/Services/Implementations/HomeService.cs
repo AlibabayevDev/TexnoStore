@@ -40,11 +40,37 @@ namespace TexnoStoreWebCore.Services.Implementations
             {
                 var product = allProducts[i];
                 var productModel = baseMapper.Map(product);
-
+                productModel.MiddleStarCount = MiddleStarCount(productModel.ProductId);
                 productsModels.Add(productModel);
             }
 
             return productsModels;
+        }
+
+        public double MiddleStarCount(int productId)
+        {
+            var reviewsEntity = db.ReviewRepository.GetAll(productId);
+            var mapper = new ReviewMapper();
+            List<ReviewModel> reviews= new List<ReviewModel>();
+            for (int i = 0; i < reviewsEntity.Count; i++)
+            {
+                var review = reviewsEntity[i];
+                var reviewModel = mapper.Map(review);
+                reviews.Add(reviewModel);
+            }
+            
+            if (reviews.Count == 0)
+            {
+                return 0;
+            }
+            double count = 0;
+            for (int i = 0; i < reviews.Count; i++)
+            {
+                count += reviews[i].Rating;
+            }
+            count /= reviews.Count;
+
+            return Math.Round(count, 1);
         }
 
         public int ProductName(int productId, int typeId)
