@@ -1,5 +1,5 @@
 ﻿@using TexnoStore.Models.Laptops
-
+@using System.Globalization;
 @model LaptopListViewModel
 
 <head>
@@ -8,9 +8,8 @@
 
 	<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 	<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
-
-@*	<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-*@	<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+@*	<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>*@	
+	<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
 </head>
 	<body>
 		<!-- SECTION -->
@@ -24,9 +23,9 @@
 							@{
 									for(int i=0;i<@Model.Laptop.LaptopsImages.Image.Count;i++)
 									{
-													<div class="product-preview">
-														<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="" width="150px" height="400px" >
-													</div>
+																										<div class="product-preview">
+																											<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="" width="150px" height="400px" >
+																										</div>
 									}
 							}
 						</div>
@@ -36,9 +35,9 @@
 							@{
 								for(int i=0;i<Model.Laptop.LaptopsImages.Image.Count;i++)
 								{
-												<div class="product-preview">
-													<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="">
-												</div>
+																									<div class="product-preview">
+																										<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="">
+																									</div>
 								}
 						}
 						</div>
@@ -67,10 +66,10 @@
 									@{
 										for(int i=0;i<5;i++)
 										{
-														<div class="form_radio_btn" id=radio>
-															<input id="radio-@i" type="radio" name="ImageId" value="@i">
-															<label for="radio-@i">i7-9750H / GTX 1660Ti</label>
-														</div>
+																											<div class="form_radio_btn" id=radio>
+																												<input id="radio-@i" type="radio" name="ImageId" value="@i">
+																												<label for="radio-@i">i7-9750H / GTX 1660Ti</label>
+																											</div>
 										}
 									}
 
@@ -146,7 +145,7 @@
 							<ul class="tab-nav">
 								<li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
 								<li><a data-toggle="tab" href="#tab2">Details</a></li>
-								<li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li>
+								<li><a data-toggle="tab" href="#tab3">Reviews (@Model.CountReview)</a></li>
 							</ul>
 							<!-- /product tab nav -->
 
@@ -258,7 +257,7 @@
 										<div class="col-md-3">
 											<div id="rating">
 												<div class="rating-avg">
-													<span>4.5</span>
+												<span>@Model.MiddleStarCount</span>
 													<div class="rating-stars">
 														<i class="fa fa-star"></i>
 														<i class="fa fa-star"></i>
@@ -277,9 +276,12 @@
 															<i class="fa fa-star"></i>
 														</div>
 														<div class="rating-progress">
-															<div style="width: 80%;"></div>
+															@{
+																int rating5 = @Model.Reviews.Where(x => x.Rating == 5).Count() * 100 / @Model.Reviews.Count;
+															}
+															<div style="width: @rating5%;"></div>
 														</div>
-														<span class="sum">3</span>
+														<span class="sum">@Model.Reviews.Where(x => x.Rating==5).Count()</span>
 													</li>
 													<li>
 														<div class="rating-stars">
@@ -290,9 +292,12 @@
 															<i class="fa fa-star-o"></i>
 														</div>
 														<div class="rating-progress">
-															<div style="width: 60%;"></div>
+															@{
+																int rating4 = @Model.Reviews.Where(x => x.Rating == 4).Count() * 100 / @Model.Reviews.Count;
+															}
+															<div style="width: @rating4%;"></div>
 														</div>
-														<span class="sum">2</span>
+													<span class="sum">@Model.Reviews.Where(x => x.Rating==4).Count()</span>
 													</li>
 													<li>
 														<div class="rating-stars">
@@ -303,9 +308,12 @@
 															<i class="fa fa-star-o"></i>
 														</div>
 														<div class="rating-progress">
-															<div></div>
+														@{
+															int rating3 = @Model.Reviews.Where(x => x.Rating == 3).Count() * 100 / @Model.Reviews.Count;
+														}
+														<div style="width: @rating3%"></div>
 														</div>
-														<span class="sum">0</span>
+														<span class="sum">@Model.Reviews.Where(x => x.Rating==3).Count()</span>
 													</li>
 													<li>
 														<div class="rating-stars">
@@ -316,9 +324,12 @@
 															<i class="fa fa-star-o"></i>
 														</div>
 														<div class="rating-progress">
-															<div></div>
+															@{
+																int rating2 = @Model.Reviews.Where(x => x.Rating ==2).Count() * 100 / @Model.Reviews.Count;
+															}
+															<div style="width: @rating2%;"></div>
 														</div>
-														<span class="sum">0</span>
+														<span class="sum">@Model.Reviews.Where(x => x.Rating==2).Count()</span>
 													</li>
 													<li>
 														<div class="rating-stars">
@@ -329,9 +340,13 @@
 															<i class="fa fa-star-o"></i>
 														</div>
 														<div class="rating-progress">
-															<div></div>
+															@{
+																int rating1 = @Model.Reviews.Where(x => x.Rating == 1).Count() * 100 / @Model.Reviews.Count;
+															}
+														<div style="width: @rating1%;"></div>
+
 														</div>
-														<span class="sum">0</span>
+														<span class="sum">@Model.Reviews.Where(x => x.Rating==1).Count()</span>
 													</li>
 												</ul>
 											</div>
@@ -342,10 +357,9 @@
 										<div class="col-md-6" style="position:relative">
 											<div id="reviews">
 											<div style="margin:0 auto;">
-												<table id="demoGrid" width="100%" cellspacing="0" >
+												<table id="demoGrid" width="100%" cellspacing="0">
 													<thead>
 														<tr>
-															<th class="sorting_disabled"></th>
 															<th></th>
 														</tr>
 													</thead>
@@ -353,22 +367,27 @@
 														@foreach (var review in Model.Reviews)
 														{
 															<tr style="border: 1px solid black;">
-																<td style="border: 1px solid black;">
+																<td style="border: 1px solid #E4E7ED;">
 																	<div class="reviews">
 																		<div class="review-heading">
 																			<h5 style="width:60px" class="name">@review.Name</h5>
-																			<p class="date">27 DEC 2018, 8:0 PM</p>
-																			<div class="review-rating">
-																				<i class="fa fa-star"></i>
-																				<i class="fa fa-star"></i>
-																				<i class="fa fa-star"></i>
-																				<i class="fa fa-star"></i>
-																				<i class="fa fa-star-o empty"></i>
+																			<p class="date">@review.AddDate.Day @review.AddDate.ToString("MMM") @review.AddDate.Year</p>
+																			<div class="review-rating" id="starCount">
+																							@if (review.Rating== 5) {
+																								<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+																							}
+																							@if (review.Rating== 4) {
+																								<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i>
+																							}
+																							@if (review.Rating== 3) {
+																								<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
+																							}
+																							@if (review.Rating== 2) {
+																								<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
+																							}
 																			</div>
 																		</div>
 																	</div>																		
-																</td>
-																<td style="border: 1px solid black;">
 																	<div class="review-heading">
 																		<p style="position:relative">@review.Message</p>
 																	</div>
@@ -387,9 +406,6 @@
 														"bSortable": false,
 														"aTargets": ["sorting_disabled"]
 													}],
-													"order": [
-														[1, 'asc']
-													],
 												});
 											</script>
 											</div>
@@ -401,9 +417,9 @@
 											<div id="review-form">
 												<form class="review-form"> @* asp-controller="Laptop" asp-action="Review" *@
 													<input asp-for="@Model.Laptop.Id" id="stdId" hidden/>
-													<input asp-for="@Model.Review.Name" id="stdName" class="input" type="text" placeholder="Your Name">
-													<input asp-for="@Model.Review.Email" id="stdEmail" class="input" type="email" placeholder="Your Email">
-													<textarea  asp-for="@Model.Review.Message" id="stdMessage" class="input" placeholder="Your Review"></textarea>
+													<input asp-for="@Model.Review.Name" id="stdName" class="input" type="text" placeholder="Your Name" required>
+													<input asp-for="@Model.Review.Email" id="stdEmail" class="input" type="email" placeholder="Your Email" required>
+													<textarea  asp-for="@Model.Review.Message" id="stdMessage" class="input" placeholder="Your Review" required></textarea>
 													<div class="input-rating">
 														<span>Your Rating: </span>
 														<div class="stars">

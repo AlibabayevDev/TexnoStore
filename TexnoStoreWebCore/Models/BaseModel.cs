@@ -21,5 +21,8 @@ namespace TexnoStoreWebCore.Models
         public string ProductTypeName { get; set; }
         public int ProductId { get; set; }
         public DateTime AddDate { get; set; }
+        public int CountReview { get; set; }
+        public double MiddleStarCount { get; set; }
+
     }
 }

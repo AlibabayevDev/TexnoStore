@@ -21,18 +21,22 @@ namespace TexnoStore.Controllers
         }
         public IActionResult Index()
         {
-            var user = db.LoginRepository.Get(User.Identity.Name);
-
-            var viewModel = new CheckoutViewModel()
+            if(User.Identity.IsAuthenticated)
             {
-                ShopCart = new Models.ShopCartListViewModel()
+                var user = db.LoginRepository.Get(User.Identity.Name);
+
+                var viewModel = new CheckoutViewModel()
                 {
-                    ShopCartModels = service.CheckOutService.CheckOutProducts(user.Id),
-                    ShopCartPrice = service.ShopCartService.ShopCartPrice(user.Id)
-                },
-                
-            };
-            return View(viewModel);
+                    ShopCart = new Models.ShopCartListViewModel()
+                    {
+                        ShopCartModels = service.CheckOutService.CheckOutProducts(user.Id),
+                        ShopCartPrice = service.ShopCartService.ShopCartPrice(user.Id)
+                    },
+
+                };
+                return View(viewModel);
+            }
+            return RedirectToAction("Index", "Account");
         }
 
         public IActionResult Order(CheckoutViewModel viewModel)

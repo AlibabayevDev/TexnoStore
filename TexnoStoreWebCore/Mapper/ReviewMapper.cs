@@ -14,6 +14,7 @@ namespace TexnoStoreWebCore.Mapper
                 Email = model.Email,
                 Message = model.Message,
                 ProductId = model.ProductId,
+                AddDate = model.AddDate,
                 StarCount = model.Rating,
             };
         }
@@ -28,6 +29,7 @@ namespace TexnoStoreWebCore.Mapper
                 Email = entity.Email,
                 Message = entity.Message,
                 ProductId = entity.ProductId,
+                AddDate = entity.AddDate,
                 Rating = entity.StarCount,
             };
         }

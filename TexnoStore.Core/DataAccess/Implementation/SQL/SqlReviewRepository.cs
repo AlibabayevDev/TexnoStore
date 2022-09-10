@@ -26,7 +26,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             {
                 connection.Open();
 
-                string cmdText = "Insert into Review values(@Name,@Email,@Message,@StarCount,@LaptopId)";
+                string cmdText = "Insert into Review values(@Name,@Email,@Message,@StarCount,@LaptopId,@AddDate)";
 
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {
@@ -34,6 +34,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                     cmd.Parameters.AddWithValue("@Email", review.Email);
                     cmd.Parameters.AddWithValue("@Message", review.Message);
                     cmd.Parameters.AddWithValue("@StarCount", review.StarCount);
+                    cmd.Parameters.AddWithValue("@AddDate", DateTime.Now);
                     cmd.Parameters.AddWithValue("@LaptopId", review.ProductId);
 
                     int affectedCount = cmd.ExecuteNonQuery();
@@ -62,9 +63,10 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                     {
                         Review review = new Review();
                         review.Name = Convert.ToString(reader["Name"]);
-                        review.Email = Convert.ToString(reader["email"]);
-                        review.Message = Convert.ToString(reader["message"]);
-                        review.StarCount = Convert.ToInt16(reader["starCount"]);
+                        review.Email = Convert.ToString(reader["Email"]);
+                        review.Message = Convert.ToString(reader["Message"]);
+                        review.StarCount = Convert.ToInt16(reader["StarCount"]);
+                        review.AddDate = Convert.ToDateTime(reader["AddDate"]);
                         review.ProductId = Convert.ToInt16(reader["ProductId"]);
                         reviews.Add(review);
                     }

@@ -70,7 +70,6 @@ namespace TexnoStoreWebCore.Services.Implementations
 
                 reviewsModels.Add(laptopModel);
             }
-
             return reviewsModels;
         }
 
