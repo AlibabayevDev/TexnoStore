@@ -1,9 +1,11 @@
 ﻿using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using MimeKit;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
@@ -12,8 +14,10 @@ using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace TexnoStore.Email
 {
-    public class EmailHelper
+    public class EmailService
     {
+
+
         //public bool SendEmail(string userEmail, string confirmationLink)
         //{
         //    MailMessage mailMessage = new MailMessage();
@@ -132,64 +136,5 @@ namespace TexnoStore.Email
         //    }
         //    return false;
         //}
-
-        public void SendFile(EmailModel emailModel, IHostingEnvironment env, List<User> clients)
-        {
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Adminstrator", "alibabaev375@mail.ru"));
-            message.Subject = "Confirm Password";
-            var builder = new BodyBuilder();
-            builder.Attachments.Add(env.WebRootPath + "\\texnostore.txt");
-            message.Body = builder.ToMessageBody();
-
-
-            for (int i = 0; i < clients.Count; i++)
-            {
-                message.To.Add(new MailboxAddress("naren", clients[i].Email));
-                using (var client = new SmtpClient())
-                {
-                    client.Connect("smtp.mail.ru", 25, false);
-                    client.Authenticate("alibabaev375@mail.ru", "UnhvOfx824cPnFhevo3g");
-                    client.Send(message);
-                    client.Disconnect(true);
-                }
-            }
-        }
-
-
-        public void SendFileAsync(EmailModel emailModel, IHostingEnvironment env, List<User> clients)
-        {
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Adminstrator", "alibabaev375@mail.ru"));
-            message.Subject = "Confirm Password";
-            var builder = new BodyBuilder();
-
-            if (emailModel.Attachments != null)
-            {
-                byte[] attachmentFileByteArray;   
-                if (emailModel.Attachments.Length > 0)
-                {
-                      using (MemoryStream memoryStream = new MemoryStream())
-                      {
-                          emailModel.Attachments.CopyTo(memoryStream);
-                          attachmentFileByteArray = memoryStream.ToArray();
-                      }
-                      builder.Attachments.Add(emailModel.Attachments.FileName, attachmentFileByteArray, ContentType.Parse(emailModel.Attachments.ContentType));
-                      message.Body = builder.ToMessageBody();
-                }
-            }
-
-            for (int i = 0; i < clients.Count; i++)
-            {
-                message.To.Add(new MailboxAddress("naren", clients[i].Email));
-                using (var client = new SmtpClient())
-                {
-                    client.Connect("smtp.mail.ru", 25, false);
-                    client.Authenticate("alibabaev375@mail.ru", "UnhvOfx824cPnFhevo3g");
-                    client.Send(message);
-                    client.Disconnect(true);
-                }
-            }
-        }
     }
 }

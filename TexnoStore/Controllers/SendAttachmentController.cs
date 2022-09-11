@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using MimeKit;
 using System.Collections.Generic;
 using System.IO;
@@ -16,10 +17,13 @@ namespace TexnoStore.Controllers
     {
         private readonly IHostingEnvironment env;
         private readonly IUnitOfWork db;
-        public SendAttachmentController(IUnitOfWork db, IHostingEnvironment env) 
+        private readonly IConfiguration configuration;
+       
+        public SendAttachmentController(IUnitOfWork db, IHostingEnvironment env, IConfiguration configuration) 
         {
             this.db = db;
             this.env = env;
+            this.configuration = configuration;
         }
 
         [HttpGet]
@@ -32,8 +36,8 @@ namespace TexnoStore.Controllers
         public ActionResult Index(EmailModel emailModel)
         {
             var clients = db.LoginRepository.Get();
-            EmailHelper email = new EmailHelper();
-            email.SendFileAsync(emailModel, env, clients);
+            EmailFileSender email = new EmailFileSender();
+            email.SendFileAsync(emailModel, configuration, clients);
             return View();
         }
     }
