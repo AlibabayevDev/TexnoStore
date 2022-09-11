@@ -19,13 +19,13 @@
         @Html.ValidationSummary()  
         <input type="submit" value="Send" />  
         <table>  
- @*           <tr>  
+            <tr>  
                 <td>To:  
                 </td>  
                 <td>  
                     @Html.TextBoxFor(m => m.To)  
                 </td>  
-            </tr>  *@
+            </tr>  
             <tr>  
                 <td>Subject:  
                 </td>  
@@ -37,7 +37,7 @@
                 <td>Attachment  
                 </td>  
                 <td>  
-                    <input type="file" name="fileUploader" />  
+                    @Html.TextBoxFor(model => model.Attachments, new { type = "file" })
                 </td>  
             </tr>  
         </table>      

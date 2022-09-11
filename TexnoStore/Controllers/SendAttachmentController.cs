@@ -22,6 +22,7 @@ namespace TexnoStore.Controllers
             this.env = env;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -32,10 +33,8 @@ namespace TexnoStore.Controllers
         {
             var clients = db.LoginRepository.Get();
             EmailHelper email = new EmailHelper();
-            email.SendFile(emailModel, env, clients);
+            email.SendFileAsync(emailModel, env, clients);
             return View();
         }
-
-
     }
 }
