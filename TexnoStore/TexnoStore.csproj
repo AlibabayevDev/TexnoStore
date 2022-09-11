@@ -27,6 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\texnostore.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TexnoStore.Core\TexnoStore.Core.csproj" />
     <ProjectReference Include="..\TexnoStoreWebCore\TexnoStoreWebCore.csproj" />
   </ItemGroup>
