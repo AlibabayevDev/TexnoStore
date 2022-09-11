@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using TexnoStore.Mapper.Phones;
 using TexnoStore.Models.Phones;
+using TexnoStoreWebCore.Models.Phones;
+using TexnoStoreWebCore.Mapper.Phones;
 
 namespace TexnoStore.Controllers
 {

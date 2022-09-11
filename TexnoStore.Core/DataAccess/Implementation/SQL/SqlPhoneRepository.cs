@@ -486,9 +486,10 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         Phone phone = new Phone();
                         phone.ImageId = Convert.ToInt32(reader["ImageId"]);
                         phone.Id = Convert.ToInt32(reader["Id"]);
-                        phone.PhonesImages = new PhonesImages()
+                        phone.ProductId = Convert.ToInt16(reader["ProductId"]);
+                        phone.PhonesImages = new ProductImages()
                         {
-                            Img = Images(phone.Id)
+                            Image = Images(phone.ProductId)
                         };
                         phone.Name = Convert.ToString(reader["Name"]);
                         phone.OldPrice = Convert.ToDouble(reader["OldPrice"]);
@@ -499,7 +500,6 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         phone.AddDate = Convert.ToDateTime(reader["AddDate"]);
                         phone.ProductType = Convert.ToInt16(reader["TypeId"]);
                         phone.ProductTypeName = Convert.ToString(reader["ProductType"]);
-                        phone.ProductId = Convert.ToInt16(reader["ProductId"]);
                         laptops.Add(phone);
                     }
 
@@ -528,9 +528,10 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                     {
                         phone.ImageId = Convert.ToInt32(reader["ImageId"]);
                         phone.Id = Convert.ToInt32(reader["Id"]);
-                        phone.PhonesImages = new PhonesImages()
+                        phone.ProductId = Convert.ToInt16(reader["ProductId"]);
+                        phone.PhonesImages = new ProductImages()
                         {
-                            Img = Images(phone.Id)
+                            Image = Images(phone.ProductId)
                         };
                         phone.Name = Convert.ToString(reader["Name"]);
                         phone.OldPrice = Convert.ToDouble(reader["OldPrice"]);
@@ -541,7 +542,6 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         phone.AddDate = Convert.ToDateTime(reader["AddDate"]);
                         phone.ProductType = Convert.ToInt16(reader["TypeId"]);
                         phone.ProductTypeName = Convert.ToString(reader["ProductType"]);
-                        phone.ProductId = Convert.ToInt16(reader["ProductId"]);
                     }
 
                     return phone;
@@ -569,9 +569,9 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         Phone phone = new Phone();
                         phone.ImageId = Convert.ToInt32(reader["ImageId"]);
                         phone.Id = Convert.ToInt32(reader["Id"]);
-                        phone.PhonesImages = new PhonesImages()
+                        phone.PhonesImages = new ProductImages()
                         {
-                            Img = Images(phone.Id)
+                            Image = Images(phone.Id)
                         };
                         phone.Name = Convert.ToString(reader["Name"]);
                         phone.OldPrice = Convert.ToDouble(reader["OldPrice"]);
@@ -598,9 +598,9 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string cmdText = "select Phone.Id,PhoneImage.ImgName  from Phone " +
-                    "inner join PhonesImages on Phone.id = PhonesImages.PhoneId "+
-                    "inner join PhoneImage on PhonesImages.ImageId = PhoneImage.Id where PhonesImages.PhoneId = @Id ";
+                string cmdText = "select Products.Id,ProductImage.ImgName from Products " +
+                    "inner join ProductsImages on Products.id = ProductsImages.ProductId " +
+                    "inner join ProductImage on ProductsImages.ImageId = ProductImage.Id where ProductsImages.ProductId = @Id";
 
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {

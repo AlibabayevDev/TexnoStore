@@ -5,13 +5,13 @@ using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Core.Domain.Entities.Laptop;
 using TexnoStore.Core.Domain.Entities.Phone;
 using TexnoStore.Mapper;
-using TexnoStore.Mapper.Laptops;
-using TexnoStore.Mapper.Phones;
 using TexnoStore.Models;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Models.Phones;
+using TexnoStoreWebCore.Mapper;
 using TexnoStoreWebCore.Models;
 using TexnoStoreWebCore.Models.Laptops;
+using TexnoStoreWebCore.Models.Phones;
 using TexnoStoreWebCore.Services.Abstract;
 
 namespace TexnoStore.Controllers

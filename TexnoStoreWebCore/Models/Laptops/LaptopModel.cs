@@ -18,6 +18,6 @@ namespace TexnoStoreWebCore.Models.Laptops
         public string Display { get; set; }
         public string ScreenSize { get; set; }
         public CategoryModel Category { get; set; }
-        public LaptopsImagesModel LaptopsImages { get; set; }
+        public ProductImagesModel LaptopsImages { get; set; }
     }
 }

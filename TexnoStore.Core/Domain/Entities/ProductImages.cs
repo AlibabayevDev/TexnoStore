@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using TexnoStore.Core.Domain.Entities;
 
-namespace TexnoStoreWebCore.Models.Laptops
+namespace TexnoStore.Core.Domain.Entities
 {
-    public class LaptopsImagesModel
+    public class ProductImages
     {
         public int Id { get; set; }
-        public virtual LaptopModel Laptop { get; set; }
+        public virtual BaseEntity Product { get; set; }
         public virtual List<Image> Image { get; set; }
     }
 }

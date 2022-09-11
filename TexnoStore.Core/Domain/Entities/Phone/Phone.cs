@@ -10,6 +10,6 @@ namespace TexnoStore.Core.Domain.Entities.Phone
     {
         public int ImageId { get; set; }
         public Category Category { get; set; }
-        public PhonesImages PhonesImages { get; set; }
+        public ProductImages PhonesImages { get; set; }
     }
 }

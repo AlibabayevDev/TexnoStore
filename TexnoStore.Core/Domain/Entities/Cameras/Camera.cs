@@ -22,6 +22,6 @@ namespace TexnoStore.Core.Domain.Entities.Cameras
 
         public Category Category { get; set; }
 
-        public CameraImages CameraImages { get; set; }
+        public ProductImages CameraImages { get; set; }
     }
 }

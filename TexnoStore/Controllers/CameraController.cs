@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using TexnoStore.Core.DataAccess.Abstract;
-using TexnoStore.Mapper.Cameras;
 using TexnoStore.Models.Cameras;
+using TexnoStoreWebCore.Mapper.Cameras;
+using TexnoStoreWebCore.Models.Cameras;
 
 namespace TexnoStore.Controllers
 {

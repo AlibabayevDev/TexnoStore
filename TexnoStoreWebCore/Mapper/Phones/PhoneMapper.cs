@@ -13,7 +13,7 @@ namespace TexnoStoreWebCore.Mapper.Phones
     {
         private readonly CategoryMapper categoryMapper = new CategoryMapper();
 
-        private readonly PhoneImageMapper laptopImageMapper = new PhoneImageMapper();
+        private readonly ProductImageMapper laptopImageMapper = new ProductImageMapper();
 
         public Phone Map(PhoneModel model)
         {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TexnoStoreWebCore.Models;
+using TexnoStoreWebCore.Models.Cameras;
 
 namespace TexnoStore.Models.Cameras
 {

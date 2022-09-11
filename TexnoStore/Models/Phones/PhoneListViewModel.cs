@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TexnoStore.Core.Domain.Entities;
 using TexnoStoreWebCore.Models;
+using TexnoStoreWebCore.Models.Phones;
 
 namespace TexnoStore.Models.Phones
 {

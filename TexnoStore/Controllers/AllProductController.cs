@@ -8,11 +8,10 @@ using TexnoStore.Core.Domain.Entities;
 using TexnoStore.Core.Domain.Entities.Laptop;
 using TexnoStore.Core.Domain.Entities.Phone;
 using TexnoStore.Mapper;
-using TexnoStore.Mapper.Laptops;
-using TexnoStore.Mapper.Phones;
 using TexnoStore.Models;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Models.Phones;
+using TexnoStoreWebCore.Mapper;
 using TexnoStoreWebCore.Models;
 
 namespace TexnoStore.Controllers

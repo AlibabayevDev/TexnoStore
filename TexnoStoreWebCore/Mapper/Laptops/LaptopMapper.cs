@@ -13,7 +13,7 @@ namespace TexnoStoreWebCore.Mapper.Laptops
     {
         private readonly CategoryMapper categoryMapper = new CategoryMapper();
 
-        private readonly LaptopImageMapper laptopImageMapper = new LaptopImageMapper();
+        private readonly ProductImageMapper laptopImageMapper = new ProductImageMapper();
 
         public Laptop Map(LaptopModel model)
         {

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TexnoStore.Core.Domain.Entities.Laptop;
 using TexnoStore.Core.Domain.Entities;
+using System.Reflection;
 
 namespace TexnoStore.Core.DataAccess.Implementation.SQL
 {
@@ -485,9 +486,10 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         Laptop laptop = new Laptop();
                         laptop.ImageId = Convert.ToInt32(reader["ImageId"]);
                         laptop.Id = Convert.ToInt32(reader["Id"]);
-                        laptop.LaptopsImages = new LaptopsImages()
+                        laptop.ProductId = Convert.ToInt16(reader["ProductId"]);
+                        laptop.LaptopsImages = new ProductImages()
                         {
-                            Img = Images(laptop.Id)
+                            Image = Images(laptop.ProductId)
                         };
                         laptop.Name = Convert.ToString(reader["Name"]);
                         laptop.OldPrice = Convert.ToDouble(reader["OldPrice"]);
@@ -507,7 +509,6 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         laptop.OperatingSystem = Convert.ToString(reader["OperatingSystem"]);
                         laptop.HardDrive = Convert.ToString(reader["HardDrive"]);
                         laptop.ShortDesc = Convert.ToString(reader["ShortDesc"]);
-                        laptop.ProductId = Convert.ToInt16(reader["ProductId"]);
                         laptop.ProductType = Convert.ToInt16(reader["TypeId"]);
                         laptop.ProductTypeName = Convert.ToString(reader["ProductType"]);
                         laptop.AddDate = Convert.ToDateTime(reader["AddDate"]);
@@ -541,9 +542,10 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                     {
                         laptop.ImageId = Convert.ToInt32(reader["ImageId"]);
                         laptop.Id = Convert.ToInt32(reader["Id"]);
-                        laptop.LaptopsImages = new LaptopsImages()
+                        laptop.ProductId = Convert.ToInt16(reader["ProductId"]);
+                        laptop.LaptopsImages = new ProductImages()
                         {
-                            Img = Images(laptop.Id)
+                            Image = Images(laptop.ProductId)
                         };
                         laptop.Name = Convert.ToString(reader["Name"]);
                         laptop.OldPrice = Convert.ToDouble(reader["OldPrice"]);
@@ -563,7 +565,6 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         laptop.OperatingSystem = Convert.ToString(reader["OperatingSystem"]);
                         laptop.HardDrive = Convert.ToString(reader["HardDrive"]);
                         laptop.ShortDesc = Convert.ToString(reader["ShortDesc"]);
-                        laptop.ProductId = Convert.ToInt16(reader["ProductId"]);
                         laptop.ProductType = Convert.ToInt16(reader["TypeId"]);
                         laptop.Category = new Category()
                         {
@@ -598,9 +599,9 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         Laptop laptop = new Laptop();
                         laptop.ImageId = Convert.ToInt32(reader["ImageId"]);
                         laptop.Id = Convert.ToInt32(reader["Id"]);
-                        laptop.LaptopsImages = new LaptopsImages()
+                        laptop.LaptopsImages = new ProductImages()
                         {
-                            Img = Images(laptop.Id)
+                            Image = Images(laptop.ProductId)
                         };
                         laptop.Name = Convert.ToString(reader["Name"]);
                         laptop.OldPrice = Convert.ToDouble(reader["OldPrice"]);
@@ -627,9 +628,9 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string cmdText = "select Laptop.Id,LaptopImage.ImgName  from Laptop " +
-                    "inner join LaptopsImages on Laptop.id = LaptopsImages.LaptopId "+
-                    "inner join LaptopImage on LaptopsImages.ImageId = LaptopImage.Id where LaptopsImages.LaptopId = @Id ";
+                string cmdText = "select Products.Id,ProductImage.ImgName from Products " +
+                    "inner join ProductsImages on Products.id = ProductsImages.ProductId " +
+                    "inner join ProductImage on ProductsImages.ImageId = ProductImage.Id where ProductsImages.ProductId = @Id";
 
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {

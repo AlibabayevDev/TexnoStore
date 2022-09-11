@@ -8,15 +8,18 @@ using TexnoStore.Core.Domain.Entities.Cameras;
 using TexnoStore.Core.Domain.Entities.Laptop;
 using TexnoStore.Core.Domain.Entities.Phone;
 using TexnoStore.Mapper;
-using TexnoStore.Mapper.Cameras;
-using TexnoStore.Mapper.Laptops;
-using TexnoStore.Mapper.Phones;
 using TexnoStore.Models;
 using TexnoStore.Models.Cameras;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Models.Phones;
+using TexnoStoreWebCore.Mapper;
+using TexnoStoreWebCore.Mapper.Cameras;
+using TexnoStoreWebCore.Mapper.Laptops;
+using TexnoStoreWebCore.Mapper.Phones;
 using TexnoStoreWebCore.Models;
+using TexnoStoreWebCore.Models.Cameras;
 using TexnoStoreWebCore.Models.Laptops;
+using TexnoStoreWebCore.Models.Phones;
 
 namespace TexnoStore.Controllers
 {

@@ -39,9 +39,10 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                     {
                         camera.Id = Convert.ToInt32(reader["Id"]);
                         camera.ImageId = Convert.ToInt32(reader["ImageId"]);
-                        camera.CameraImages = new CameraImages()
+                        camera.ProductId = Convert.ToInt16(reader["ProductId"]);
+                        camera.CameraImages = new ProductImages()
                         {
-                            img = Images(camera.Id)
+                            Image = Images(camera.ProductId)
                         };
                         camera.Company = Convert.ToString(reader["Company"]);
                         camera.OpticalZoom = Convert.ToString(reader["OpticalZoom"]);
@@ -53,7 +54,6 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         camera.LongDesc = Convert.ToString(reader["LongDesc"]);
                         camera.MainImg = Convert.ToString(reader["MainImg"]);
                         camera.ShortDesc = Convert.ToString(reader["ShortDesc"]);
-                        camera.ProductId = Convert.ToInt16(reader["ProductId"]);
                         camera.ProductType = Convert.ToInt16(reader["TypeId"]);
                         camera.Category = new Category()
                         {
@@ -87,9 +87,10 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         Camera camera = new Camera();
                         camera.Id = Convert.ToInt32(reader["Id"]);
                         camera.ImageId = Convert.ToInt32(reader["ImageId"]);
-                        camera.CameraImages = new CameraImages()
+                        camera.ProductId = Convert.ToInt16(reader["ProductId"]);
+                        camera.CameraImages = new ProductImages()
                         {
-                            img = Images(camera.Id)
+                            Image = Images(camera.ProductId)
                         };
                         camera.Company = Convert.ToString(reader["Company"]);
                         camera.OpticalZoom = Convert.ToString(reader["OpticalZoom"]);
@@ -101,7 +102,6 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         camera.LongDesc = Convert.ToString(reader["LongDesc"]);
                         camera.MainImg = Convert.ToString(reader["MainImg"]);
                         camera.ShortDesc = Convert.ToString(reader["ShortDesc"]);
-                        camera.ProductId = Convert.ToInt16(reader["ProductId"]);
                         camera.ProductType = Convert.ToInt16(reader["TypeId"]);
                         camera.ProductTypeName = Convert.ToString(reader["ProductType"]);
                         camera.AddDate = Convert.ToDateTime(reader["AddDate"]);
@@ -119,8 +119,9 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string cmdText = "select Camera.Id, CameraImage.ImgName from Camera inner join CamerasImages on Camera.Id = CamerasImages.CameraId inner join CameraImage on CamerasImages.ImageId = CameraImage.Id where CamerasImages.CameraId = @Id";
-
+                string cmdText = "select Products.Id,ProductImage.ImgName from Products " +
+                    "inner join ProductsImages on Products.id = ProductsImages.ProductId " +
+                    "inner join ProductImage on ProductsImages.ImageId = ProductImage.Id where ProductsImages.ProductId = @Id";
                 using (SqlCommand cmd = new SqlCommand(cmdText, connection))
                 {
                     cmd.Parameters.AddWithValue("@Id", Id);
@@ -163,9 +164,9 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
                         Camera camera = new Camera();
                         camera.ImageId = Convert.ToInt32(reader["ImageId"]);
                         camera.Id = Convert.ToInt32(reader["Id"]);
-                        camera.CameraImages = new CameraImages()
+                        camera.CameraImages = new ProductImages()
                         {
-                            img = Images(camera.Id)
+                            Image = Images(camera.Id)
                         };
                         camera.Name = Convert.ToString(reader["Name"]);
                         camera.OldPrice = Convert.ToDouble(reader["OldPrice"]);

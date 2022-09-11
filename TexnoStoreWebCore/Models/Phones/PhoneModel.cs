@@ -6,6 +6,6 @@ namespace TexnoStoreWebCore.Models.Phones
     {
         public int ImageId { get; set; }
         public CategoryModel Category { get; set; }
-        public PhonesImagesModel PhonesImages { get; set; }
+        public ProductImagesModel PhonesImages { get; set; }
     }
 }

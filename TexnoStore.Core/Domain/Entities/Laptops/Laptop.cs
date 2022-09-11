@@ -16,6 +16,6 @@
         public string ScreenSize { get; set; }
         public int ProductId { get; set; }
         public Category Category { get; set; }
-        public LaptopsImages LaptopsImages { get; set; }
+        public ProductImages LaptopsImages { get; set; }
     }
 }

@@ -15,6 +15,6 @@ namespace TexnoStoreWebCore.Models.Cameras
         public string Color { get; set; }
         public int ImageId { get; set; }
         public Category Category { get; set; }
-        public CamerasImagesModel CameraImages { get; set; }
+        public ProductImagesModel CameraImages { get; set; }
     }
 }

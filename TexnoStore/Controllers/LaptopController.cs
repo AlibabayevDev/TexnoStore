@@ -3,14 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using TexnoStore.Models;
-using TexnoStore.Mapper.Laptops;
 using TexnoStore.Models.Laptops;
 using TexnoStore.Mapper;
 using Microsoft.AspNetCore.Identity;
 using TexnoStore.Core.Domain.Entities;
 using TexnoStore.Models.Phones;
 using TexnoStore.Core.Domain.Entities.Phone;
-using TexnoStore.Mapper.Phones;
 using TexnoStore.Core.Domain.Entities.Laptop;
 using System;
 using TexnoStoreWebCore.Services.Abstract;
@@ -46,7 +44,6 @@ namespace TexnoStore.Controllers
                 Laptop = laptop,
                 Reviews = reviews,
                 CountReview=reviews.Count,
-                MiddleStarCount = service.ReviewService.MiddleStarCount(reviews)
             };
             return View(model);
         }

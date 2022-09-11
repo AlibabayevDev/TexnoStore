@@ -7,7 +7,7 @@ namespace TexnoStoreWebCore.Mapper.Cameras
     {
         private readonly CategoryMapper categoryMapper = new CategoryMapper();
 
-        private readonly CameraImageMapper cameraImageMapper = new CameraImageMapper();
+        private readonly ProductImageMapper cameraImageMapper = new ProductImageMapper();
 
         public Camera Map(CameraModel model)
         {
