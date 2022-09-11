@@ -1,0 +1,68 @@
+﻿@using TexnoStoreWebCore.Models
+@model BaseModel
+@{
+	for (int i = 0; i < 1; i++)
+	{
+		if (Model.MiddleStarCount >= 4.5)
+		{
+			<i class="fa fa-star"></i>
+
+			<i class="fa fa-star"></i>
+
+			<i class="fa fa-star"></i>
+
+			<i class="fa fa-star"></i>
+
+			<i class="fa fa-star"></i>
+			break;
+		}
+		if (Model.MiddleStarCount >= 3.5)
+		{
+			<i class="fa fa-star"></i>
+
+			<i class="fa fa-star"></i>
+
+			<i class="fa fa-star"></i>
+
+			<i class="fa fa-star"></i>
+
+			<i class="fa fa-star-o empty"></i>
+			break;
+		}
+		if (Model.MiddleStarCount >= 2.5)
+		{
+			<i class="fa fa-star"></i>
+
+			<i class="fa fa-star"></i>
+
+			<i class="fa fa-star"></i>
+
+			<i class="fa fa-star-o empty"></i>
+
+			<i class="fa fa-star-o empty"></i>
+			break;
+		}
+		if (Model.MiddleStarCount >= 1.5)
+		{
+			<i class="fa fa-star"></i>
+
+			<i class="fa fa-star"></i>
+
+			<i class="fa fa-star-o empty"></i>
+
+			<i class="fa fa-star-o empty"></i>
+
+			<i class="fa fa-star-o empty"></i>
+			break;
+		}
+		if (Model.MiddleStarCount >= 0.5)
+		{
+			<i class="fa fa-star"></i>
+			<i class="fa fa-star-o empty"></i>
+			<i class="fa fa-star-o empty"></i>
+			<i class="fa fa-star-o empty"></i>
+			<i class="fa fa-star-o empty"></i>
+			break;
+		}
+	}
+}

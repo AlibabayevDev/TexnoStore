@@ -7,7 +7,7 @@
 	{
 		reviewCount = 1;
 	}
-}
+} 
 <head>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="~/DataTables/datatables.js" rel="stylesheet"></script>
@@ -29,9 +29,9 @@
 							@{
 									for(int i=0;i<@Model.Laptop.LaptopsImages.Image.Count;i++)
 									{
-																																																													<div class="product-preview">
-																																																														<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="" width="150px" height="400px" >
-																																																													</div>
+														<div class="product-preview">
+															<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="" style="max-height:500px;max-width:400px;">
+														</div>
 									}
 							}
 						</div>
@@ -41,9 +41,9 @@
 							@{
 								for(int i=0;i<Model.Laptop.LaptopsImages.Image.Count;i++)
 								{
-																																																												<div class="product-preview">
-																																																													<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="">
-																																																												</div>
+									<div class="product-preview">
+										<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="" style="max-height:500px;max-width:400px;">
+									</div>
 								}
 						}
 						</div>
@@ -53,40 +53,7 @@
 							<h2 class="product-name">@Model.Name</h2>
 							<div>
 								<div class="product-rating">
-								@{
-									for (int i = 0; i < 1; i++)
-									{
-										if (Model.MiddleStarCount >= 4.5)
-										{
-															<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-											break;
-										}
-										if (Model.MiddleStarCount >= 3.5)
-										{
-															<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i>
-											break;
-										}
-										if (Model.MiddleStarCount >= 2.5)
-										{
-															<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
-											break;
-										}
-										if (Model.MiddleStarCount >= 1.5)
-										{
-															<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
-											break;
-										}
-										if (Model.MiddleStarCount >= 0.5)
-										{
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-o empty"></i>
-														<i class="fa fa-star-o empty"></i>
-														<i class="fa fa-star-o empty"></i>
-														<i class="fa fa-star-o empty"></i>
-											break;
-										}
-									}
-								}
+									@Html.Partial("StarRating",Model)
 								</div>
 								<a class="review-link" href="#top">@Model.Reviews.Count Review(s) | Add your review</a>
 							</div>
@@ -289,32 +256,32 @@
 														{
 															if (Model.MiddleStarCount >= 4.5)
 															{
-																			<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+																	<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
 																break;
 															}
 															if (Model.MiddleStarCount >= 3.5)
 															{
-																			<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i>
+																	<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i>
 																break;
 															}
 															if (Model.MiddleStarCount >= 2.5)
 															{
-																			<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
+																	<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
 																break;
 															}
 															if (Model.MiddleStarCount >= 1.5)
 															{
-																			<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
+																	<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
 																break;
 															}
 															if (Model.MiddleStarCount >= 0.5)
 															{
-																			<i class="fa fa-star"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
+																	<i class="fa fa-star"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
 																break;
 															}
 															if (Model.MiddleStarCount <= 0.5)
 															{
-																			<i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
+																	<i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
 																break;
 															}
 														}
@@ -604,7 +571,7 @@
 							</div>
 						</div>
 					</div>
-					<!-- /product -->
+					<!-- /product --> 
 
 					<!-- product -->
 					<div class="col-md-3 col-xs-6">
@@ -738,19 +705,18 @@
 		</div>
 
 
+
 	<script>
-		let b='#radio-';
-		$('#radio').click(function(){
-		for(var i=0;i<5;i++)
-		{
-			var radioValue;
-				$(b+i).click(function(){
-				radioValue=@Model.Laptop.Price + i;
-				$('h3#final_price').text('$'+radioValue);		
-				});
-		}
-			});
-		
+												$.ajax({
+													url: "/Review/StarRating?middleStarCount=" + 5,
+													method: "GET",
+													success: function (data) {
+
+													},
+													error: function (err) {
+														console.error(err);
+													}
+												})
 
 
 			

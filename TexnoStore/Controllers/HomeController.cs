@@ -50,7 +50,7 @@ namespace TexnoStore.Controllers
                 return RedirectToAction("PhoneProduct", "Phone", new { id = phone.Id });
             }
             else if(typeId == 3)
-            {
+            { 
                 var camera = service.CameraService.CameraById(productId);
                 return RedirectToAction("CameraProduct", "Camera", new { id = camera.Id });
             }

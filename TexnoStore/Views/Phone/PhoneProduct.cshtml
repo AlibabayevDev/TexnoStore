@@ -44,11 +44,7 @@
 							<h2 class="product-name">@Model.Name</h2>
 							<div>
 								<div class="product-rating">
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star"></i>
-									<i class="fa fa-star-o"></i>
+									@Html.Partial("StarRating",Model)
 								</div>
 								<a class="review-link" href="#">10 Review(s) | Add your review</a>
 							</div>
