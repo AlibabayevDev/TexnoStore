@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -38,6 +39,7 @@ namespace TexnoStore.Controllers
             var clients = db.LoginRepository.Get();
             EmailFileSender email = new EmailFileSender();
             email.SendFileAsync(emailModel, configuration, clients);
+            ViewBag.Message = string.Format("File succesfully sent {0}", DateTime.Now.ToString());
             return View();
         }
     }
