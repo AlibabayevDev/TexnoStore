@@ -14,7 +14,7 @@ using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace TexnoStore.Email
 {
-    public class EmailService
+    public class EmailSender
     {
 
 

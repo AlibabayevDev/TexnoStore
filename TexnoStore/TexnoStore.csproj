@@ -32,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EmailService\EmailService.csproj" />
     <ProjectReference Include="..\TexnoStore.Core\TexnoStore.Core.csproj" />
     <ProjectReference Include="..\TexnoStoreWebCore\TexnoStoreWebCore.csproj" />
   </ItemGroup>

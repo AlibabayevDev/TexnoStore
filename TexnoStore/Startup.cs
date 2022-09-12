@@ -16,6 +16,9 @@ using TexnoStore.Core.IdentityServer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using TexnoStoreWebCore.Services.Implementations;
 using TexnoStoreWebCore.Services.Abstract;
+using EmailService.Services.Abstract;
+using EmailService.Services.Implementations;
+using EmailService.Factory;
 
 namespace TexnoStore
 {
@@ -39,6 +42,10 @@ namespace TexnoStore
 
                 return DbFactory.Create(connectionString);
             });
+            services.AddSingleton((t) =>
+            {
+                return EmailFactory.Create();
+            });
             services.AddIdentity<User, Role>(opts => {
                 opts.Password.RequiredLength = 5;   // ??????????? ?????
                 opts.Password.RequireNonAlphanumeric = false;   // ????????? ?? ?? ?????????-???????? ???????
@@ -51,6 +58,7 @@ namespace TexnoStore
             services.AddSingleton<IUserStore<User>, UserStore>();
             services.AddSingleton<IRoleStore<Role>, RoleStore>();
             services.AddSingleton<IUnitOfWorkService, UnitOfWorkService>();
+            //services.AddSingleton<IEmailService, EmailServiceSender>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -70,12 +78,12 @@ namespace TexnoStore
                 options.ClientId = Configuration["Authentication:Google:ClientId"];
                 options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
                 options.SignInScheme = IdentityConstants.ExternalScheme;
-            })
-           .AddFacebook(facebookOptions =>
-           {
-               facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
-               facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"]; 
-           });
+            });
+           //.AddFacebook(facebookOptions =>
+           //{
+           //    facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+           //    facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"]; 
+           //});
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

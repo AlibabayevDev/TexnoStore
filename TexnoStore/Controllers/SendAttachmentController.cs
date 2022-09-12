@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using EmailService.Models;
+using EmailService.Services.Abstract;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +12,7 @@ using System.Net;
 using System.Net.Mail;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Core.Domain.Entities;
-using TexnoStore.Email;
+
 
 namespace TexnoStore.Controllers
 {
@@ -19,12 +21,14 @@ namespace TexnoStore.Controllers
         private readonly IHostingEnvironment env;
         private readonly IUnitOfWork db;
         private readonly IConfiguration configuration;
-       
-        public SendAttachmentController(IUnitOfWork db, IHostingEnvironment env, IConfiguration configuration) 
+        private readonly IEmailService emailService;
+
+        public SendAttachmentController(IUnitOfWork db, IEmailService emailService, IHostingEnvironment env, IConfiguration configuration)
         {
             this.db = db;
             this.env = env;
             this.configuration = configuration;
+            this.emailService = emailService;
         }
 
         [HttpGet]
@@ -37,8 +41,7 @@ namespace TexnoStore.Controllers
         public ActionResult Index(EmailModel emailModel)
         {
             var clients = db.LoginRepository.Get();
-            EmailFileSender email = new EmailFileSender();
-            email.SendFileAsync(emailModel, configuration, clients);
+            emailService.AttachmentSender.SendAttachmentAsync(emailModel, configuration, clients);
             ViewBag.Message = string.Format("File succesfully sent {0}", DateTime.Now.ToString());
             return View();
         }
