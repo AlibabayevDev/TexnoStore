@@ -11,11 +11,10 @@
 <head>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="~/DataTables/datatables.js" rel="stylesheet"></script>
-
+	<script src="~/DataTables/bootstrap4.min.js"></script>
 	<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 	<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
 @*	<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>*@	
-	<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
 </head>
 	<body>
 		<!-- SECTION -->
@@ -27,12 +26,12 @@
 					<div class="col-md-5 col-md-push-2">
 						<div id="product-main-img">
 							@{
-									for(int i=0;i<@Model.Laptop.LaptopsImages.Image.Count;i++)
-									{
-														<div class="product-preview">
-															<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="" style="max-height:500px;max-width:400px;">
-														</div>
-									}
+								for(int i=0;i<@Model.Laptop.LaptopsImages.Image.Count;i++)
+								{
+									<div class="product-preview">
+										<img src="~/img/@Model.Laptop.LaptopsImages.Image[i].ImgName" alt="" style="max-height:500px;max-width:400px;">
+									</div>
+								}
 							}
 						</div>
 					</div>
@@ -53,7 +52,7 @@
 							<h2 class="product-name">@Model.Name</h2>
 							<div>
 								<div class="product-rating">
-									@Html.Partial("StarRating",Model)
+									@Html.Partial("StarRating",Model.Laptop)
 								</div>
 								<a class="review-link" href="#top">@Model.Reviews.Count Review(s) | Add your review</a>
 							</div>
@@ -249,43 +248,9 @@
 										<div class="col-md-3">
 											<div id="rating">
 												<div class="rating-avg">
-												<span>@Model.MiddleStarCount / 5</span>
+												<span>@Model.Laptop.MiddleStarCount / 5</span>
 													<div class="rating-stars" id="middleStarCount">
-													@{
-														for (int i = 0; i < 1; i++)
-														{
-															if (Model.MiddleStarCount >= 4.5)
-															{
-																	<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-																break;
-															}
-															if (Model.MiddleStarCount >= 3.5)
-															{
-																	<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i>
-																break;
-															}
-															if (Model.MiddleStarCount >= 2.5)
-															{
-																	<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
-																break;
-															}
-															if (Model.MiddleStarCount >= 1.5)
-															{
-																	<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
-																break;
-															}
-															if (Model.MiddleStarCount >= 0.5)
-															{
-																	<i class="fa fa-star"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
-																break;
-															}
-															if (Model.MiddleStarCount <= 0.5)
-															{
-																	<i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
-																break;
-															}
-														}
-													}
+														@Html.Partial("StarRating",Model.Laptop)
 													</div>
 												</div>
 												<ul class="rating">
@@ -388,44 +353,85 @@
 													<tbody>
 														@foreach (var review in Model.Reviews)
 														{
-															<tr style="border: 1px solid black;">
-																<td style="border: 1px solid #E4E7ED;">
-																	<div class="reviews">
-																		<div class="review-heading">
-																			<h5 class="name">@review.Name</h5>
-																			<p class="date">@review.AddDate.Day @review.AddDate.ToString("MMM") @review.AddDate.Year</p>
-																			<div class="review-rating" id="starCount">
-																							@if (review.Rating== 5) {
-																								<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-																							}
-																							@if (review.Rating== 4) {
-																								<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i>
-																							}
-																							@if (review.Rating== 3) {
-																								<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
-																							}
-																							@if (review.Rating== 2) {
-																								<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i><i class="fa fa-star-o empty"></i>
-																							}
-																							@if (review.Rating== 1) {
-																								<i class="fa fa-star"></i>
+															for(int i=0;i<10;i++)
+															{
+																<tr style="border: 1px solid black;">
+																	<td style="border: 1px solid #E4E7ED;">
+																		<div class="reviews">
+																			<div class="review-heading">
+																				<h5 class="name">@review.Name</h5>
+																				<p class="date">@review.AddDate.Day @review.AddDate.ToString("MMM") @review.AddDate.Year</p>
+																				<div class="review-rating" id="starCount">
+																					@if (review.Rating == 5)
+																					{
+																						<i class="fa fa-star"></i>
 
-																								<i class="fa fa-star-o empty"></i>
+																						<i class="fa fa-star"></i>
 
-																								<i class="fa fa-star-o empty"></i>
+																						<i class="fa fa-star"></i>
 
-																								<i class="fa fa-star-o empty"></i>
+																						<i class="fa fa-star"></i>
 
-																								<i class="fa fa-star-o empty"></i>
-																							}
+																						<i class="fa fa-star"></i>
+																					}
+																					@if (review.Rating == 4)
+																					{
+																						<i class="fa fa-star"></i>
+
+																						<i class="fa fa-star"></i>
+
+																						<i class="fa fa-star"></i>
+
+																						<i class="fa fa-star"></i>
+
+																						<i class="fa fa-star-o empty"></i>
+																					}
+																					@if (review.Rating == 3)
+																					{
+																						<i class="fa fa-star"></i>
+
+																						<i class="fa fa-star"></i>
+
+																						<i class="fa fa-star"></i>
+
+																						<i class="fa fa-star-o empty"></i>
+
+																						<i class="fa fa-star-o empty"></i>
+																					}
+																					@if (review.Rating == 2)
+																					{
+																						<i class="fa fa-star"></i>
+
+																						<i class="fa fa-star"></i>
+
+																						<i class="fa fa-star-o empty"></i>
+
+																						<i class="fa fa-star-o empty"></i>
+
+																						<i class="fa fa-star-o empty"></i>
+																					}
+																					@if (review.Rating == 1)
+																					{
+																						<i class="fa fa-star"></i>
+
+																						<i class="fa fa-star-o empty"></i>
+
+																						<i class="fa fa-star-o empty"></i>
+
+																						<i class="fa fa-star-o empty"></i>
+
+																						<i class="fa fa-star-o empty"></i>
+																					}
+																				</div>
 																			</div>
 																		</div>
-																	</div>																		
-																	<div class="review-heading">
-																		<p style="position:relative">@review.Message</p>
-																	</div>
-																</td>
-															</tr>
+																		<div class="review-heading">
+																			<p style="position:relative">@review.Message</p>
+																		</div>
+																	</td>
+																</tr>
+
+															}
 														}
 													</tbody>
 												</table>

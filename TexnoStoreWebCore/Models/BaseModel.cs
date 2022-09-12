@@ -23,6 +23,5 @@ namespace TexnoStoreWebCore.Models
         public DateTime AddDate { get; set; }
         public int CountReview { get; set; }
         public double MiddleStarCount { get; set; }
-
     }
 }

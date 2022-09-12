@@ -16,9 +16,11 @@ namespace TexnoStoreWebCore.Services.Implementations
     public class LaptopService : ILaptopService
     {
         public readonly IUnitOfWork db;
-        public LaptopService(IUnitOfWork db)
+        public readonly IReviewService reviewService;
+        public LaptopService(IUnitOfWork db,IReviewService reviewService)
         {
             this.db = db;
+            this.reviewService = reviewService;
         }
 
         public List<LaptopModel> Laptops()
@@ -32,7 +34,7 @@ namespace TexnoStoreWebCore.Services.Implementations
             {
                 var laptop = laptops[i];
                 var laptopModel = laptopMapper.Map(laptop);
-
+                laptopModel.MiddleStarCount = reviewService.MiddleStarCount(laptopModel.ProductId);
                 laptopModels.Add(laptopModel);
             }
 
@@ -42,20 +44,14 @@ namespace TexnoStoreWebCore.Services.Implementations
 
         public LaptopModel LaptopProduct(int id)
          {
-            var laptops = db.LaptopRepository.Laptops();
+            var laptop = db.LaptopRepository.LaptopProduct(id);
 
             LaptopMapper laptopMapper = new LaptopMapper();
-            List<LaptopModel> laptopModels = new List<LaptopModel>();
 
-            for (int i = 0; i < laptops.Count; i++)
-            {
-                var laptop = laptops[i];
-                var laptopModel = laptopMapper.Map(laptop);
+            var laptopModel = laptopMapper.Map(laptop);
+            laptopModel.MiddleStarCount = reviewService.MiddleStarCount(laptopModel.ProductId);
 
-                laptopModels.Add(laptopModel);
-            }
-
-            return laptopModels.FirstOrDefault(x => x.Id == id);
+            return laptopModel;
         }
 
         public List<ReviewModel> Reviews(int id)

@@ -8,17 +8,15 @@ using TexnoStoreWebCore.Mapper;
 using TexnoStoreWebCore.Models;
 using TexnoStoreWebCore.Services.Abstract;
 
-
 namespace TexnoStoreWebCore.Services.Implementations
 {
-	public class ReviewService : IReviewService
-	{
-        private readonly IUnitOfWork db;
-        public ReviewService(IUnitOfWork db)
+    public class Service : IService
+    {
+        public readonly IUnitOfWork db;
+        public Service(IUnitOfWork db)
         {
             this.db = db;
         }
-
         public double MiddleStarCount(int productId)
         {
             var reviewsEntity = db.ReviewRepository.GetAll(productId);
