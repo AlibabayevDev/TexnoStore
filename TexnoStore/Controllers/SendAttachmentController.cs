@@ -21,9 +21,9 @@ namespace TexnoStore.Controllers
         private readonly IHostingEnvironment env;
         private readonly IUnitOfWork db;
         private readonly IConfiguration configuration;
-        private readonly IEmailService emailService;
+        private readonly IEmailServiceSender emailService;
 
-        public SendAttachmentController(IUnitOfWork db, IEmailService emailService, IHostingEnvironment env, IConfiguration configuration)
+        public SendAttachmentController(IUnitOfWork db, IEmailServiceSender emailService, IHostingEnvironment env, IConfiguration configuration)
         {
             this.db = db;
             this.env = env;

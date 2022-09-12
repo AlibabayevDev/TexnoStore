@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EmailService.Services.Implementations
 {
-    public class EmailServiceSender : IEmailService
+    public class EmailServiceSender : IEmailServiceSender
     {
         public IEmailAttachmentSender AttachmentSender => new EmailAttachmentSender();
 
