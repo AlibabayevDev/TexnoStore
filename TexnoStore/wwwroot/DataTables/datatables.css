@@ -18,7 +18,7 @@
             color: #2B2D42;
             text-decoration: none;
             background-color: #fff;
-            border: 1px solid #ddd
+            border: 0px solid #ddd
         }
 
         .pagination > li:first-child > a, .pagination > li:first-child > span {
