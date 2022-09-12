@@ -70,7 +70,12 @@ namespace TexnoStore
                 options.ClientId = Configuration["Authentication:Google:ClientId"];
                 options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
                 options.SignInScheme = IdentityConstants.ExternalScheme;
-            });
+            })
+           .AddFacebook(facebookOptions =>
+           {
+               facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+               facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"]; 
+           });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
