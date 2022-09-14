@@ -37,12 +37,18 @@ namespace TexnoStore.Controllers
             {
                 using (var response = httpClient.GetAsync("https://localhost:7169/api/LaptopConroller/GetAll").Result)
                 {
-                    string apiResponse = response.Content.ReadAsStringAsync().Result;
-                    laptops = JsonConvert.DeserializeObject<List<LaptopModel>>(apiResponse);
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        string apiResponse = response.Content.ReadAsStringAsync().Result;
+                        laptops = JsonConvert.DeserializeObject<List<LaptopModel>>(apiResponse);
+                    }
+                    else
+                        ViewBag.StatusCode = response.StatusCode;
+    
                 }
             }
 
-            //var laptops = service.LaptopService.Laptops();
+            //var laptops = service.LaptopService.Laptops.
 
             var model = new LaptopListViewModel
             {
