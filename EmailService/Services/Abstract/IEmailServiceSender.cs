@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EmailService.Services.Abstract
 {
-    public interface IEmailService
+    public interface IEmailServiceSender
     {
         IEmailAttachmentSender AttachmentSender { get; }
         IEmailPasswordReset PasswordReset { get; }

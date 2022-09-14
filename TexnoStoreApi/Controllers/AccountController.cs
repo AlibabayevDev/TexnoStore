@@ -96,7 +96,7 @@ namespace TexnoStoreApi.Controllers
 
             var token = userManager.GeneratePasswordResetTokenAsync(user);
             var link = Url.Action("ResetPassword", "Account", new { token, email = user.Email }, Request.Scheme);
-            EmailService emailHelper = new EmailService();
+            EmailSender emailHelper = new EmailSender();
 
             bool emailResponse = emailHelper.SendEmailPasswordReset(user.Email, link);
 

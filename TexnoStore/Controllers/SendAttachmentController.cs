@@ -5,10 +5,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Mail;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Core.Domain.Entities;
@@ -21,9 +24,9 @@ namespace TexnoStore.Controllers
         private readonly IHostingEnvironment env;
         private readonly IUnitOfWork db;
         private readonly IConfiguration configuration;
-        private readonly IEmailService emailService;
-
-        public SendAttachmentController(IUnitOfWork db, IEmailService emailService, IHostingEnvironment env, IConfiguration configuration)
+        private readonly IEmailServiceSender emailService;
+        string Baseurl = "https://localhost:7261/api/SendAttachment/";
+        public SendAttachmentController(IUnitOfWork db, IEmailServiceSender emailService, IHostingEnvironment env, IConfiguration configuration)
         {
             this.db = db;
             this.env = env;
@@ -40,9 +43,16 @@ namespace TexnoStore.Controllers
         [HttpPost]
         public ActionResult Index(EmailModel emailModel)
         {
-            var clients = db.LoginRepository.Get();
-            emailService.AttachmentSender.SendAttachmentAsync(emailModel, configuration, clients);
-            ViewBag.Message = string.Format("File succesfully sent {0}", DateTime.Now.ToString());
+
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = httpClient.GetAsync("https://localhost:7261/api/SendAttachment").Result)
+                {
+                    string apiResponse =  response.Content.ReadAsStringAsync().Result;
+                    emailModel = JsonConvert.DeserializeObject<EmailModel>(apiResponse);
+                }
+            }
+
             return View();
         }
     }

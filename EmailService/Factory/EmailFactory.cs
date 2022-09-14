@@ -10,7 +10,7 @@ namespace EmailService.Factory
 {
     public static class EmailFactory
     {
-        public static IEmailService Create()
+        public static IEmailServiceSender Create()
         {
             return new EmailServiceSender();
         }
