@@ -15,6 +15,8 @@ using TexnoStore.Core.Domain.Entities.Laptop;
 using System;
 using TexnoStoreWebCore.Services.Abstract;
 using TexnoStoreWebCore.Models.Laptops;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace TexnoStore.Controllers
 {
@@ -30,7 +32,17 @@ namespace TexnoStore.Controllers
 
         public IActionResult Index()
         {
-            var laptops = service.LaptopService.Laptops();
+            List<LaptopModel> laptops = new List<LaptopModel>();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = httpClient.GetAsync("https://localhost:7169/api/LaptopConroller/GetAll").Result)
+                {
+                    string apiResponse = response.Content.ReadAsStringAsync().Result;
+                    laptops = JsonConvert.DeserializeObject<List<LaptopModel>>(apiResponse);
+                }
+            }
+
+            //var laptops = service.LaptopService.Laptops();
 
             var model = new LaptopListViewModel
             {
