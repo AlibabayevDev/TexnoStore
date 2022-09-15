@@ -1,0 +1,116 @@
+select * from LaptopsImages
+select * from LaptopImage
+select * from camera
+select * from CamerasImages
+select * from Enum
+select * from products
+select * from laptop
+select * from CameraImage
+
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyMSIsIm5hbWUiOiIyMSIsImVtYWlsIjoibmFoaWRtaXIxMDFAZ21haWwuY29tIiwibmJmIjoxNjYxNTk4NjYxLCJleHAiOjE2NjMzMjY2NTksImlhdCI6MTY2MTU5ODY2MX0.1aXinkKXSmI80HrJqnGGRw5v1W8WfVgTS0gYf_KGnCc
+
+
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyMSIsIm5hbWUiOiIyMSIsImVtYWlsIjoibmFoaWRtaXIxMDFAZ21haWwuY29tIiwibmJmIjoxNjYxNjA3NDc1LCJleHAiOjE2NjMzMzU0NzUsImlhdCI6MTY2MTYwNzQ3NX0.HKqYg2SYkmPOhgDfx2PewM6litTgVSjdvIwkNBnq13A
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyMSIsIm5hbWUiOiIyMSIsImVtYWlsIjoibmFoaWRtaXIxMDFAZ21haWwuY29tIiwibmJmIjoxNjYxNjA3NTI0LCJleHAiOjE2NjMzMzU1MjQsImlhdCI6MTY2MTYwNzUyNH0.LC1LKj9zaDESs_tIrIqo3laPGs0JbPM25iGKrOokJbU
+
+{
+  "id": 2,
+  "name": "Nahid",
+  "lastName": "Mirzazada",
+  "email": "nahidmir101@gmail.com",
+  "password": "12345",
+  "retypePassword": "12345"
+}
+
+
+ services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+           .AddJwtBearer(x =>
+           {
+               x.RequireHttpsMetadata = false;
+               x.SaveToken = true;
+               x.TokenValidationParameters = new TokenValidationParameters
+               {
+                   ValidateIssuerSigningKey = true,
+                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("xecretKeywqejane")),
+                   ValidateIssuer = false,
+                   ValidateAudience = false,
+               };
+           });
+
+
+
+
+   .AddJwtBearer(token =>
+            {
+                token.RequireHttpsMetadata = false;
+                token.SaveToken = true;
+                token.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    //Same Secret key will be used while creating the token
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes[Configuration["JWT:Key"]),
+                    ValidateIssuer = true,
+                    //Usually, this is your application base URL
+                    ValidIssuer = "http://localhost:44300/",
+                    ValidateAudience = true,
+                    //Here, we are creating and using JWT within the same application.
+                    //In this case, base URL is fine.
+                    //If the JWT is created using a web service, then this would be the consumer URL.
+                    RequireExpirationTime = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+
+
+
+
+
+
+
+  private string GenerateToken(User user)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            byte[] key = Encoding.ASCII.GetBytes("xecretKeywqejane");
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(
+                new[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.Email, user.Email)
+                }),
+                Expires = DateTime.Now.AddDays(20), //Token expires after 15
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

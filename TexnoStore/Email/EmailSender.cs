@@ -1,11 +1,23 @@
 ﻿using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using MimeKit;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Net;
+using System.Net.Mail;
+using TexnoStore.Core.Domain.Entities;
+using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace TexnoStore.Email
 {
-    public class EmailHelper
+    public class EmailSender
     {
+
+
         //public bool SendEmail(string userEmail, string confirmationLink)
         //{
         //    MailMessage mailMessage = new MailMessage();
@@ -64,6 +76,7 @@ namespace TexnoStore.Email
                 message.From.Add(new MailboxAddress("Adminstrator", "alibabaev375@mail.ru"));
                 message.To.Add(new MailboxAddress("naren", userEmail));
                 message.Subject = "Confirm Password";
+    
                 message.Body = new TextPart("plain")
                 {
                     Text = link

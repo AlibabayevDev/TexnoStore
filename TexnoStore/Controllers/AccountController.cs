@@ -3,10 +3,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
+using Newtonsoft.Json;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Core.Domain.Entities;
@@ -17,6 +22,12 @@ using TexnoStore.Models.Users;
 
 namespace TexnoStore.Controllers
 {
+    public class EmailLink
+    {
+        public string email { get; set; }
+        public string link { get; set; }
+    }
+
     public class AccountController : Controller
     {
         public LoginMapper LoginMapper = new LoginMapper();
@@ -229,7 +240,36 @@ namespace TexnoStore.Controllers
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
             var link = Url.Action("ResetPassword", "Account", new { token, email = user.Email }, Request.Scheme);
 
-            EmailHelper emailHelper = new EmailHelper();
+
+            //var values = new Dictionary<string, string>()
+            //{
+            //    { "email", email },
+            //    {"link", link }
+            //};
+
+            //var content = new FormUrlEncodedContent(values);
+
+
+            //using (var httpClient = new HttpClient())
+            //{
+            //    using (var response = await httpClient.PostAsync($"https://localhost:7261/api/EmailPassword/Index/{user.Email}/{link}",content))
+            //    {
+            //        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            //        {
+            //            string apiResponse = response.Content.ReadAsStringAsync().Result;
+            //            emailLink = JsonConvert.DeserializeObject<string>(apiResponse);
+            //            return RedirectToAction("ForgotPasswordConfirmation");
+            //        }
+            //        else
+            //            ViewBag.StatusCode = response.StatusCode;
+
+            //    }
+            //}
+
+
+
+
+            EmailSender emailHelper = new EmailSender();
             bool emailResponse = emailHelper.SendEmailPasswordReset(user.Email, link);
 
             if (emailResponse)

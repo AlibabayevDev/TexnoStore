@@ -13,6 +13,8 @@ using TexnoStore.Core.Domain.Entities.Laptop;
 using System;
 using TexnoStoreWebCore.Services.Abstract;
 using TexnoStoreWebCore.Models.Laptops;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace TexnoStore.Controllers
 {
@@ -26,6 +28,24 @@ namespace TexnoStore.Controllers
 
         public IActionResult Index()
         {
+            List<LaptopModel> laptops = new List<LaptopModel>();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = httpClient.GetAsync("https://localhost:7169/api/LaptopConroller/GetAll").Result)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        string apiResponse = response.Content.ReadAsStringAsync().Result;
+                        laptops = JsonConvert.DeserializeObject<List<LaptopModel>>(apiResponse);
+                    }
+                    else
+                        ViewBag.StatusCode = response.StatusCode;
+    
+                }
+            }
+
+            //var laptops = service.LaptopService.Laptops.
+
             var laptops = service.LaptopService.Laptops();
             var model = new LaptopListViewModel
             {
@@ -37,10 +57,28 @@ namespace TexnoStore.Controllers
 
         public IActionResult LaptopProduct(int id)
         {
+            LaptopModel laptop = new LaptopModel();
+            //var laptop = service.LaptopService.LaptopProduct(id);
+            using (var httpClient = new HttpClient())
+            {
+                using(var response = httpClient.GetAsync("https://localhost:7169/api/LaptopConroller/GetLaptop/" + id).Result)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        string apiResponse = response.Content.ReadAsStringAsync().Result;
+                        laptop = JsonConvert.DeserializeObject<LaptopModel>(apiResponse);
+                    }
+                    else
+                        ViewBag.StatusCode = response.StatusCode;
+                }
+
+            }
+
             var laptop = service.LaptopService.LaptopProduct(id);
             var reviews = service.LaptopService.Reviews(id);
             var model = new LaptopListViewModel
             {
+                    Laptop = laptop
                 Laptop = laptop,
                 Reviews = reviews,
                 CountReview=reviews.Count,
