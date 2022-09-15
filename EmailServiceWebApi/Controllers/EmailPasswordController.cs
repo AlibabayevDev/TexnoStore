@@ -4,8 +4,8 @@ using TexnoStore.Core.DataAccess.Abstract;
 
 namespace EmailServiceWebApi.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class EmailPasswordController : ControllerBase
     {
         private readonly IEmailServiceSender emailService;
@@ -18,7 +18,7 @@ namespace EmailServiceWebApi.Controllers
         }
 
         [HttpPost] 
-        [Route("PasswordReset/{email}/{link}")]
+        [Route("PasswordReset/{email}&{link}")]
         public IActionResult Index(string email,string link)
         {
             try
