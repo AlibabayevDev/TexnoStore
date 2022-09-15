@@ -60,11 +60,26 @@ namespace TexnoStore.Controllers
 
         public IActionResult LaptopProduct(int id)
         {
-            var laptop = service.LaptopService.LaptopProduct(id);
+            LaptopModel laptop = new LaptopModel();
+            //var laptop = service.LaptopService.LaptopProduct(id);
+            using (var httpClient = new HttpClient())
+            {
+                using(var response = httpClient.GetAsync("https://localhost:7169/api/LaptopConroller/GetLaptop/" + id).Result)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        string apiResponse = response.Content.ReadAsStringAsync().Result;
+                        laptop = JsonConvert.DeserializeObject<LaptopModel>(apiResponse);
+                    }
+                    else
+                        ViewBag.StatusCode = response.StatusCode;
+                }
+
+            }
 
             var model = new LaptopListViewModel
             {
-                Laptop = laptop
+                    Laptop = laptop
             };
             return View(model);
         }
