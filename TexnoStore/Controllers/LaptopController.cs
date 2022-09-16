@@ -46,7 +46,6 @@ namespace TexnoStore.Controllers
 
             //var laptops = service.LaptopService.Laptops.
 
-            var laptops = service.LaptopService.Laptops();
             var model = new LaptopListViewModel
             {
                 Laptops = laptops,
@@ -74,11 +73,9 @@ namespace TexnoStore.Controllers
 
             }
 
-            var laptop = service.LaptopService.LaptopProduct(id);
             var reviews = service.LaptopService.Reviews(id);
             var model = new LaptopListViewModel
             {
-                    Laptop = laptop
                 Laptop = laptop,
                 Reviews = reviews,
                 CountReview=reviews.Count,
