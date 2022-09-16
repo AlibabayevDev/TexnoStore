@@ -44,7 +44,7 @@ namespace TexnoStore.Controllers
         public ActionResult Index(EmailModel emailModel)
         {
             var users = db.LoginRepository.Get();
-            emailService.AttachmentSender.SendAttachmentAsync(emailModel,configuration,users);
+            emailService.AttachmentSender.SendAttachmentAsync(emailModel,configuration,users);  
             //using (var httpClient = new HttpClient())
             //{
             //    using (var response = httpClient.GetAsync("https://localhost:7261/api/SendAttachment").Result)
