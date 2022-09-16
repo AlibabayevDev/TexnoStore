@@ -111,7 +111,7 @@ namespace TexnoStore
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=Index}/{id?}");
+                    pattern: "{controller=SendAttachment}/{action=Index}/{id?}");
             });
         }
     }
