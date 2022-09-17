@@ -43,15 +43,16 @@ namespace TexnoStore.Controllers
         [HttpPost]
         public ActionResult Index(EmailModel emailModel)
         {
-
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = httpClient.GetAsync("https://localhost:7261/api/SendAttachment").Result)
-                {
-                    string apiResponse =  response.Content.ReadAsStringAsync().Result;
-                    emailModel = JsonConvert.DeserializeObject<EmailModel>(apiResponse);
-                }
-            }
+            var users = db.LoginRepository.Get();
+            emailService.AttachmentSender.SendAttachmentAsync(emailModel,configuration,users);
+            //using (var httpClient = new HttpClient())
+            //{
+            //    using (var response = httpClient.GetAsync("https://localhost:7261/api/SendAttachment").Result)
+            //    {
+            //        string apiResponse =  response.Content.ReadAsStringAsync().Result;
+            //        emailModel = JsonConvert.DeserializeObject<EmailModel>(apiResponse);
+            //    }
+            //}
 
             return View();
         }
