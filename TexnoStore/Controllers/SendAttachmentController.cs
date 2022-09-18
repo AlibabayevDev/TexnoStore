@@ -45,13 +45,29 @@ namespace TexnoStore.Controllers
         [HttpPost]
         public ActionResult Index(EmailModel emailModel)
         {
+            byte[] attachmentFileByteArray = null;
+
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:7261/api/SendAttachment");
-                //var postTask = client.PostAsJsonAsync<EmailModel>("emailModel", emailModel);
-                //postTask.Wait();
 
-                var company = JsonConvert.SerializeObject(emailModel);
+                if (emailModel.Attachments != null)
+                {
+                    if (emailModel.Attachments.Length > 0)
+                    {
+                        using (MemoryStream memoryStream = new MemoryStream())
+                        {
+                            emailModel.Attachments.CopyTo(memoryStream);
+                            attachmentFileByteArray = memoryStream.ToArray();
+                        }
+                    }
+                }
+                SendModel sendModel = new SendModel();
+                sendModel.attachmentFileByteArray = attachmentFileByteArray;
+                sendModel.Subject=emailModel.Subject;
+                sendModel.To=emailModel.To;
+                var company = JsonConvert.SerializeObject(sendModel);
+
                 var requestContent = new StringContent(company, Encoding.UTF8, "application/json");
                 using (var response = client.PostAsync("https://localhost:7261/api/SendAttachment", requestContent).Result)
                 {

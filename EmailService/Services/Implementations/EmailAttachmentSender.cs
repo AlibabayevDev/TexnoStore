@@ -39,7 +39,7 @@ namespace EmailService.Services.Implementations
         }
 
 
-        public void SendAttachmentAsync(EmailModel emailModel, IConfiguration configuration, List<User> clients)
+        public void SendAttachmentAsync(SendModel emailModel, IConfiguration configuration, List<User> clients)
         {
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("Adminstrator", "alibabaev375@mail.ru"));
@@ -61,19 +61,19 @@ namespace EmailService.Services.Implementations
             //    }
             //}
 
-            var host = configuration["EmailSettings:Host"];
-            var port = int.Parse(configuration["EmailSettings:Port"]);
-            var sender = configuration["EmailSettings:Email"];
-            var password = configuration["EmailSettings:Password"];
-            var useSSL = bool.Parse(configuration["EmailSettings:UseSSL"]);
+            //var host = configuration["EmailSettings:Host"];
+            //var port = int.Parse(configuration["EmailSettings:Port"]);
+            //var sender = configuration["EmailSettings:Email"];
+            //var password = configuration["EmailSettings:Password"];
+            //var useSSL = bool.Parse(configuration["EmailSettings:UseSSL"]);
 
             for (int i = 0; i < clients.Count; i++)
             {
                 message.To.Add(new MailboxAddress("naren", clients[i].Email));
                 using (var client = new SmtpClient())
                 {
-                    client.Connect(host, port, useSSL);
-                    client.Authenticate(sender, password);
+                    client.Connect("smtp.mail.ru", 25, false);
+                    client.Authenticate("alibabaev375@mail.ru", "UnhvOfx824cPnFhevo3g");
                     client.Send(message);
                     client.Disconnect(true);
                 }

@@ -14,7 +14,7 @@ namespace EmailService.Services.Abstract
     {
         void SendAttachment(EmailModel emailModel, IHostingEnvironment env, List<User> clients);
 
-        void SendAttachmentAsync(EmailModel emailModel, IConfiguration configuration, List<User> clients);
+        void SendAttachmentAsync(SendModel emailModel, IConfiguration configuration, List<User> clients);
 
     }
 }

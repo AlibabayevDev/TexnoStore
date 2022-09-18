@@ -4,9 +4,9 @@ using System.Net.Mail;
 
 namespace EmailService.Models
 {
-    public class EmailModel
+    public class SendModel
     {
-        public IFormFile Attachments { get; set; }
+        public byte[] attachmentFileByteArray { get; set; }
 
         public string To { get; set; }
 
