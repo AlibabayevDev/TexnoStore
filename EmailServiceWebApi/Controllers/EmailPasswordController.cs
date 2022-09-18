@@ -17,12 +17,13 @@ namespace EmailServiceWebApi.Controllers
             this.emailService = emailService;
         }
 
-        [HttpPost] 
-        public IActionResult Index(string email,string link)
+        [HttpPost]
+        [Route("ForgotPassword")]
+        public IActionResult Index(List<string> values)
         {
             try
             {
-                emailService.PasswordReset.SendEmailPasswordReset(email, link);
+                emailService.PasswordReset.SendEmailPasswordReset(values[0], values[1]);
                 return Ok();
             }
             catch

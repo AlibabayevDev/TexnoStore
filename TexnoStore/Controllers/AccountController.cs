@@ -245,42 +245,39 @@ namespace TexnoStore.Controllers
             var link = Url.Action("ResetPassword", "Account", new { token, email = user.Email }, Request.Scheme);
 
 
-            //var values = new Dictionary<string, string>()
-            //{
-            //    { "email", email },
-            //    {"link", link }
-            //};
+            List<string> values = new List<string>();
+            values.Add(email);
+            values.Add(link);
 
+            string emailModel;
 
-            //string emailModel;
-
-            //using (var httpClient = new HttpClient())
-            //{
-            //    StringContent content = new StringContent(JsonConvert.SerializeObject(values), Encoding.UTF8, "application/json");
-
-            //    using (var response = await httpClient.PostAsync("https://localhost:44386/api/EmailPassword/Index", content))
-            //    {
-            //        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            //        {
-            //            string apiResponse = await response.Content.ReadAsStringAsync();
-            //            emailModel = JsonConvert.DeserializeObject<string>(apiResponse);
-            //            return RedirectToAction("ForgotPasswordConfirmation");
-            //        }
-            //        else
-            //            ViewBag.StatusCode = response.StatusCode;
-            //    }
-            //}
-
-
-            EmailSender emailHelper = new EmailSender();
-            bool emailResponse = emailHelper.SendEmailPasswordReset(user.Email, link);
-
-            if (emailResponse)
-                return RedirectToAction("ForgotPasswordConfirmation");
-            else
+            using (var httpClient = new HttpClient())
             {
-                // log email failed 
+                StringContent content = new StringContent(JsonConvert.SerializeObject(values), Encoding.UTF8, "application/json");
+
+                using (var response = await httpClient.PostAsync("https://localhost:44386/api/EmailPassword/ForgotPassword", content))
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        emailModel = JsonConvert.DeserializeObject<string>(apiResponse);
+                        return RedirectToAction("ForgotPasswordConfirmation");
+                    }
+                    else
+                        ViewBag.StatusCode = response.StatusCode;
+                }
             }
+
+
+            //EmailSender emailHelper = new EmailSender();
+            //bool emailResponse = emailHelper.SendEmailPasswordReset(user.Email, link);
+
+            //if (emailResponse)
+            //    return RedirectToAction("ForgotPasswordConfirmation");
+            //else
+            //{
+            //    // log email failed 
+            //}
             return View(email);
         }
 

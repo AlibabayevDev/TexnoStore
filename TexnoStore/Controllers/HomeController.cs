@@ -73,31 +73,30 @@ namespace TexnoStore.Controllers
 
         public IActionResult AddSubscribe(AllProductsListViewModel viewModel)
         {
-            //if (viewModel.SubscribeModel.Email != null)
-            //{
-            //    service.SubscribeService.Add(viewModel.SubscribeModel);
-            //}
-            //else
-            //    ViewBag.Message = "email is required";
-
-            AllProductsListViewModel model = new AllProductsListViewModel();
-
-            using (var httpClient = new HttpClient())
+            if (viewModel.SubscribeModel.Email != null)
             {
-                StringContent content = new StringContent(JsonConvert.SerializeObject(viewModel.SubscribeModel), Encoding.UTF8, "application/json");
-
-                using (var response =  httpClient.PostAsync("https://localhost:7169/api/Home/AddSubscribe", content).Result)
+                AllProductsListViewModel model = new AllProductsListViewModel();
+                using (var httpClient = new HttpClient())
                 {
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(viewModel.SubscribeModel), Encoding.UTF8, "application/json");
+
+                    using (var response = httpClient.PostAsync("https://localhost:7169/api/Home/AddSubscribe", content).Result)
                     {
-                        string apiResponse = response.Content.ReadAsStringAsync().Result;
-                        model = JsonConvert.DeserializeObject<AllProductsListViewModel>(apiResponse);
-                        return RedirectToAction("ForgotPasswordConfirmation");
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            string apiResponse = response.Content.ReadAsStringAsync().Result;
+                            model = JsonConvert.DeserializeObject<AllProductsListViewModel>(apiResponse);
+                            return RedirectToAction("ForgotPasswordConfirmation");
+                        }
+                        else
+                            ViewBag.StatusCode = response.StatusCode;
                     }
-                    else
-                        ViewBag.StatusCode = response.StatusCode;
                 }
             }
+            else
+                ViewBag.Message = "email is required";
+
+       
             return RedirectToAction("Index");
         }
     }
