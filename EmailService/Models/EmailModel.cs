@@ -6,7 +6,7 @@ namespace EmailService.Models
 {
     public class EmailModel
     {
-        public IFormFile Attachments { get; set; }
+        //public IFormFile Attachments { get; set; }
 
         public string To { get; set; }
 
