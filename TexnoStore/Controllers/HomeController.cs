@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Models;
 using TexnoStoreWebCore.Mapper;
@@ -70,12 +73,31 @@ namespace TexnoStore.Controllers
 
         public IActionResult AddSubscribe(AllProductsListViewModel viewModel)
         {
-            if (viewModel.SubscribeModel.Email != null)
+            //if (viewModel.SubscribeModel.Email != null)
+            //{
+            //    service.SubscribeService.Add(viewModel.SubscribeModel);
+            //}
+            //else
+            //    ViewBag.Message = "email is required";
+
+            AllProductsListViewModel model = new AllProductsListViewModel();
+
+            using (var httpClient = new HttpClient())
             {
-                service.SubscribeService.Add(viewModel.SubscribeModel);
+                StringContent content = new StringContent(JsonConvert.SerializeObject(viewModel.SubscribeModel), Encoding.UTF8, "application/json");
+
+                using (var response =  httpClient.PostAsync("https://localhost:7169/api/Home/AddSubscribe", content).Result)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        string apiResponse = response.Content.ReadAsStringAsync().Result;
+                        model = JsonConvert.DeserializeObject<AllProductsListViewModel>(apiResponse);
+                        return RedirectToAction("ForgotPasswordConfirmation");
+                    }
+                    else
+                        ViewBag.StatusCode = response.StatusCode;
+                }
             }
-            else
-                ViewBag.Message = "email is required";
             return RedirectToAction("Index");
         }
     }

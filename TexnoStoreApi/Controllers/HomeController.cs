@@ -38,5 +38,20 @@ namespace TexnoStoreApi.Controllers
             var model = service.HomeService.AllProducts();
             return Ok(model);
         }
+
+        [HttpPost]
+        [Route("AddSubscribe")]
+        public IActionResult AddSubscribe(SubscribeModel model)
+        {
+            try
+            {
+                service.SubscribeService.Add(model);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest("something went wrong");
+            }
+        }
     }
 }
