@@ -1,5 +1,6 @@
 ﻿using EmailService.Services.Abstract;
 using EmailService.Services.Implementations;
+using EmailServiceWebApi.SmtpMiddlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -78,7 +79,7 @@ namespace EmailServiceWebApi
             }
 
             app.UseHttpsRedirection();
-
+            app.UseErrorHandlerMiddleware();
             app.UseRouting();
             app.UseCookiePolicy();
             app.UseAuthentication();
