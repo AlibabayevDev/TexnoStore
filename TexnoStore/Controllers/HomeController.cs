@@ -68,17 +68,15 @@ namespace TexnoStore.Controllers
             return PartialView("Success");
         }
 
-        public IActionResult AddSubscribe(SubscribeModel model)
+        public IActionResult AddSubscribe(AllProductsListViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            if (viewModel.SubscribeModel.Email != null)
             {
-                SubscribeMapper mapper = new SubscribeMapper();
-                var subscribe = mapper.Map(model);
-                db.SubscribeRepository.Add(subscribe);
+                service.SubscribeService.Add(viewModel.SubscribeModel);
             }
             else
                 ViewBag.Message = "email is required";
             return RedirectToAction("Index");
         }
     }
-}
+} 
