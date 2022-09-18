@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Models;
+using TexnoStoreWebCore.Mapper;
 using TexnoStoreWebCore.Models;
 using TexnoStoreWebCore.Services.Abstract;
 
@@ -65,6 +66,19 @@ namespace TexnoStore.Controllers
             service.HomeService.AddToCard(model);
 
             return PartialView("Success");
+        }
+
+        public IActionResult AddSubscribe(SubscribeModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                SubscribeMapper mapper = new SubscribeMapper();
+                var subscribe = mapper.Map(model);
+                db.SubscribeRepository.Add(subscribe);
+            }
+            else
+                ViewBag.Message = "email is required";
+            return RedirectToAction("Index");
         }
     }
 }

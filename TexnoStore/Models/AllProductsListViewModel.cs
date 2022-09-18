@@ -13,5 +13,6 @@ namespace TexnoStore.Models
         public IEnumerable<LaptopModel> LaptopModel { get; set; }
         public IEnumerable<PhoneModel> PhoneModel { get; set; }
         public IEnumerable<CameraModel> CameraModel { get; set; }
+        public SubscribeModel SubscribeModel { get; set; }
     }
 }
