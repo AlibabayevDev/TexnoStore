@@ -18,7 +18,6 @@ namespace EmailServiceWebApi.Controllers
         }
 
         [HttpPost] 
-        [Route("PasswordReset/{email}&{link}")]
         public IActionResult Index(string email,string link)
         {
             try

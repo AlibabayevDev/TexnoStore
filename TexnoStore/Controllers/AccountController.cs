@@ -251,26 +251,25 @@ namespace TexnoStore.Controllers
             //    {"link", link }
             //};
 
-            //var content = new FormUrlEncodedContent(values);
 
+            //string emailModel;
 
             //using (var httpClient = new HttpClient())
             //{
-            //    using (var response = await httpClient.PostAsync($"https://localhost:7261/api/EmailPassword/Index/{user.Email}/{link}",content))
+            //    StringContent content = new StringContent(JsonConvert.SerializeObject(values), Encoding.UTF8, "application/json");
+
+            //    using (var response = await httpClient.PostAsync("https://localhost:44386/api/EmailPassword/Index", content))
             //    {
             //        if (response.StatusCode == System.Net.HttpStatusCode.OK)
             //        {
-            //            string apiResponse = response.Content.ReadAsStringAsync().Result;
-            //            emailLink = JsonConvert.DeserializeObject<string>(apiResponse);
+            //            string apiResponse = await response.Content.ReadAsStringAsync();
+            //            emailModel = JsonConvert.DeserializeObject<string>(apiResponse);
             //            return RedirectToAction("ForgotPasswordConfirmation");
             //        }
             //        else
             //            ViewBag.StatusCode = response.StatusCode;
-
             //    }
             //}
-
-
 
 
             EmailSender emailHelper = new EmailSender();
