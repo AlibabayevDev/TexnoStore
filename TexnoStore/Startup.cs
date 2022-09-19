@@ -60,9 +60,15 @@ namespace TexnoStore
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddGoogle(options =>
+            {
+                options.ClientId = Configuration["Authentication:Google:ClientId"];
+                options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                options.SignInScheme = IdentityConstants.ExternalScheme;
             });
-            
-           
+
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
