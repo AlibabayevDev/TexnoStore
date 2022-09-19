@@ -67,9 +67,8 @@ namespace TexnoStore.Controllers
                 sendModel.Subject=emailModel.Subject;
                 sendModel.To=emailModel.To;
                 var company = JsonConvert.SerializeObject(sendModel);
-
                 var requestContent = new StringContent(company, Encoding.UTF8, "application/json");
-                using (var response = client.PostAsync("https://localhost:7261/api/SendAttachment", requestContent).Result)
+                using (var response = client.PostAsync("https://localhost:7261/api/SendAttachment/",requestContent).Result)
                 {
                     string apiResponse = response.Content.ReadAsStringAsync().Result;
                     emailModel = JsonConvert.DeserializeObject<EmailModel>(apiResponse);

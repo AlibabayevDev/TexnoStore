@@ -45,7 +45,8 @@ namespace EmailService.Services.Implementations
             message.From.Add(new MailboxAddress("Adminstrator", "alibabaev375@mail.ru"));
             message.Subject = "Confirm Password";
             var builder = new BodyBuilder();
-
+            builder.Attachments.Add("file",emailModel.attachmentFileByteArray);
+            message.Body = builder.ToMessageBody();
             //if (emailModel.Attachments != null)
             //{
             //    byte[] attachmentFileByteArray;
