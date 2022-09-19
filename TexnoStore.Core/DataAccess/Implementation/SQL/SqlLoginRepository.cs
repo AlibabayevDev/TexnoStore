@@ -90,7 +90,7 @@ namespace TexnoStore.Core.DataAccess.Implementation.SQL
 
                 string cmdText = "select * from Users";
 
-                using (SqlCommand cmd = new SqlCommand())
+                using (SqlCommand cmd = new SqlCommand(cmdText,connection))
                 {
                     SqlDataReader reader = cmd.ExecuteReader();
 
