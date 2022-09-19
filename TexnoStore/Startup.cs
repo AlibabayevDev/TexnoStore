@@ -68,13 +68,13 @@ namespace TexnoStore
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            })
-            .AddGoogle(options =>
-            {
-                options.ClientId = Configuration["Authentication:Google:ClientId"];
-                options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-                options.SignInScheme = IdentityConstants.ExternalScheme;
             });
+            //.AddGoogle(options =>
+            //{
+            //    options.ClientId = Configuration["Authentication:Google:ClientId"];
+            //    options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            //    options.SignInScheme = IdentityConstants.ExternalScheme;
+            //});
 
 
            //.AddFacebook(facebookOptions =>
