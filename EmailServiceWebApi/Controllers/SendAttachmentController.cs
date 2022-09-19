@@ -22,7 +22,7 @@ namespace EmailServiceWebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index([FromBody] EmailModel emailModel)
+        public IActionResult Index([FromBody] SendModel emailModel)
         {
             try 
             {

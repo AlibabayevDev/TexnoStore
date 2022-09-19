@@ -1,4 +1,5 @@
-﻿using EmailService.Models;
+﻿using EmailService.Mapper;
+using EmailService.Models;
 using EmailService.Services.Abstract;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,7 +13,9 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Net.Mail;
+using System.Text;
 using TexnoStore.Core.DataAccess.Abstract;
 using TexnoStore.Core.Domain.Entities;
 
@@ -43,16 +46,29 @@ namespace TexnoStore.Controllers
         [HttpPost]
         public ActionResult Index(EmailModel emailModel)
         {
-            var users = db.LoginRepository.Get();
-            emailService.AttachmentSender.SendAttachmentAsync(emailModel,configuration,users);
-            //using (var httpClient = new HttpClient())
-            //{
-            //    using (var response = httpClient.GetAsync("https://localhost:7261/api/SendAttachment").Result)
-            //    {
-            //        string apiResponse =  response.Content.ReadAsStringAsync().Result;
-            //        emailModel = JsonConvert.DeserializeObject<EmailModel>(apiResponse);
-            //    }
-            //}
+            
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7261/api/SendAttachment");
+
+                var mapper = new SendMapper();
+                var sendModel = mapper.Map(emailModel);
+
+                var company = JsonConvert.SerializeObject(sendModel);
+                var requestContent = new StringContent(company, Encoding.UTF8, "application/json");
+                using (var response = client.PostAsync("https://localhost:7261/api/SendAttachment/",requestContent).Result)
+                {
+                    string apiResponse = response.Content.ReadAsStringAsync().Result;
+                    emailModel = JsonConvert.DeserializeObject<EmailModel>(apiResponse);
+                }
+
+                //var result = postTask.Result;
+                //if (result.IsSuccessStatusCode)
+                //{
+                //    return RedirectToAction("Index");
+                //}
+            }
 
             return View();
         }

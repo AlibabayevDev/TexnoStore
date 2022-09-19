@@ -39,27 +39,14 @@ namespace EmailService.Services.Implementations
         }
 
 
-        public void SendAttachmentAsync(EmailModel emailModel, IConfiguration configuration, List<User> clients)
+        public void SendAttachmentAsync(SendModel emailModel, IConfiguration configuration, List<User> clients)
         {
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("Adminstrator", "alibabaev375@mail.ru"));
             message.Subject = "Confirm Password";
             var builder = new BodyBuilder();
-
-            if (emailModel.Attachments != null)
-            {
-                byte[] attachmentFileByteArray;
-                if (emailModel.Attachments.Length > 0)
-                {
-                    using (MemoryStream memoryStream = new MemoryStream())
-                    {
-                        emailModel.Attachments.CopyTo(memoryStream);
-                        attachmentFileByteArray = memoryStream.ToArray();
-                    }
-                    builder.Attachments.Add(emailModel.Attachments.FileName, attachmentFileByteArray, ContentType.Parse(emailModel.Attachments.ContentType));
-                    message.Body = builder.ToMessageBody();
-                }
-            }
+            builder.Attachments.Add(emailModel.FileName,emailModel.attachmentFileByteArray, ContentType.Parse(emailModel.Type));
+            message.Body = builder.ToMessageBody();
 
             var host = configuration["EmailSettings:Host"];
             var port = int.Parse(configuration["EmailSettings:Port"]);
