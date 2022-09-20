@@ -39,13 +39,12 @@ namespace TexnoStore.Controllers
                         laptops = JsonConvert.DeserializeObject<List<LaptopModel>>(apiResponse);
                     }
                     else
+                    {
                         ViewBag.StatusCode = response.StatusCode;
-    
+                    }
                 }
             }
-
             //var laptops = service.LaptopService.Laptops.
-
             var model = new LaptopListViewModel
             {
                 Laptops = laptops,

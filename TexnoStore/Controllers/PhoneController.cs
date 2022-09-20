@@ -5,6 +5,10 @@ using System.Linq;
 using TexnoStore.Models.Phones;
 using TexnoStoreWebCore.Models.Phones;
 using TexnoStoreWebCore.Mapper.Phones;
+using Newtonsoft.Json;
+using System.Net.Http;
+using TexnoStore.Core.Domain.Entities.Laptop;
+using TexnoStoreWebCore.Models.Laptops;
 
 namespace TexnoStore.Controllers
 {
@@ -19,42 +23,43 @@ namespace TexnoStore.Controllers
 
         public IActionResult Index()
         {
-            var phones = db.PhoneRepository.Phones();
-
-            PhoneMapper phoneMapper = new PhoneMapper();
-            List<PhoneModel> phonesModels = new List<PhoneModel>();
-
-            for (int i = 0; i < phones.Count; i++)
+            var phones = new List<PhoneModel>();
+            using (var httpClient = new HttpClient())
             {
-                var phone = phones[i];
-                var phoneModel = phoneMapper.Map(phone);
-
-                phonesModels.Add(phoneModel);
+                using (var response = httpClient.GetAsync("https://localhost:7169/api/Phone/GetAll/").Result)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        string apiResponse = response.Content.ReadAsStringAsync().Result;
+                        phones = JsonConvert.DeserializeObject<List<PhoneModel>>(apiResponse);
+                    }
+                    else
+                    {
+                        ViewBag.StatusCode = response.StatusCode;
+                    }
+                }
             }
             var model = new PhoneListViewModel
             {
-                Phones = phonesModels,
+                Phones = phones,
             };
             return View(model);
         }
 
         public IActionResult PhoneProduct(int id)
         {
-            var phones = db.PhoneRepository.Phones();
-
-            PhoneMapper phoneMapper = new PhoneMapper();
-            List<PhoneModel> phonesModels = new List<PhoneModel>();
-
-            for (int i = 0; i < phones.Count; i++)
+            var phone = new PhoneModel();
+            using(var httpClient = new HttpClient())
             {
-                var phone = phones[i];
-                var phoneModel = phoneMapper.Map(phone);
-
-                phonesModels.Add(phoneModel);
+                using(var response = httpClient.GetAsync("https://localhost:7169/api/Phone/PhoneProduct/"+id).Result)
+                {
+                    string apiResponse = response.Content.ReadAsStringAsync().Result;
+                    phone = JsonConvert.DeserializeObject<PhoneModel>(apiResponse);
+                }
             }
             var model = new PhoneListViewModel
             {
-                Phone = phonesModels.FirstOrDefault(x => x.Id == id),
+                Phone = phone,
             };
 
             return View(model);
