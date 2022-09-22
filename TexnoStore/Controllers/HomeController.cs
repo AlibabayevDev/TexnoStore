@@ -1,9 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Net.Http;
 using TexnoStore.Core.DataAccess.Abstract;
+using TexnoStore.Core.Domain.Entities.Laptop;
 using TexnoStore.Models;
 using TexnoStoreWebCore.Mapper;
 using TexnoStoreWebCore.Models;
+using TexnoStoreWebCore.Models.Laptops;
 using TexnoStoreWebCore.Services.Abstract;
 
 namespace TexnoStore.Controllers
@@ -19,8 +24,19 @@ namespace TexnoStore.Controllers
         }
         public IActionResult Index()
         {
-            var products = service.HomeService.AllProducts();
-            
+            var products = new List<BaseModel>();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = httpClient.GetAsync("https://localhost:7169/api/Home/GetAllProducts/").Result)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        string apiResponse = response.Content.ReadAsStringAsync().Result;
+                        products = JsonConvert.DeserializeObject<List<BaseModel>> (apiResponse);
+                    }
+                }
+
+            }
             var viewModel = new AllProductsListViewModel()
             {
                 Products=products,
@@ -41,18 +57,15 @@ namespace TexnoStore.Controllers
         {
             if (typeId == 1)
             {
-                var laptop = service.LaptopService.LaptopProduct(productId);
-                return RedirectToAction("LaptopProduct", "Laptop", new { id = laptop.Id });
+                return RedirectToAction("LaptopProduct", "Laptop", new { id = productId });
             }
             else if (typeId == 2)
             {
-                var phone = service.PhoneService.PhoneProduct(productId);
-                return RedirectToAction("PhoneProduct", "Phone", new { id = phone.Id });
+                return RedirectToAction("PhoneProduct", "Phone", new { id = productId });
             }
             else if(typeId == 3)
             { 
-                var camera = service.CameraService.CameraById(productId);
-                return RedirectToAction("CameraProduct", "Camera", new { id = camera.Id });
+                return RedirectToAction("CameraProduct", "Camera", new { id = productId });
             }
 
             return View();
