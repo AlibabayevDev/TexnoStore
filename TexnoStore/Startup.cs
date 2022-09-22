@@ -52,7 +52,7 @@ namespace TexnoStore
                 opts.Password.RequireLowercase = false; // ????????? ?? ??????? ? ?????? ????????
                 opts.Password.RequireUppercase = false; // ????????? ?? ??????? ? ??????? ????????
                 opts.Password.RequireDigit = false; // ????????? ?? ?????
-            }).AddDefaultTokenProviders(); ;
+            }).AddDefaultTokenProviders(); 
 
             services.AddSingleton<IPasswordHasher<User>, CustomPasswordHasher>();
             services.AddSingleton<IUserStore<User>, UserStore>();
@@ -69,19 +69,6 @@ namespace TexnoStore
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             });
-            //services.AddAuthentication().AddGoogle(googleOptions =>
-            //{
-            //    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-            //    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-            //});
-            //.AddGoogle(options =>
-            //{
-            //    options.ClientId = Configuration["Authentication:Google:ClientId"];
-            //    options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-            //    options.SignInScheme = IdentityConstants.ExternalScheme;
-            //});
-
-
             //.AddFacebook(facebookOptions =>
             //{
             //    facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
