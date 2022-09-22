@@ -1,0 +1,18 @@
+﻿@using TexnoStoreWebCore.Models;
+@model SmsModel;
+@{
+	Layout = null;
+}
+
+<form asp-controller="Sms" asp-action="Index">
+	<label>Mobile</label>
+	<span asp-validation-for="@Model.Mobile" class="text-danger"></span>  
+	<input asp-for="@Model.Mobile"/>
+	<label>Message</label>
+	<span asp-validation-for="@Model.Message" class="text-danger"></span>
+    <input asp-for="@Model.Message"/>
+    <input type="submit" value="Send" />  
+</form>
+
+
+
