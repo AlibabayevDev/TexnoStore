@@ -678,7 +678,7 @@ textarea.input {
     width: 0%;
     overflow: hidden;
     z-index: 22;
-    padding-top: 60px;
+    padding-top: 0px;
     -webkit-transform: translateX(-100%);
     -ms-transform: translateX(-100%);
     transform: translateX(-100%);
