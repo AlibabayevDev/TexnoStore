@@ -27,7 +27,7 @@ namespace TexnoStore.Controllers
             var products = new List<BaseModel>();
             using (var httpClient = new HttpClient())
             {
-                using (var response = httpClient.GetAsync("https://localhost:7169/api/Home/GetAllProducts/").Result)
+                using (var response = httpClient.GetAsync("http://texnostore-001-site1.etempurl.com/api/Home/GetAllProducts/").Result)
                 {
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
