@@ -26,6 +26,7 @@ namespace TexnoStoreApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
             services.AddControllers();
             services.AddSingleton((t) =>
             {
@@ -103,17 +104,17 @@ namespace TexnoStoreApi
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            })
-            .AddCookie(options =>
-            {
-                options.LoginPath = "/account/google-login"; // Must be lowercase
-            })
-           .AddGoogle(options =>
-           {
-               options.ClientId = Configuration["Authentication:Google:ClientId"];
-               options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-               options.SignInScheme = IdentityConstants.ExternalScheme;
-           });
+            });
+            //.AddCookie(options =>
+            //{
+            //    options.LoginPath = "/account/google-login"; // Must be lowercase
+            //})
+           //.AddGoogle(options =>
+           //{
+           //    options.ClientId = Configuration["Authentication:Google:ClientId"];
+           //    options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+           //    options.SignInScheme = IdentityConstants.ExternalScheme;
+           //});
         }
 
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
@@ -128,9 +129,7 @@ namespace TexnoStoreApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
-
             app.UseRouting();
             app.UseCookiePolicy();
             app.UseRequestResponseLoggingMiddleware();

@@ -69,6 +69,11 @@ namespace TexnoStore
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             });
+            //services.AddAuthentication().AddGoogle(googleOptions =>
+            //{
+            //    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+            //    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            //});
             //.AddGoogle(options =>
             //{
             //    options.ClientId = Configuration["Authentication:Google:ClientId"];
@@ -77,11 +82,11 @@ namespace TexnoStore
             //});
 
 
-           //.AddFacebook(facebookOptions =>
-           //{
-           //    facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
-           //    facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"]; 
-           //});
+            //.AddFacebook(facebookOptions =>
+            //{
+            //    facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+            //    facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"]; 
+            //});
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
