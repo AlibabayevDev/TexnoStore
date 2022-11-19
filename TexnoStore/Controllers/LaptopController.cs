@@ -31,7 +31,7 @@ namespace TexnoStore.Controllers
             List<LaptopModel> laptops = new List<LaptopModel>();
             using (var httpClient = new HttpClient())
             {
-                using (var response = httpClient.GetAsync("http://texnostore-001-site1.etempurl.com/api/LaptopConroller/GetAll").Result)
+                using (var response = httpClient.GetAsync("http://onlinemagazine1-001-site1.itempurl.com/api/LaptopConroller/GetAll").Result)
                 {
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
@@ -59,7 +59,7 @@ namespace TexnoStore.Controllers
             //var laptop = service.LaptopService.LaptopProduct(id);
             using (var httpClient = new HttpClient())
             {
-                using(var response = httpClient.GetAsync("http://texnostore-001-site1.etempurl.com/api/LaptopConroller/GetLaptop/" + id).Result)
+                using(var response = httpClient.GetAsync("http://onlinemagazine1-001-site1.itempurl.com/api/LaptopConroller/GetLaptop/" + id).Result)
                 {
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {

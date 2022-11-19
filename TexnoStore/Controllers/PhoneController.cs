@@ -26,7 +26,7 @@ namespace TexnoStore.Controllers
             var phones = new List<PhoneModel>();
             using (var httpClient = new HttpClient())
             {
-                using (var response = httpClient.GetAsync("http://texnostore-001-site1.etempurl.com/api/Phone/GetAll/").Result)
+                using (var response = httpClient.GetAsync("http://onlinemagazine1-001-site1.itempurl.com/api/Phone/GetAll/").Result)
                 {
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
@@ -51,7 +51,7 @@ namespace TexnoStore.Controllers
             var phone = new PhoneModel();
             using(var httpClient = new HttpClient())
             {
-                using(var response = httpClient.GetAsync("http://texnostore-001-site1.etempurl.com/api/Phone/PhoneProduct/" + id).Result)
+                using(var response = httpClient.GetAsync("http://onlinemagazine1-001-site1.itempurl.com/api/Phone/PhoneProduct/" + id).Result)
                 {
                     string apiResponse = response.Content.ReadAsStringAsync().Result;
                     phone = JsonConvert.DeserializeObject<PhoneModel>(apiResponse);
