@@ -1,5 +1,5 @@
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Data Source=SQL8001.site4now.net;Initial Catalog=db_a8ff0f_onlinemagazine1;User Id=db_a8ff0f_onlinemagazine1_admin;Password=5333372e"
+    "DefaultConnection": "Data Source=LAPTOP-8TIN9OH7;Initial Catalog=db_a8c5d2_texnostore;Integrated security = true"
   }
 }

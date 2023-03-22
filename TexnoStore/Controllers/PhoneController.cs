@@ -26,7 +26,7 @@ namespace TexnoStore.Controllers
             var phones = new List<PhoneModel>();
             using (var httpClient = new HttpClient())
             {
-                using (var response = httpClient.GetAsync("http://onlinemagazine1-001-site1.itempurl.com/api/Phone/GetAll/").Result)
+                using (var response = httpClient.GetAsync("https://localhost:7169/api/Phone/GetAll").Result)
                 {
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {

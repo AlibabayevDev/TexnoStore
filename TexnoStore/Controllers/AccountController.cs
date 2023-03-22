@@ -22,12 +22,6 @@ using TexnoStore.Models.Users;
 
 namespace TexnoStore.Controllers
 {
-    public class EmailLink
-    {
-        public string email { get; set; }
-        public string link { get; set; }
-    }
-
     public class AccountController : Controller
     {
         public LoginMapper LoginMapper = new LoginMapper();
