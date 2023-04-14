@@ -60,8 +60,12 @@ namespace TexnoStore.Controllers
                 using (var response = client.PostAsync("https://localhost:7261/api/SendAttachment/",requestContent).Result)
                 {
                     string apiResponse = response.Content.ReadAsStringAsync().Result;
-                    emailModel = JsonConvert.DeserializeObject<EmailModel>(apiResponse);
+                    if(apiResponse =="")
+                    {
+
+                    }
                 }
+
 
                 //var result = postTask.Result;
                 //if (result.IsSuccessStatusCode)
